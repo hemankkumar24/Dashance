@@ -1,2 +1,12 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "main_font";
+  src: url("/fonts/SFPRODISPLAYREGULAR.OTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.main-font {
+  font-family: "main_font", sans-serif;
+}
