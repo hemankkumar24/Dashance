@@ -1,7 +1,76 @@
+"use client"
+
 import React from 'react'
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FAQItem from './components/Landing/FAQItem'
 
+// GSAP  
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
 const page = () => {
+
+
+  useGSAP(() => {
+    // Text Show Up Animation
+    gsap.utils.toArray<HTMLElement>(".animate-show-up").forEach((el, i) => {
+      gsap.fromTo(el, { opacity: 0, y: 10, },
+        {
+          opacity: 1, y: 0, duration: 1, ease: "power1.out",
+          scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" }
+        })
+    });
+
+    // Text Show from Left Animation (FAQ)
+    gsap.utils.toArray<HTMLElement>(".animate-show-from-left").forEach((el, i) => {
+      gsap.fromTo(el, { opacity: 0, x: 10, },
+        {
+          opacity: 1, x: 0, duration: 1., ease: "power4.out",
+          scrollTrigger: { trigger: el, start: "top 50%", toggleActions: "play none none none" }
+        })
+    });
+
+    // Constant Linear Movement Scroll
+    const el = document.querySelector(".infinite-loop-x");
+    if (!el) return;
+    const width = el.scrollWidth / 2;
+
+    const tl = gsap.fromTo(
+      el,
+      { x: -width },
+      {
+        x: 0,
+        duration: 30,
+        ease: "linear",
+        repeat: -1,
+      }
+    );
+
+    el.addEventListener("mouseenter", () => tl.pause());
+    el.addEventListener("mouseleave", () => tl.resume());
+
+    const words = gsap.utils.toArray<HTMLElement>(".word");
+
+    // Words Being Seen Lock
+    gsap.to(words, {
+      opacity: 1,
+      color: "#78716c", 
+      stagger: 0.1,     
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".word-section",
+        start: "top top",
+        end: "+=1000",  
+        scrub: 1,
+        pin: true,      
+      }
+    });
+  });
+
+  // Text Storing for Text Animation
+  const text = `Take control of your money with complete privacy and clarity. Track your spending, understand your habits, and make better financial decisions all without compromising your data. Built to keep your financial life secure, simple, and entirely yours. No tracking, no selling just smarter money management.`;
+
   return (
     <div className='w-full bg-stone-50'>
 
@@ -17,7 +86,7 @@ const page = () => {
           </button>
         </div>
         {/* Middle Name */}
-        <div className="absolute inset-0 flex items-start justify-center pt-5 main-font text-2xl text-blue-700">
+        <div className="absolute inset-0 flex items-start justify-center pt-5 main-font text-2xl">
           Dashance
         </div>
       </div>
@@ -36,7 +105,7 @@ const page = () => {
       </div>
       {/* Hero Text Section */}
       <div className='py-10 flex flex-col items-center border-b-stone-500 border-b'>
-        <div className='text-8xl px-25 text-center main-font text-stone-800'>
+        <div className='text-8xl animate-show-up px-25 text-center main-font text-stone-800 opacity-0'>
           Beyond tracking: clearer, smarter, and
           <span className='italic-font'> more in control</span>
         </div>
@@ -66,73 +135,105 @@ const page = () => {
         </div>
       </div>
 
-      {/* Skill Section */}
-      <div className="py-2 border-b-stone-500 border-b text-3xl main-font gap-5 justify-center flex overflow-x-hidden whitespace-nowrap">
-        <span>Real-time insights</span>
-        <span className='text-blue-700'>•</span>
-        <span>Track every expense</span>
-        <span className='text-blue-700'>•</span>
-        <span>Understand spending patterns</span>
-        <span className='text-blue-700'>•</span>
-        <span>Financial clarity</span>
-        <span className='text-blue-700'>•</span>
-        <span>Fast & minimal</span>
-        <span className='text-blue-700'>•</span>
-        <span>Goal setting</span>
-        <span className='text-blue-700'>•</span>
-        <span>Analyze effortlessly</span>
+      {/* Scroll Section */}
+      <div className="py-2 border-b-stone-500 border-b text-3xl main-font whitespace-nowrap overflow-x-hidden mask">
+        <div className='infinite-loop-x flex gap-5'>
+          <span>Real-time insights</span>
+          <span className='text-blue-700'>•</span>
+          <span>Track every expense</span>
+          <span className='text-blue-700'>•</span>
+          <span>Understand spending patterns</span>
+          <span className='text-blue-700'>•</span>
+          <span>Financial clarity</span>
+          <span className='text-blue-700'>•</span>
+          <span>Fast & minimal</span>
+          <span className='text-blue-700'>•</span>
+          <span>Goal setting</span>
+          <span className='text-blue-700'>•</span>
+          <span>Analyze effortlessly</span>
+          <span className='text-blue-700'>•</span>
+          <span>Real-time insights</span>
+          <span className='text-blue-700'>•</span>
+          <span>Track every expense</span>
+          <span className='text-blue-700'>•</span>
+          <span>Understand spending patterns</span>
+          <span className='text-blue-700'>•</span>
+          <span>Financial clarity</span>
+          <span className='text-blue-700'>•</span>
+          <span>Fast & minimal</span>
+          <span className='text-blue-700'>•</span>
+          <span>Goal setting</span>
+          <span className='text-blue-700'>•</span>
+          <span>Analyze effortlessly</span>
+        </div>
       </div>
 
       {/* Description Section */}
-      <div className='py-25 border-b border-b-stone-500'>
+      <div className="word-section py-35 border-b border-b-stone-500 overflow-hidden">
         <div className='main-font text-5xl px-10'>
-          <div className='text-stone-800'>
+          <div className='text-stone-800 animate-show-up'>
             Private by design. Powerful by default.
           </div>
-          <div className='text-stone-500 pt-2'>
-            Take control of your money with complete privacy and clarity. Track your spending, understand your habits, and make better financial decisions all without compromising your data. Built to keep your financial life secure, simple, and entirely yours. No tracking, no selling just smarter money management.
+          <div className='text-stone-300 pt-2 leading-snug flex flex-wrap'>
+            {text.split(" ").map((word, i) => (
+              <span key={i} className="word opacity-30 mr-2 inline-block">
+                {word}
+              </span>
+            ))}
           </div>
         </div>
       </div>
 
       {/* FAQ Section */}
       <div className='grid grid-cols-2 border-b border-b-stone-500'>
-        <div className='p-10 main-font text-6xl border-r-stone-500 border-r'>
+        <div className='p-10 main-font text-6xl border-r-stone-500 border-r animate-show-up'>
           FAQ
         </div>
-        <div className='p-10 flex flex-col gap-5 main-font'>
-          <FAQItem title="What can I do with Dashance?">
-            Easily track your expenses, understand where your money goes, and set simple financial goals. Everything is designed to give you clarity without complexity.
-          </FAQItem>
+        <div className='p-10 flex flex-col gap-5 main-font mb-6'>
+          <div className='animate-show-from-left'>
+            <FAQItem title="What can I do with Dashance?">
+              Easily track your expenses, understand where your money goes, and set simple financial goals. Everything is designed to give you clarity without complexity.
+            </FAQItem>
+          </div>
 
-          <FAQItem title="Do you track or monetize my data?">
-            No. We don’t track your behavior or sell your data. Dashance exists to help you manage your finances not to profit from your information.
-          </FAQItem>
+          <div className='animate-show-from-left'>
+            <FAQItem title="Do you track or monetize my data?">
+              No. We don’t track your behavior or sell your data. Dashance exists to help you manage your finances not to profit from your information.
+            </FAQItem>
+          </div>
 
-          <FAQItem title="How is this different from other finance apps?">
-            Most apps focus on collecting data. Dashance focuses on giving you clear insights while keeping things simple and private.
-          </FAQItem>
+          <div className='animate-show-from-left'>
+            <FAQItem title="How is this different from other finance apps?">
+              Most apps focus on collecting data. Dashance focuses on giving you clear insights while keeping things simple and private.
+            </FAQItem>
+          </div>
 
-          <FAQItem title="Is my financial data private?">
-            Yes. Your data stays yours. We use secure systems to protect your information and never share it with third parties.
-          </FAQItem>
+          <div className='animate-show-from-left'>
+            <FAQItem title="Is my financial data private?">
+              Yes. Your data stays yours. We use secure systems to protect your information and never share it with third parties.
+            </FAQItem>
+          </div>
 
-          <FAQItem title="Do I need to connect my bank account?">
-            No. You can use Dashance without connecting your bank. Any integrations are optional and handled securely.
-          </FAQItem>
+          <div className='animate-show-from-left'>
+            <FAQItem title="Do I need to connect my bank account?">
+              No. You can use Dashance without connecting your bank. Any integrations are optional and handled securely.
+            </FAQItem>
+          </div>
 
-          <FAQItem title="Can I use this across devices?">
-            Yes. You can use Dashance on your phone, laptop, or tablet. Your data is linked to your account and stays in sync across all your devices.
-          </FAQItem>
+          <div className='animate-show-from-left'>
+            <FAQItem title="Can I use this across devices?">
+              Yes. You can use Dashance on your phone, laptop, or tablet. Your data is linked to your account and stays in sync across all your devices.
+            </FAQItem>
+          </div>
         </div>
       </div>
 
       {/* Get Started Section */}
       <div className='main-font'>
         <div className='bg-stone-900 relative w-full h-full pt-40 pb-140 flex flex-col items-center text-center overflow-hidden'>
-          <div className='text-6xl text-stone-100'>
+          <div className='text-6xl text-stone-100 animate-show-up'>
             Start managing your money with <span className='italic-font'>clarity</span>
-          </div>  
+          </div>
           <div className='pt-5 text-3xl text-stone-400 w-[60%]'>
             Simple, private, and built for control. Everything you need to track, understand, and improve your finances.
           </div>
@@ -141,7 +242,7 @@ const page = () => {
               Login
             </button>
             <button className='text-stone-100 text-xl'>
-              Get Started 
+              Get Started
             </button>
           </div>
           <div className="absolute text-[420px] bottom-0 left-1/2 -translate-x-1/2 translate-y-3/10 text-stone-200/30 italic-font">

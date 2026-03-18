@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* Font Stuff */
 @font-face {
   font-family: "main_font";
   src: url("/fonts/SFPRODISPLAYREGULAR.OTF") format("truetype");
@@ -20,4 +21,9 @@
 
 .italic-font {
   font-family: "italic_font", sans-serif;
+}
+
+/* Scrolling CSS */
+.mask {
+  mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
 }
