@@ -1,8 +1,8 @@
 import React from 'react'
-import Balance from '../components/Balance'
-import Income from '../components/Income'
-import Expense from '../components/Expense'
-import Goal from '../components/Goal'
+import Balance from '../components/Dashboard/Balance'
+import Income from '../components/Dashboard/Income'
+import Expense from '../components/Dashboard/Expense'
+import Goal from '../components/Dashboard/Goal'
 
 const page = () => {
   return (

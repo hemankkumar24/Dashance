@@ -7,6 +7,17 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "italic_font";
+  src: url("/fonts/LibreBaskerville-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .main-font {
   font-family: "main_font", sans-serif;
+}
+
+.italic-font {
+  font-family: "italic_font", sans-serif;
 }
