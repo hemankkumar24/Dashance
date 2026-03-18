@@ -55,17 +55,48 @@ const page = () => {
     // Words Being Seen Lock
     gsap.to(words, {
       opacity: 1,
-      color: "#78716c", 
-      stagger: 0.1,     
+      color: "#78716c",
+      stagger: 0.1,
       ease: "none",
       scrollTrigger: {
         trigger: ".word-section",
         start: "top top",
-        end: "+=1000",  
+        end: "+=1000",
         scrub: 1,
-        pin: true,      
+        pin: true,
       }
     });
+
+    // animation for more in control text
+    const tops = gsap.utils.toArray<HTMLElement>(".top");
+    const bottoms = gsap.utils.toArray<HTMLElement>(".bottom");
+
+    const tl2 = gsap.timeline({ paused: true });
+
+    tl2.to(tops, {
+      y: "-100%",
+      stagger: 0.03,
+      duration: 0.5,
+      ease: "power3.inOut",
+    });
+
+    tl2.to(
+      bottoms,
+      {
+        y: "-100%",
+        stagger: 0.03,
+        duration: 0.5,
+        ease: "power3.inOut",
+      },
+      0
+    );
+
+    const container = document.querySelector(".hover-text");
+    if (!container) return;
+
+    container.addEventListener("mouseenter", () => tl2.play());
+    container.addEventListener("mouseleave", () => tl2.reverse());
+
   });
 
   // Text Storing for Text Animation
@@ -107,7 +138,26 @@ const page = () => {
       <div className='py-10 flex flex-col items-center border-b-stone-500 border-b'>
         <div className='text-8xl animate-show-up px-25 text-center main-font text-stone-800 opacity-0'>
           Beyond tracking: clearer, smarter, and
-          <span className='italic-font'> more in control</span>
+          {/* More in control Animation */}
+          <span className="hover-text inline-block cursor-pointer italic-font">
+            {Array.from(" more in control").map((char, i) => (
+              <span key={i} className="letter inline-block relative overflow-hidden">
+
+                {char === " " ? (
+
+                  <span className="inline-block w-[0.3em]"></span>
+                ) : (
+                  <>
+                    <span className="top block">{char}</span>
+                    <span className="bottom block absolute left-0 top-full text-blue-600">
+                      {char}
+                    </span>
+                  </>
+                )}
+
+              </span>
+            ))}
+          </span>
         </div>
         <div className='text-xl main-font text-stone-500 pt-5'>
           Track expenses, understand your spending, and make confident financial decisions all in one place.
