@@ -144,7 +144,7 @@ const page = () => {
               Get Started 
             </button>
           </div>
-          <div className="absolute text-[420px] bottom-0 left-1/2 -translate-x-1/2 translate-y-3/10 text-stone-200/50 italic-font">
+          <div className="absolute text-[420px] bottom-0 left-1/2 -translate-x-1/2 translate-y-3/10 text-stone-200/30 italic-font">
             Dashance
           </div>
         </div>
