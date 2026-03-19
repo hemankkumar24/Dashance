@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FAQItem from './components/Landing/FAQItem'
+import Link from 'next/link';
 
 // GSAP  
 import gsap from "gsap";
@@ -117,11 +118,11 @@ const page = () => {
             Home
           </div>
           <button className='main-font text-lg'>
-            Create Account
+            <Link href="/signup">Create Account</Link>
           </button>
         </div>
         {/* Middle Name */}
-        <div className="absolute inset-0 flex items-start justify-center pt-5 main-font text-2xl">
+        <div className="absolute inset-0 flex items-start justify-center pt-5 main-font text-2xl pointer-events-none">
           Dashance
         </div>
       </div>
@@ -292,6 +293,7 @@ const page = () => {
             Simple, private, and built for control. Everything you need to track, understand, and improve your finances.
           </div>
           <div className='pt-5 flex gap-5'>
+            <Link href="/login">
               <ShimmerButton
                 background={hovered ? "#000" : "#fff"}
                 shimmerColor={hovered ? "#fff" : "#000"}
@@ -301,8 +303,9 @@ const page = () => {
               >
                 Login
               </ShimmerButton>
+            </Link>
             <button className='text-stone-100 text-lg'>
-              Get Started
+              <Link href="/signup">Get Started</Link>
             </button>
           </div>
           <div className="absolute text-[420px] bottom-0 left-1/2 -translate-x-1/2 translate-y-3/10 text-stone-200/30 italic-font">
