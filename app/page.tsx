@@ -297,7 +297,7 @@ const page = () => {
                 shimmerColor={hovered ? "#fff" : "#000"}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-                className="transition-all duration-300 px-10 text-lg text-black hover:text-white"
+                className="px-10 text-lg text-black hover:text-white"
               >
                 Login
               </ShimmerButton>
