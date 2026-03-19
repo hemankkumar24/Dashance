@@ -1,12 +1,13 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FAQItem from './components/Landing/FAQItem'
 
 // GSAP  
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ShimmerButton } from '@/components/ui/shimmer-button';
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const page = () => {
@@ -102,7 +103,10 @@ const page = () => {
   // Text Storing for Text Animation
   const text = `Take control of your money with complete privacy and clarity. Track your spending, understand your habits, and make better financial decisions all without compromising your data. Built to keep your financial life secure, simple, and entirely yours. No tracking, no selling just smarter money management.`;
 
+  // Use State for Hover Animation 
+  const [hovered, setHovered] = useState(false)
   return (
+
     <div className='w-full bg-stone-50'>
 
       {/* Navbar Section */}
@@ -176,7 +180,7 @@ const page = () => {
             Track, manage, and grow your money effortlessly.
             From daily expenses to long-term goals everything in one place.
           </div>
-          <button className='px-5 py-1 text-lg border border-stone-300 bg-white mt-5 inline-block rounded-2xl text-stone-800'>
+          <button className='px-5 py-1 text-lg border border-stone-300 bg-white mt-5 inline-block rounded-2xl text-stone-800 hover:bg-stone-800 hover:text-stone-50 transition-colors duration-300 cursor-pointer'>
             Get Started
           </button>
         </div>
@@ -288,10 +292,16 @@ const page = () => {
             Simple, private, and built for control. Everything you need to track, understand, and improve your finances.
           </div>
           <div className='pt-5 flex gap-5'>
-            <button className='px-10 py-2 text-xl border border-stone-300 font-bold bg-white inline-block rounded-4xl text-stone-500 font-main'>
-              Login
-            </button>
-            <button className='text-stone-100 text-xl'>
+              <ShimmerButton
+                background={hovered ? "#000" : "#fff"}
+                shimmerColor={hovered ? "#fff" : "#000"}
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+                className="transition-all duration-300 px-10 text-lg text-black hover:text-white"
+              >
+                Login
+              </ShimmerButton>
+            <button className='text-stone-100 text-lg'>
               Get Started
             </button>
           </div>
