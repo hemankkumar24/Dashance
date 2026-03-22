@@ -44,7 +44,7 @@ export const SemiGauge = ({ progress, value, max }: Props) => {
             d={arcPath}
             fill="transparent"
             stroke="#2563eb"
-            strokeWidth="13"
+            strokeWidth="8"
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
@@ -53,7 +53,7 @@ export const SemiGauge = ({ progress, value, max }: Props) => {
         </svg>
 
         {/* Center Content */}
-        <div className="absolute inset-0 top-10 flex flex-col items-center justify-center">
+        <div className="absolute inset-0 top-10 flex flex-col items-center justify-center select-none">
           <div className="text-lg text-stone-400">Target</div>
           <div className="text-5xl font-semibold text-white">${value}</div>
           <div className="text-lg text-stone-400">/ ${max}</div>

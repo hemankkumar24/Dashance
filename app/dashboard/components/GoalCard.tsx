@@ -15,7 +15,7 @@ const GoalCard = ({ title, progress }: Props) => {
 
             <div className='h-full w-full flex items-center justify-around gap-4 '>
 
-                <div className='w-[40%] text-xl font-medium truncate'>
+                <div className='w-[40%] text-xl font-medium truncate select-none'>
                     {title}
                 </div>
 
@@ -23,7 +23,7 @@ const GoalCard = ({ title, progress }: Props) => {
                 <div className='flex-1 flex gap-2 items-center'>
 
                     {/* Percentage */}
-                    <div className={`text-sm ${toggled ? "opacity-0": "opacity-100"}  transition-opacity duration-200`}>
+                    <div className={`text-sm ${toggled ? "opacity-0": "opacity-100"}  transition-opacity duration-200 select-none`}>
                         {progress}%
                     </div>
 
@@ -38,13 +38,13 @@ const GoalCard = ({ title, progress }: Props) => {
                 </div>
 
                 {/* Action Icon */}
-                <div className={`w-8 text-lg h-8 flex justify-center items-center text-stone-800 bg-stone-300 rounded-full cursor-pointer hover:bg-stone-400/50 select-none transition ${toggled && "rotate-180"} transition-transform duration-300`} onClick={(() => { setToggled(!toggled) })}>
+                <div className={`w-8 text-lg h-8 flex justify-center items-center text-stone-800 bg-stone-300 rounded-full cursor-pointer hover:bg-stone-400/50 select-none transition ${toggled && "rotate-180"} transition-transform duration-300 select-none`} onClick={(() => { setToggled(!toggled) })}>
                     v
                 </div>
             </div>
             <div className={`overflow-hidden transition-all duration-500 ${toggled ? "max-h-70 mt-4" : "max-h-0"}`}>
                 <div className='h-60 flex items-center justify-center'>
-                    <SemiGauge progress={30} value={600} max={2000} />
+                    <SemiGauge progress={progress} value={600} max={2000} />
                 </div>
             </div>
         </div>

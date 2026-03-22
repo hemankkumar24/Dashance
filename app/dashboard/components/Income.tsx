@@ -12,7 +12,7 @@ const Income = () => {
         <div className='flex items-center select-none justify-between w-full'>
 
           <div className='flex items-center gap-2 text-xl'>
-            <div className='p-2 bg-green-500 shadow-xs text-stone-100 rounded-full'>
+            <div className='p-2 bg-stone-100 shadow-xs text-blue-600 rounded-full'>
               <ArrowBigDown size={20} />
             </div>
             <div>Income</div>
@@ -37,7 +37,7 @@ const Income = () => {
           </div>
 
         </div>
-        <div className='h-full flex flex-col justify-end gap-1'>
+        <div className='h-full flex flex-col justify-end gap-1 select-none'>
             <div className='text-5xl font-bold'>
                 ₹5000
             </div>
@@ -45,7 +45,7 @@ const Income = () => {
               x% Balance Increase
             </div>
         </div>
-        <div className='h-4/5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto p-2 gap-2 flex'>
+        <div className='h-4/5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto p-2 gap-2 flex custom-scroll'>
             <div className='w-3/7 shrink-0 h-full bg-stone-300 rounded-xl'>
                
             </div>
