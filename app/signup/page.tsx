@@ -6,7 +6,7 @@ const page = () => {
         <div className='w-full h-screen'>
             <img className='absolute w-full h-screen -z-5 object-cover' src="./images/wallpaper/wallpaper.webp"></img>
             <div className='flex justify-center items-center w-full h-full py-0 lg:py-5 xl:py-0'>
-                <div className='w-200 h-full xl:w-300 xl:h-200 xl:rounded-4xl border-stone-50 rounded-xl border xl:border-10'>
+                <div className='w-200 h-full xl:w-300 xl:h-200 xl:rounded-4xl md:border-stone-50 rounded-xl border xl:border-10'>
                     <div className='xl:grid xl:grid-cols-2 w-full h-full'>
                         {/* Left Side with Bottom Left Text */}
                         <div className='hidden xl:block bg-stone-50/30 rounded-2xl rounded-tr-none rounded-br-none backdrop-blur-2xl relative'>
@@ -27,7 +27,7 @@ const page = () => {
                         </div>
 
                         {/* Right Side */}
-                        <div className='bg-stone-50/30 backdrop-blur-md xl:bg-stone-50 h-full md:rounded-tr-xl relative md:rounded-xl'>
+                        <div className='bg-stone-50/30 backdrop-blur-md xl:bg-stone-50 h-full relative rounded-none md:rounded-xl xl:rounded-none'>
                             <div className='absolute inset-0 pt-2 text-2xl flex justify-center italic-font text-stone-50 xl:text-stone-800 pointer-events-none'>
                                 Dashance
                             </div>

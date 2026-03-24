@@ -14,117 +14,139 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const page = () => {
 
   useGSAP(() => {
+
     // Text Show Up Animation
-    gsap.utils.toArray<HTMLElement>(".animate-show-up").forEach((el, i) => {
-      gsap.fromTo(el, { opacity: 0, y: 10, },
-        {
-          opacity: 1, y: 0, duration: 1, ease: "power1.out",
-          scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" }
-        })
-    });
-
-    // Text Show from Left Animation (FAQ)
-    gsap.utils.toArray<HTMLElement>(".animate-show-from-left").forEach((el, i) => {
-      gsap.fromTo(el, { opacity: 0, x: 10, },
-        {
-          opacity: 1, x: 0, duration: 1., ease: "power4.out",
-          scrollTrigger: { trigger: el, start: "top 0%", toggleActions: "play none none none" }
-        })
-    });
-
-    // Constant Linear Movement Scroll
-    const el = document.querySelector(".infinite-loop-x");
-    if (!el) return;
-    const width = el.scrollWidth / 2;
-
-    const tl = gsap.fromTo(
-      el,
-      { x: -width },
-      {
-        x: 0,
-        duration: 30,
-        ease: "linear",
-        repeat: -1,
-      }
-    );
-
-    el.addEventListener("mouseenter", () => tl.pause());
-    el.addEventListener("mouseleave", () => tl.resume());
-
-    const words = gsap.utils.toArray<HTMLElement>(".word");
-
-    // Words Being Seen Lock
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 900px)", () => {
-      gsap.to(words, {
-        opacity: 1,
-        color: "#78716c",
-        stagger: 0.1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".word-section",
-          start: "top top",
-          end: "bottom top", // ends when section leaves viewport
-          scrub: 1,
-          pin: true,
-        }
+      gsap.utils.toArray<HTMLElement>(".animate-show-up").forEach((el) => {
+        gsap.fromTo(el, { opacity: 0, y: 10 },
+          {
+            opacity: 1, y: 0, duration: 1, ease: "power1.out",
+            scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" }
+          })
       });
-    });
 
-    mm.add("(max-width: 899px)", () => {
-      gsap.to(words, {
-        opacity: 1,
-        color: "#78716c",
-        stagger: 0.1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".word-section",
-          start: "top 50%",
-          end: "bottom 50%", // same here
-          scrub: 1,
-          markers: true
+      // ✅ FIXED: Text Show from Left Animation (Responsive)
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          desktop: "(min-width: 900px)",
+          mobile: "(max-width: 899px)",
+        },
+        (context) => {
+
+          const { desktop } = context.conditions!
+
+          gsap.utils.toArray<HTMLElement>(".animate-show-from-left").forEach((el) => {
+            gsap.fromTo(
+              el,
+              { opacity: 0, x: 10 },
+              {
+                opacity: 1,
+                x: 0,
+                duration: 1,
+                ease: "power4.out",
+                scrollTrigger: {
+                  trigger: el,
+                  start: desktop ? "top 0%" : "top 50%",
+                  toggleActions: "play none none none",
+                }
+              }
+            )
+          })
         }
+      );
+
+      // Constant Linear Movement Scroll
+      const el = document.querySelector(".infinite-loop-x");
+      if (!el) return;
+      const width = el.scrollWidth / 2;
+
+      const tl = gsap.fromTo(
+        el,
+        { x: -width },
+        {
+          x: 0,
+          duration: 30,
+          ease: "linear",
+          repeat: -1,
+        }
+      );
+
+      el.addEventListener("mouseenter", () => tl.pause());
+      el.addEventListener("mouseleave", () => tl.resume());
+
+      const words = gsap.utils.toArray<HTMLElement>(".word");
+
+      // Words Being Seen Lock
+      mm.add("(min-width: 900px)", () => {
+        gsap.to(words, {
+          opacity: 1,
+          color: "#78716c",
+          stagger: 0.1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".word-section",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+            pin: true,
+          }
+        });
       });
-    });
 
-    // animation for more in control text
-    const tops = gsap.utils.toArray<HTMLElement>(".top");
-    const bottoms = gsap.utils.toArray<HTMLElement>(".bottom");
+      mm.add("(max-width: 899px)", () => {
+        gsap.to(words, {
+          opacity: 1,
+          color: "#78716c",
+          stagger: 0.1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".word-section",
+            start: "top 50%",
+            end: "bottom 50%",
+            scrub: 1,
+          }
+        });
+      });
 
-    const tl2 = gsap.timeline({ paused: true });
+      // animation for more in control text
+      const tops = gsap.utils.toArray<HTMLElement>(".top");
+      const bottoms = gsap.utils.toArray<HTMLElement>(".bottom");
 
-    tl2.to(tops, {
-      y: "-100%",
-      stagger: 0.03,
-      duration: 0.5,
-      ease: "power3.inOut",
-    });
+      const tl2 = gsap.timeline({ paused: true });
 
-    tl2.to(
-      bottoms,
-      {
+      tl2.to(tops, {
         y: "-100%",
         stagger: 0.03,
         duration: 0.5,
         ease: "power3.inOut",
-      },
-      0
-    );
+      });
 
-    const container = document.querySelector(".hover-text");
-    if (!container) return;
+      tl2.to(
+        bottoms,
+        {
+          y: "-100%",
+          stagger: 0.03,
+          duration: 0.5,
+          ease: "power3.inOut",
+        },
+        0
+      );
 
-    container.addEventListener("mouseenter", () => tl2.play());
-    container.addEventListener("mouseleave", () => tl2.reverse());
+      const container = document.querySelector(".hover-text");
+      if (!container) return;
 
-  });
+      container.addEventListener("mouseenter", () => tl2.play());
+      container.addEventListener("mouseleave", () => tl2.reverse());
 
-  // Text Storing for Text Animation
-  const text = `Take control of your money with complete privacy and clarity. Track your spending, understand your habits, and make better financial decisions all without compromising your data. Built to keep your financial life secure, simple, and entirely yours. No tracking, no selling just smarter money management.`;
+      return () => mm.revert(); 
 
-  // Use State for Hover Animation 
-  const [hovered, setHovered] = useState(false)
+    });
+
+    const text = `Take control of your money with complete privacy and clarity. Track your spending, understand your habits, and make better financial decisions all without compromising your data. Built to keep your financial life secure, simple, and entirely yours. No tracking, no selling just smarter money management.`;
+
+    const [hovered, setHovered] = useState(false)
+    
   return (
 
     <div className='w-full bg-stone-50'>
