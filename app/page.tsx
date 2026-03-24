@@ -28,7 +28,7 @@ const page = () => {
       gsap.fromTo(el, { opacity: 0, x: 10, },
         {
           opacity: 1, x: 0, duration: 1., ease: "power4.out",
-          scrollTrigger: { trigger: el, start: "top 0%", toggleActions: "play none none none",markers: true }
+          scrollTrigger: { trigger: el, start: "top 0%", toggleActions: "play none none none" }
         })
     });
 
