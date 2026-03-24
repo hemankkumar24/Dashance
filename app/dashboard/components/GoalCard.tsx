@@ -39,7 +39,7 @@ const GoalCard = ({ title, progress }: Props) => {
 
                 {/* Action Icon */}
                 <div className={`w-8 text-lg h-8 flex justify-center items-center text-stone-800 bg-stone-300 rounded-full cursor-pointer hover:bg-stone-400/50 select-none transition ${toggled && "rotate-180"} transition-transform duration-300 select-none`} onClick={(() => { setToggled(!toggled) })}>
-                    v
+                    ⌄
                 </div>
             </div>
             <div className={`overflow-hidden transition-all duration-500 ${toggled ? "max-h-70 mt-4" : "max-h-0"}`}>

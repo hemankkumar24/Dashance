@@ -1,10 +1,78 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { ArrowBigUp } from 'lucide-react'
+import ExpenseCard from './ExpenseCard'
 
 const Income = () => {
 
   const [opened, setOpened] = useState(false)
+
+  // scroll starts here
+  const scrollRef = useRef<HTMLDivElement | null>(null)
+
+  const isDown = useRef(false)
+  const startX = useRef(0)
+  const scrollLeft = useRef(0)
+
+  const velocity = useRef(0)
+  const lastX = useRef(0)
+  const animationFrame = useRef<number | null>(null)
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!scrollRef.current) return
+
+    isDown.current = true
+    scrollRef.current.classList.add("cursor-grabbing")
+
+    startX.current = e.pageX - scrollRef.current.offsetLeft
+    scrollLeft.current = scrollRef.current.scrollLeft
+    lastX.current = e.pageX
+
+    if (animationFrame.current) {
+      cancelAnimationFrame(animationFrame.current)
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (!scrollRef.current) return
+    isDown.current = false
+    scrollRef.current.classList.remove("cursor-grabbing")
+  }
+
+  const handleMouseUp = () => {
+    if (!scrollRef.current) return
+
+    isDown.current = false
+    scrollRef.current.classList.remove("cursor-grabbing")
+
+    const momentum = () => {
+      if (!scrollRef.current) return
+
+      scrollRef.current.scrollLeft -= velocity.current
+      velocity.current *= 0.96
+
+      if (Math.abs(velocity.current) > 0.5) {
+        animationFrame.current = requestAnimationFrame(momentum)
+      }
+    }
+
+    momentum()
+  }
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDown.current || !scrollRef.current) return
+
+    e.preventDefault()
+
+    const x = e.pageX - scrollRef.current.offsetLeft
+    const walk = (x - startX.current) * 1.5
+
+    velocity.current = e.pageX - lastX.current
+    lastX.current = e.pageX
+
+    scrollRef.current.scrollLeft = scrollLeft.current - walk
+  }
+  // scroll ends here
 
   return (
     <div className='flex flex-col h-full w-full bg-stone-50 rounded-xl shadow-sm'>
@@ -45,17 +113,24 @@ const Income = () => {
               x% Balance Increase
             </div>
         </div>
-        <div className='h-4/5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto p-2 gap-2 flex custom-scroll' data-lenis-prevent>
-            <div className='w-3/7 shrink-0 h-full bg-stone-300 rounded-xl'>
-               
-            </div>
-            <div className='w-3/7 shrink-0 h-full bg-stone-300 rounded-xl'>
-               
-            </div>
-            <div className='w-3/7 shrink-0 h-full bg-stone-300 rounded-xl'>
-               
-            </div>
+
+        {/* scroll starts here */}
+        <div
+          ref={scrollRef}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          className='h-4/5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
+          data-lenis-prevent
+        >
+            <ExpenseCard name={"Chicken"} amount={170} />
+            <ExpenseCard name={"Chicken"} amount={170} />
+            <ExpenseCard name={"Chicken"} amount={170} />
+            <ExpenseCard name={"Chicken"} amount={170} />
         </div>
+        {/* scroll ends here */}
+
       </div>
     </div>
   )

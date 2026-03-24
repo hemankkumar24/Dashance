@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FAQItem from './components/Landing/FAQItem'
 import Link from 'next/link';
@@ -12,7 +12,6 @@ import { ShimmerButton } from '@/components/ui/shimmer-button';
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const page = () => {
-
 
   useGSAP(() => {
     // Text Show Up Animation
@@ -29,7 +28,7 @@ const page = () => {
       gsap.fromTo(el, { opacity: 0, x: 10, },
         {
           opacity: 1, x: 0, duration: 1., ease: "power4.out",
-          scrollTrigger: { trigger: el, start: "top 50%", toggleActions: "play none none none" }
+          scrollTrigger: { trigger: el, start: "top 0%", toggleActions: "play none none none",markers: true }
         })
     });
 
@@ -66,7 +65,7 @@ const page = () => {
         scrollTrigger: {
           trigger: ".word-section",
           start: "top top",
-          end: "bottom top", // 🔥 ends when section leaves viewport
+          end: "bottom top", // ends when section leaves viewport
           scrub: 1,
           pin: true,
         }
