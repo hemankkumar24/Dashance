@@ -10,7 +10,7 @@ const page = () => {
     const [toggled, setToggled] = useState(false)
 
     return (
-        <div className='w-full h-screen'>
+        <div className='flex justify-center items-center w-full min-h-[100dvh] py-0 lg:py-5 xl:py-0'>
             <img
                 className='absolute w-full h-screen -z-5 object-cover'
                 src="./images/wallpaper/wallpaper.webp"
