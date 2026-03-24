@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const page = () => {
     return (
-        <div className='flex justify-center items-center w-full min-h-[100dvh] py-0 lg:py-5 xl:py-0'>
+        <div className='w-full h-screen'>
             <img className='absolute w-full h-screen -z-5 object-cover' src="./images/wallpaper/wallpaper.webp"></img>
             <div className='flex justify-center items-center w-full h-full py-0 lg:py-5 xl:py-0'>
                 <div className='w-200 h-full xl:w-300 xl:h-200 xl:rounded-4xl border-stone-50 rounded-xl border xl:border-10'>

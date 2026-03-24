@@ -127,7 +127,7 @@ const page = () => {
   const [hovered, setHovered] = useState(false)
   return (
 
-    <div className='w-full min-h-dvh bg-stone-50 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]'>
+    <div className='w-full bg-stone-50'>
 
       {/* Navbar Section */}
       <div className='w-full px-5 lg:px-10 py-5 border-b-stone-500 border relative'>
