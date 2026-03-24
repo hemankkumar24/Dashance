@@ -9,7 +9,7 @@ const page = () => {
                 <div className='w-300 h-200 rounded-4xl border-stone-50 border-10'>
                     <div className='grid grid-cols-2 w-full h-full'>
                         {/* Left Side with Bottom Left Text */}
-                        <div className='bg-transparent relative'>
+                        <div className='bg-stone-50/30 rounded-2xl rounded-tr-none rounded-br-none backdrop-blur-2xl relative'>
                             <div className='flex flex-col absolute bottom-0 left-0 px-5 py-5 gap-2'>
                                 <div className='italic-font text-6xl text-white'>
                                     Get
