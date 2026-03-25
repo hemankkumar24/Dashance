@@ -1,7 +1,14 @@
-import React from 'react'
+"use client"
+
+import React, { useState } from 'react'
 import Link from 'next/link'
+import { LucideEye, LucideEyeOff } from 'lucide-react'
 
 const page = () => {
+
+    const [toggled, setToggled] = useState(false)
+    const [confirmToggled, setConfirmToggled] = useState(false)
+
     return (
         <div className='w-full h-screen bg-black'>
             <img className='absolute w-full h-screen object-cover opacity-80' src="./images/wallpaper/wallpaper.jpg"></img>
@@ -28,7 +35,7 @@ const page = () => {
 
                         {/* Right Side */}
                         <div className='bg-stone-950/30 backdrop-blur-sm xl:bg-stone-50 h-full relative rounded-none md:rounded-xl xl:rounded-none xl:rounded-tr-xl xl:rounded-br-xl'>
-                            <div className='absolute inset-0 pt-2 text-2xl flex justify-center italic-font text-stone-50 xl:text-stone-800 pointer-events-none'>
+                            <div className='absolute inset-0 pt-5 text-2xl flex justify-center italic-font text-stone-50 xl:text-stone-800 pointer-events-none'>
                                 Dashance
                             </div>
 
@@ -53,7 +60,19 @@ const page = () => {
                                         <div className='text-stone-50 xl:text-stone-800 text-lg'>
                                             Password
                                         </div>
-                                        <input type="password" className='text-lg w-full rounded-sm text-stone-500 px-3 py-3 bg-stone-100 outline-none border border-stone-300' placeholder="Create a password" />
+                                        <div className="relative">
+                                            <input
+                                                type={toggled ? "text" : "password"}
+                                                className='text-lg w-full rounded-sm text-stone-500 px-3 py-3 pr-10 bg-stone-100 outline-none border border-stone-300'
+                                                placeholder="Enter your password"
+                                            />
+
+                                            <div className='absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer' onClick={() => {setToggled(!toggled)}}>
+                                                {
+                                                    toggled ? <LucideEyeOff className='text-stone-500/50' /> : <LucideEye className='text-stone-500/50' />
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div className='pt-5'>

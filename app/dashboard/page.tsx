@@ -3,6 +3,8 @@ import Balance from './components/Balance'
 import Income from './components/Income'
 import Expense from './components/Expense'
 import Goal from './components/Goal'
+import Cashflow from './components/Cashflow'
+import Transaction from './components/Transaction'
 
 const page = () => {
   return (
@@ -35,10 +37,10 @@ const page = () => {
             <div className='grid grid-rows-2 h-full min-h-0 gap-2'>
               <div className='grid grid-cols-2 h-full min-h-0 gap-2'>
                 <div className='bg-stone-50 h-full'>
-
+                  <Cashflow />
                 </div>
                 <div className='bg-stone-50 h-full'>
-                  
+                  <Transaction />
                 </div>
               </div>
 

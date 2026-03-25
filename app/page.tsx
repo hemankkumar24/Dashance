@@ -285,11 +285,11 @@ const page = () => {
       </div>
 
       {/* FAQ Section */}
-      <div className='grid grid-cols-2 border-b border-b-stone-500'>
+      <div className='lg:grid lg:grid-cols-2 border-b border-b-stone-500'>
         <div className='p-5 lg:p-10 main-font text-6xl border-r-stone-500 border-r animate-show-up'>
           FAQ
         </div>
-        <div className='p-5 lg:p-10 flex flex-col gap-5 main-font mb-6'>
+        <div className='p-5 pt-0 lg:pt-5 lg:p-10 flex flex-col gap-5 main-font mb-6'>
           <div className='animate-show-from-left'>
             <FAQItem title="What can I do with Dashance?">
               Easily track your expenses, understand where your money goes, and set simple financial goals. Everything is designed to give you clarity without complexity.
