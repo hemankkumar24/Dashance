@@ -15,7 +15,7 @@ const ExpenseCard = ({ name, amount }: Props) => {
     <div className='w-3/7 relative shrink-0 h-full rounded-xl flex flex-col justify-center select-none'>
       
       {/* Left indicator */}
-      <div className='absolute left-0 my-auto h-[90%] w-1 bg-red-500 rounded-full' />
+      <div className='absolute left-0 my-auto h-[90%] w-1.5 bg-red-500 rounded-full' />
 
       {/* Name */}
       <div

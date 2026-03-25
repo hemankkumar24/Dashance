@@ -13,7 +13,7 @@ const IncomeCard = ({ name, amount }: Props) => {
 
   return (
     <div className='w-3/7 relative shrink-0 h-full rounded-xl flex flex-col justify-center select-none'>
-        <div className='absolute left-0 my-auto h-[90%] w-1 bg-blue-500 rounded-full '/>
+        <div className='absolute left-0 my-auto h-[90%] w-1.5 bg-blue-500 rounded-full '/>
         <div className={!hovered ? `text-lg px-6 text-stone-500 whitespace-nowrap truncate` : `text-lg px-6 text-stone-500 whitespace-nowrap bg-stone-50`} onMouseEnter={() => setHovered(true)} onMouseLeave={() => {setHovered(false)}}>
             {name}
         </div>

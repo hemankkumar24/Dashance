@@ -66,7 +66,7 @@ const Income = () => {
   // scroll ends here
 
   return (
-    <div className='flex flex-col h-full w-full bg-stone-50 rounded-xl shadow-sm'>
+    <div className='flex flex-col h-full w-full bg-stone-50 rounded-xl shadow-sm '>
       <div className='flex flex-col px-4 py-3 h-full w-full'>
         
         <div className='flex items-center select-none justify-between w-full'>
@@ -108,7 +108,7 @@ const Income = () => {
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className='h-4/5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto p-2 gap-2 flex custom-scroll main-font cursor-grab no-scrollbar'
+          className='h-4/5 mt-5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto p-2 gap-2 flex custom-scroll main-font cursor-grab no-scrollbar'
         >
           <IncomeCard name="Salary" amount={20000} />
           <IncomeCard name="Bank Interest" amount={600} />

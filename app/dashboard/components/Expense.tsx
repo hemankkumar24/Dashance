@@ -121,7 +121,7 @@ const Income = () => {
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className='h-4/5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
+          className='h-4/5 mt-5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
           data-lenis-prevent
         >
             <ExpenseCard name={"Chicken"} amount={170} />

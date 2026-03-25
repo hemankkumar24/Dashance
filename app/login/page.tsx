@@ -10,21 +10,21 @@ const page = () => {
     const [toggled, setToggled] = useState(false)
 
     return (
-        <div className='w-full h-screen'>
+        <div className='w-full h-screen bg-black'>
             <img
-                className='absolute w-full h-screen -z-5 object-cover'
-                src="./images/wallpaper/wallpaper.webp"
+                className='absolute w-full h-screen  object-cover opacity-80 '
+                src="./images/wallpaper/wallpaper.jpg"
             />
 
-            <div className='flex justify-center items-center w-full h-full py-0 lg:py-5 xl:py-0'>
+            <div className='flex justify-center items-center w-full h-full py-0 md:py-5 xl:py-0'>
                 
                 {/* Container */}
-                <div className='w-200 h-full xl:w-300 xl:h-200 xl:rounded-4xl md:border-stone-50 md:rounded-xl border xl:border-10'>
+                <div className='w-200 h-full xl:w-300 xl:h-200 xl:rounded-4xl md:border-stone-600 md:rounded-xl border xl:border-10'>
                     
                     <div className='xl:grid xl:grid-cols-2 w-full h-full'>
 
                         {/* LEFT SIDE (hidden on small screens like signup) */}
-                        <div className='hidden xl:block bg-stone-50/30 rounded-2xl rounded-tr-none rounded-br-none backdrop-blur-2xl relative'>
+                        <div className='hidden xl:block bg-stone-950/20 rounded-2xl rounded-tr-none rounded-br-none backdrop-blur-xs relative'>
                             <div className='flex flex-col absolute bottom-0 left-0 px-5 py-5 gap-2'>
                                 <div className='italic-font text-6xl text-white'>Get</div>
                                 <div className='italic-font text-6xl text-white'>Everything</div>
@@ -37,7 +37,7 @@ const page = () => {
                         </div>
 
                         {/* RIGHT SIDE */}
-                        <div className='bg-stone-50/30 backdrop-blur-md xl:bg-stone-50 h-full relative rounded-none md:rounded-xl xl:rounded-none'>
+                        <div className='bg-stone-950/30 backdrop-blur-md xl:bg-stone-50 h-full relative rounded-none md:rounded-xl xl:rounded-none'>
                             
                             {/* Logo */}
                             <div className='absolute inset-0 pt-2 text-2xl flex justify-center italic-font text-stone-50 xl:text-stone-800 pointer-events-none'>
@@ -103,7 +103,7 @@ const page = () => {
 
                                     {/* Button */}
                                     <div className='pt-5'>
-                                        <button className="w-full px-3 py-3 bg-stone-800 text-stone-50 rounded-sm">
+                                        <button className="w-full px-3 py-3 bg-stone-800 text-stone-50 rounded-sm cursor-pointer active:bg-stone-400 hover:bg-stone-700 active:text-stone-800">
                                             Sign In
                                         </button>
                                     </div>
@@ -112,10 +112,10 @@ const page = () => {
 
                             {/* Bottom link */}
                             <div className='w-full absolute bottom-0 flex justify-center text-lg pb-2 gap-1'>
-                                <span className='text-stone-500'>
+                                <span className='text-stone-50 xl:text-stone-500'>
                                     Don't have an account?
                                 </span>
-                                <span className='text-stone-800'>
+                                <span className='text-stone-950 xl:text-stone-800'>
                                     <Link href="/signup">Sign Up</Link>
                                 </span>
                             </div>
