@@ -37,7 +37,7 @@ const page = () => {
                         </div>
 
                         {/* RIGHT SIDE */}
-                        <div className='bg-stone-950/30 backdrop-blur-md xl:bg-stone-50 h-full relative rounded-none md:rounded-xl xl:rounded-none'>
+                        <div className='bg-stone-950/30 backdrop-blur-md xl:bg-stone-50 h-full relative rounded-none md:rounded-xl xl:rounded-none xl:rounded-tr-xl xl:rounded-br-xl'>
                             
                             {/* Logo */}
                             <div className='absolute inset-0 pt-2 text-2xl flex justify-center italic-font text-stone-50 xl:text-stone-800 pointer-events-none'>
