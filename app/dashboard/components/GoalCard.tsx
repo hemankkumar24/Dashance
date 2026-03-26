@@ -11,7 +11,7 @@ interface Props {
 const GoalCard = ({ title, progress }: Props) => {
     const [toggled, setToggled] = useState(false)
     return (
-        <div className={`w-full py-5 ${toggled ? "bg-stone-800 text-stone-100" : "bg-stone-200 text-stone-800"} shrink-0 rounded-xl px-5 main-font transition-all duration-300`}>
+        <div className={`w-full py-5 ${toggled ? "bg-stone-800 text-stone-100" : "bg-stone-100 border-stone-200 border text-stone-800"} shrink-0 rounded-xl px-5 main-font transition-all duration-300`}>
 
             <div className='h-full w-full flex items-center justify-around gap-4 '>
 

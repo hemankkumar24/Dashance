@@ -35,21 +35,17 @@ const page = () => {
               </div>
 
             <div className='grid grid-rows-2 h-full min-h-0 gap-2'>
-              <div className='grid grid-cols-2 h-full min-h-0 gap-2'>
-                <div className='bg-stone-50 h-full'>
-                  <Cashflow />
+                <div className='grid grid-cols-2'>
+                  <div className='bg-stone-50 h-full rounded-xl shadow-sm'>
+                    <Cashflow />
+                  </div>
+                  <div>
+                      
+                  </div>
                 </div>
-                <div className='bg-stone-50 h-full'>
+                <div className='bg-stone-50 h-full rounded-xl shadow-sm'>
                   <Transaction />
                 </div>
-              </div>
-
-              <div className='grid grid-cols-3 h-full min-h-0 gap-2'>
-                <div className='bg-stone-50 h-full'></div>
-                <div className='bg-stone-50 h-full'></div>
-                <div className='bg-stone-50 h-full'></div>
-              </div>
-
             </div>
 
           </div>
