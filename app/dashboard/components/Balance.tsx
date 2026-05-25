@@ -32,8 +32,8 @@ const Balance = () => {
                         {/* Dropdown Menu */}
                         <div
                             className={`absolute z-10 backdrop-blur-sm text-lg origin-top top-6 transition-all duration-200 mt-4 text-center shadow-lg w-full ${opened
-                                    ? "scale-100 opacity-100 rounded-xl"
-                                    : "scale-95 opacity-0 pointer-events-none"
+                                ? "scale-100 opacity-100 rounded-xl"
+                                : "scale-95 opacity-0 pointer-events-none"
                                 }`}
                         >
                             <div
@@ -58,7 +58,7 @@ const Balance = () => {
             <div className='flex justify-between bg-red0 items-center min-h-0'>
                 <div className='px-4 flex items-center '>
                     <div className='select-none gap-y-2 flex flex-col'>
-                        <div className='font-bold text-6xl flex gap-4 items-center'>
+                        <div className='font-bold text-3xl md:text-5xl xl:text-6xl flex gap-4 items-center'>
                             <div>
                                 ₹54,32,414
                             </div>
@@ -77,19 +77,23 @@ const Balance = () => {
             </div>
             {/* Buttons */}
             <div className='mt-auto'>
-                <div className='flex gap-2 p-3 text-md w-full'>
-                    <div className='px-12 py-2 bg-blue-600 hover:bg-blue-500 cursor-pointer rounded-2xl text-stone-50 flex items-center gap-2'>
-                        <span><Plus size={20} /></span>
+                <div className='grid grid-cols-4 gap-2 p-3 w-full text-md'>
+
+                    <div className='col-span-1 px-2 py-2 bg-blue-600 hover:bg-blue-500 cursor-pointer rounded-2xl text-stone-50 flex justify-center items-center gap-2'>
+                        <Plus size={18} />
                         <span className='select-none'>Add money</span>
                     </div>
-                    <div className='px-12 py-2 bg-stone-800 hover:bg-stone-700 cursor-pointer rounded-2xl text-stone-50 flex items-center gap-2'>
-                        <span><ArrowUp size={20} /></span>
+
+                    <div className='col-span-1 px-2 py-2 bg-stone-800 hover:bg-stone-700 cursor-pointer rounded-2xl text-stone-50 flex justify-center items-center gap-2'>
+                        <ArrowUp size={18} />
                         <span className='select-none'>Send money</span>
                     </div>
-                    <div className='px-12 py-2 bg-stone-200 hover:bg-stone-300 cursor-pointer rounded-2xl text-stone-600 flex items-center gap-2'>
-                        <span><FileText size={20} /></span>
+
+                    <div className='col-span-2 px-2 py-2 bg-stone-200 hover:bg-stone-300 cursor-pointer rounded-2xl text-stone-600 flex justify-center items-center gap-2'>
+                        <FileText size={18} />
                         <span className='select-none'>View Transactions</span>
                     </div>
+
                 </div>
             </div>
         </div>

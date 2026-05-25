@@ -26,8 +26,8 @@ const Budget = () => {
               ${699-56} left
             </div>  
           </div>
-          <div className='pt-5'>
-            <div className='py-2 rounded-3xl bg-blue-600 cursor-pointer hover:bg-blue-500 text-stone-50'>
+          <div className=''>
+            <div className='py-2 flex justify-center rounded-3xl bg-blue-600 cursor-pointer hover:bg-blue-500 text-stone-50'>
               Modify budget
             </div> 
           </div>
