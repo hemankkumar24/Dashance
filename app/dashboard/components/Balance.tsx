@@ -55,10 +55,10 @@ const Balance = () => {
                 </div>
             </div>
             {/* Money */}
-            <div className='flex justify-between bg-red0 items-center min-h-0'>
+            <div className='flex justify-between items-center min-h-0'>
                 <div className='px-4 flex items-center '>
-                    <div className='select-none gap-y-2 flex flex-col'>
-                        <div className='font-bold text-3xl md:text-5xl xl:text-6xl flex gap-4 items-center'>
+                    <div className='select-none  flex flex-col'>
+                        <div className='font-bold text-5xl xl:text-6xl flex gap-4 items-center'>
                             <div>
                                 ₹54,32,414
                             </div>
@@ -72,27 +72,27 @@ const Balance = () => {
                     </div>
                 </div>
                 <div className='select-none shrink-0'>
-                    <img src="images/balanceCubes/cubes.png" className='w-32 md:w-48 lg:w-64' />
+                    <img src="images/balanceCubes/cubes.png" className='w-64 -my-7 xl:my-0' />
                 </div>
             </div>
             {/* Buttons */}
-            <div className='mt-auto'>
-                <div className='grid grid-cols-4 gap-2 p-3 w-full text-md'>
+            <div className="mt-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-1 p-3">
 
-                    <div className='col-span-1 px-2 py-2 bg-blue-600 hover:bg-blue-500 cursor-pointer rounded-2xl text-stone-50 flex justify-center items-center gap-2'>
+                    <button className="flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-2 text-stone-50 transition-colors hover:bg-blue-500">
                         <Plus size={18} />
-                        <span className='select-none'>Add money</span>
-                    </div>
+                        <span>Add money</span>
+                    </button>
 
-                    <div className='col-span-1 px-2 py-2 bg-stone-800 hover:bg-stone-700 cursor-pointer rounded-2xl text-stone-50 flex justify-center items-center gap-2'>
+                    <button className="flex items-center justify-center gap-2 rounded-2xl bg-stone-800 px-4 py-2 text-stone-50 transition-colors hover:bg-stone-700">
                         <ArrowUp size={18} />
-                        <span className='select-none'>Send money</span>
-                    </div>
+                        <span>Send money</span>
+                    </button>
 
-                    <div className='col-span-2 px-2 py-2 bg-stone-200 hover:bg-stone-300 cursor-pointer rounded-2xl text-stone-600 flex justify-center items-center gap-2'>
+                    <button className="hidden xl:flex xl:col-span-2 items-center justify-center gap-2 rounded-2xl bg-stone-200 px-4 py-3 text-stone-600 transition-colors hover:bg-stone-300">
                         <FileText size={18} />
-                        <span className='select-none'>View Transactions</span>
-                    </div>
+                        <span>View Transactions</span>
+                    </button>
 
                 </div>
             </div>
