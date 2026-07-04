@@ -13,8 +13,8 @@ import { div } from 'framer-motion/client'
 
 const page = () => {
   // phone view
-  const [home, setHome] = useState(true)
-  const [wallet, setWallet] = useState(false)
+  const [home, setHome] = useState(false)
+  const [wallet, setWallet] = useState(true)
   const [goals, setGoals] = useState(false)
   const [analytics, setAnalytics] = useState(false)
 
@@ -28,16 +28,38 @@ const page = () => {
 
           <div className="flex-1 overflow-y-auto p-2">
             {home && (
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3 pb-30">
                 <Balance />
 
                 <div className="bg-stone-50 rounded-xl shadow-sm">
                   <Cashflow />
                 </div>
-
-                <Transaction />
+                
+                <div className="bg-stone-50 rounded-xl shadow-sm">
+                  <Transaction />
+                </div>
               </div>
             )}
+
+            {
+              wallet && (
+                <div className='flex flex-col gap-3 pb-30'>
+                  <Income />
+                  <Expense />
+                  <div className='bg-stone-50 shadow-sm rounded-xl'>
+                    <Budget />
+                  </div>
+                </div>
+              )
+            }
+
+            {
+              goals && (
+                <div>
+                  <Goal />
+                </div>
+              )
+            }
           </div>
         </div>
 

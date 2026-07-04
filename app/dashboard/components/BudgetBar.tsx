@@ -7,7 +7,7 @@ const BudgetBar = ({ spent, total }: Props) => {
   const percentage = Math.min((spent / total) * 100, 100);
 
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full">
       <div className="text-5xl font-semibold">
         ${spent} <span className="text-gray-500 text-lg">of ${total} spent</span>
       </div>

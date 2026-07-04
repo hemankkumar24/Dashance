@@ -83,8 +83,13 @@ const Goal = () => {
           <GoalIcon size={20} />
         </div>
 
-        <div className='text-xl select-none'>
-          My Goals
+        <div className='text-xl select-none w-full flex justify-between'>
+          <div>
+            My Goals
+          </div>
+          <div className="mr-2 h-8 w-8 pb-1 rounded-full bg-stone-200 flex items-center justify-center text-2xl leading-none">
+            +
+          </div>
         </div>
       </div>
 

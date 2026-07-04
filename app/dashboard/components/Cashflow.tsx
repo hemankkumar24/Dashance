@@ -35,10 +35,10 @@ const Cashflow = () => {
                     </div>
                 </div>
                 <div className='h-3/5'>
-                    <div className='flex gap-2 h-full w-full overflow-x-auto custom-scroll pb-3 select-none'>
+                    <div className='flex gap-2 h-full w-full overflow-x-auto custom-scroll py-5 xl:py-0 pb-3 select-none'>
 
                         <div className='flex flex-col  items-center shrink-0 w-1/6'>
-                            <div className='w-full h-full bg-stone-100 rounded-xl'></div>
+                            <div className='w-full min-h-32 xl:min-h-0 h-full bg-stone-100 rounded-xl'></div>
                             <span className='mt-2 text-stone-500 text-sm'>Jan</span>
                         </div>
 

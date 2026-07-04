@@ -108,7 +108,7 @@ const Income = () => {
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className='flex-1 min-h-0 mt-5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll main-font cursor-grab no-scrollbar'
+          className='h-25 min-h-0 mt-5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll main-font cursor-grab no-scrollbar'
         >
           <IncomeCard name="Salary" amount={20000} />
           <IncomeCard name="Bank Interest" amount={600} />
