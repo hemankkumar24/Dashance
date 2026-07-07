@@ -16,7 +16,7 @@ const page = () => {
   const [home, setHome] = useState(false)
   const [wallet, setWallet] = useState(true)
   const [goals, setGoals] = useState(false)
-  const [analytics, setAnalytics] = useState(false)
+  const [transactions, setTransactions] = useState(false)
 
   return (
     <div className='h-screen bg-stone-100 main-font min-h-0'>
@@ -24,7 +24,7 @@ const page = () => {
 
         {/* Bottom Bar For Mobile View */}
         <div className="bg-stone-200/40 h-full xl:hidden flex flex-col">
-          <FloatingBar home={home} wallet={wallet} goals={goals} analytics={analytics} setHome={setHome} setWallet={setWallet} setGoals={setGoals} setAnalytics={setAnalytics} />
+          <FloatingBar home={home} wallet={wallet} goals={goals} transactions={transactions} setHome={setHome} setWallet={setWallet} setGoals={setGoals} setTransactions={setTransactions} />
 
           <div className="flex-1 overflow-y-auto p-2">
             {home && (
@@ -32,31 +32,36 @@ const page = () => {
                 <Balance />
 
                 <div className="bg-stone-50 rounded-xl shadow-sm">
-                  <Cashflow />
+                  <Budget />
                 </div>
-                
+
                 <div className="bg-stone-50 rounded-xl shadow-sm">
-                  <Transaction />
+                  <Cashflow />
                 </div>
               </div>
             )}
 
             {
               wallet && (
-                <div className='flex flex-col gap-3 pb-30'>
+                <div className='flex flex-col h-full gap-3 pb-30'>
                   <Income />
-                  <Expense />
-                  <div className='bg-stone-50 shadow-sm rounded-xl'>
-                    <Budget />
-                  </div>
+                  <Expense /> 
                 </div>
               )
             }
 
             {
               goals && (
-                <div>
+                <div className='h-full'>
                   <Goal />
+                </div>
+              )
+            }
+
+            {
+              transactions && (
+                <div className='h-full bg-stone-50 rounded-xl shadow-sm'>
+                  <Transaction />
                 </div>
               )
             }

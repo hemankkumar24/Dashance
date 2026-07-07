@@ -1,5 +1,5 @@
 import {
-  ChartArea,
+  NotebookText,
   HomeIcon,
   Plus,
   Target,
@@ -13,11 +13,11 @@ interface Props {
   home: boolean;
   wallet: boolean;
   goals: boolean;
-  analytics: boolean;
+  transactions: boolean;
   setHome: Dispatch<SetStateAction<boolean>>;
   setWallet: Dispatch<SetStateAction<boolean>>;
   setGoals: Dispatch<SetStateAction<boolean>>;
-  setAnalytics: Dispatch<SetStateAction<boolean>>;
+  setTransactions: Dispatch<SetStateAction<boolean>>;
 }
 
 interface NavItemProps {
@@ -80,11 +80,11 @@ const FloatingBar = ({
   home,
   wallet,
   goals,
-  analytics,
+  transactions,
   setHome,
   setWallet,
   setGoals,
-  setAnalytics,
+  setTransactions,
 }: Props) => {
   return (
     <div className="fixed bottom-8 left-1/2 z-50 w-full max-w-[420px] -translate-x-1/2 px-6">
@@ -98,7 +98,7 @@ const FloatingBar = ({
               setHome(true);
               setWallet(false);
               setGoals(false);
-              setAnalytics(false);
+              setTransactions(false);
             }}
           />
 
@@ -110,7 +110,7 @@ const FloatingBar = ({
               setHome(false);
               setWallet(true);
               setGoals(false);
-              setAnalytics(false);
+              setTransactions(false);
             }}
           />
 
@@ -126,19 +126,19 @@ const FloatingBar = ({
               setHome(false);
               setWallet(false);
               setGoals(true);
-              setAnalytics(false);
+              setTransactions(false);
             }}
           />
 
           <NavItem
-            active={analytics}
-            label="Analytics"
-            Icon={ChartArea}
+            active={transactions}
+            label="Transactions"
+            Icon={NotebookText}
             onClick={() => {
               setHome(false);
               setWallet(false);
               setGoals(false);
-              setAnalytics(true);
+              setTransactions(true);
             }}
           />
         </div>

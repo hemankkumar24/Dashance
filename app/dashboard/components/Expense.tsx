@@ -105,12 +105,12 @@ const Income = () => {
           </div>
 
         </div>
-        <div className='flex flex-col justify-end gap-1 select-none'>
+        <div className='flex-1 flex flex-col justify-center select-none'>
             <div className='text-5xl font-bold'>
                 ₹5000
             </div>
             <div className='text-lg text-stone-500 pb-2'>
-              x% Balance Increase
+              x% Balance Decrease
             </div>
         </div>
 
@@ -121,7 +121,7 @@ const Income = () => {
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className='h-25 min-h-0 mt-5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
+          className='h-25 min-h-0 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
           data-lenis-prevent
         >
             <ExpenseCard name={"Chicken"} amount={170} />

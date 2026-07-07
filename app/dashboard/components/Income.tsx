@@ -66,7 +66,7 @@ const Income = () => {
   // scroll ends here
 
   return (
-    <div className='flex flex-col h-full w-full min-h-0 bg-stone-50 rounded-xl shadow-sm '>
+    <div className='flex flex-col h-full w-full min-h-0 bg-stone-50 rounded-xl shadow-sm'>
       <div className='flex flex-col px-4 py-3 h-full w-full min-h-0'>
         
         <div className='flex items-center select-none justify-between w-full'>
@@ -84,15 +84,15 @@ const Income = () => {
                 <span className="leading-none">⌄</span>
               </div>
 
-              <div className={`absolute z-10 backdrop-blur-sm text-lg origin-top top-5 transition-all duration-200 mt-3 text-center shadow-lg w-full gap-y-5 ${opened ? "scale-100 rounded-xl" : "scale-90 opacity-0 pointer-events-none"}`}>
-                <div className='py-1 w-full hover:bg-stone-200 rounded-t-xl'>FEB 2026</div>
-                <div className='py-1 w-full hover:bg-stone-200 rounded-b-xl'>JAN 2026</div>
+              <div className={`absolute z-10 backdrop-blur-sm text-lg origin-top top-5  transition-all duration-200 mt-3 text-center shadow-lg w-full gap-y-5 ${opened ? "scale-100 rounded-t-xl rounded-b-xl" : "scale-90 opacity-0 pointer-events-none"}`}>
+                <div className='py-1 w-full hover:bg-stone-200 shadow-2xs rounded-t-xl'>FEB 2026</div>
+                <div className='py-1 w-full hover:bg-stone-200 shadow-2xs rounded-b-xl'>JAN 2026</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className='flex flex-col justify-end gap-1 select-none'>
+        <div className='flex-1 flex flex-col justify-center gap-1 select-none'>
           <div className='text-5xl font-bold'>
             ₹5000
           </div>
@@ -108,7 +108,8 @@ const Income = () => {
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className='h-25 min-h-0 mt-5 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll main-font cursor-grab no-scrollbar'
+          className='h-25 min-h-0 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
+          data-lenis-prevent
         >
           <IncomeCard name="Salary" amount={20000} />
           <IncomeCard name="Bank Interest" amount={600} />
