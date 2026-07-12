@@ -24,7 +24,7 @@ const page = () => {
       <div className='2xl:mx-40 h-full min-h-0'>
 
         {/* Bottom Bar For Mobile View */}
-        <div className="bg-stone-100 h-full xl:hidden flex flex-col">
+        <div className="bg-stone-100 h-full xl:hidden flex flex-col max-w-200 border-l border-r md:mx-auto">
           <TopBar />
           <FloatingBar home={home} wallet={wallet} goals={goals} transactions={transactions} setHome={setHome} setWallet={setWallet} setGoals={setGoals} setTransactions={setTransactions} />
 
@@ -45,7 +45,7 @@ const page = () => {
 
             {
               wallet && (
-                <div className='flex flex-col h-full gap-3'>
+                <div className='flex flex-col h-full gap-3 max-h-150'>
                   <Income />
                   <Expense /> 
                 </div>

@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className="bg-stone-100">
+      <body className="bg-stone-100 max-w-[2000px] mx-auto">
         <LenisProvider>
           {children}
         </LenisProvider>

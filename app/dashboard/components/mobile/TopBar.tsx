@@ -3,7 +3,7 @@ import React from 'react'
 
 const TopBar = () => {
   return (
-    <div className='fixed py-3 items-center px-5 flex w-full justify-between bg-stone-50 shadow-sm z-10'>
+    <div className='fixed py-3 items-center px-5 flex w-full justify-between bg-stone-50 shadow-sm z-10 max-w-199.5'>
         <div className='text-xl text-stone-800'>
             Dashance
         </div>
