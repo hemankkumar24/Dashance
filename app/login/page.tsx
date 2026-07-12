@@ -10,9 +10,9 @@ const page = () => {
     const [toggled, setToggled] = useState(false)
 
     return (
-        <div className='w-full h-screen bg-black'>
+        <div className='w-full h-dvh bg-black'>
             <img
-                className='absolute w-full h-screen  object-cover opacity-80 '
+                className='absolute w-full h-dvh  object-cover opacity-80 '
                 src="./images/wallpaper/wallpaper.jpg"
             />
 

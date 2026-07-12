@@ -87,7 +87,7 @@ const FloatingBar = ({
   setTransactions,
 }: Props) => {
   return (
-    <div className="fixed bottom-8 left-1/2 z-50 w-full max-w-[420px] -translate-x-1/2 px-6">
+    <div className="fixed bottom-4 left-1/2 z-50 w-full max-w-[420px] -translate-x-1/2 px-6">
       <div className="rounded-[2.5rem] border border-white/50 bg-white/40 p-2 shadow-[0_16px_40px_-12px_rgba(0,0,0,0.3)] backdrop-blur-[48px] dark:border-white/10 dark:bg-black/40">
         <div className="flex items-center justify-between px-2">
           <NavItem

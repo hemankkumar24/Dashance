@@ -10,8 +10,8 @@ const page = () => {
     const [confirmToggled, setConfirmToggled] = useState(false)
 
     return (
-        <div className='w-full h-screen bg-black'>
-            <img className='absolute w-full h-screen object-cover opacity-80' src="./images/wallpaper/wallpaper.jpg"></img>
+        <div className='w-full h-dvh bg-black'>
+            <img className='absolute w-full h-dvh object-cover opacity-80' src="./images/wallpaper/wallpaper.jpg"></img>
             <div className='flex justify-center items-center w-full h-full py-0 md:py-5 xl:py-0'>
                 <div className='w-200 h-full xl:w-300 xl:h-200 xl:rounded-4xl md:border-stone-600 rounded-xl border xl:border-10'>
                     <div className='xl:grid xl:grid-cols-2 w-full h-full'>

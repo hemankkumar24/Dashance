@@ -14,7 +14,7 @@ const Cashflow = () => {
                         <div className='p-2 bg-stone-100 shadow-xs text-blue-600 rounded-full'>
                             <ChartNoAxesColumnIncreasing size={20} />
                         </div>
-                        <div>Cashflow chart</div>
+                        <div className='text-lg md:text-xl'>Cashflow chart</div>
                     </div>
                     {/* Button for Month Choosing */}
                     <div className='rounded-xl shadow-sm p-0.5 select-none transition-all'>

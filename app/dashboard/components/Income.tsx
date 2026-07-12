@@ -92,11 +92,11 @@ const Income = () => {
           </div>
         </div>
 
-        <div className='flex-1 flex flex-col justify-center gap-1 select-none'>
-          <div className='text-5xl font-bold'>
+        <div className='flex-1 flex flex-col justify-center elect-none'>
+          <div className='text-3xl lg:text-4xl xl:text-5xl font-bold'>
             ₹5000
           </div>
-          <div className='text-lg text-stone-500 pb-2'>
+          <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
             x% Balance Increase
           </div>
         </div>
@@ -108,7 +108,7 @@ const Income = () => {
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className='h-25 min-h-0 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
+          className='h-25 min-h-0 bg-stone-100 border border-stone-200  rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
           data-lenis-prevent
         >
           <IncomeCard name="Salary" amount={20000} />

@@ -83,7 +83,7 @@ const Income = () => {
             <div className='p-2 bg-stone-100 shadow-xs text-blue-600 rounded-full'>
               <ArrowBigUp size={20} />
             </div>
-            <div>Expense</div>
+            <div className='text-lg md:text-xl'>Expense</div>
           </div>
 
           {/* Button for Month Choosing */}
@@ -106,10 +106,10 @@ const Income = () => {
 
         </div>
         <div className='flex-1 flex flex-col justify-center select-none'>
-            <div className='text-5xl font-bold'>
+            <div className='text-3xl lg:text-4xl xl:text-5xl font-bold'>
                 ₹5000
             </div>
-            <div className='text-lg text-stone-500 pb-2'>
+            <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
               x% Balance Decrease
             </div>
         </div>
@@ -121,7 +121,7 @@ const Income = () => {
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          className='h-25 min-h-0 bg-stone-100 border border-stone-200 rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
+          className='h-25 min-h-0 border border-stone-200 bg-stone-100 rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
           data-lenis-prevent
         >
             <ExpenseCard name={"Chicken"} amount={170} />

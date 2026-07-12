@@ -1,25 +1,29 @@
 "use client"
 
-import React, { useState } from 'react'
+import React from 'react'
 
 interface Props {
-    name: string,
-    amount: number
+  name: string
+  amount: number
 }
 
 const IncomeCard = ({ name, amount }: Props) => {
-
-    const [hovered, setHovered] = useState(false)
-
   return (
-    <div className='w-36 relative shrink-0 h-full rounded-xl flex flex-col justify-center select-none'>
-        <div className='absolute left-0 my-auto h-[90%] w-1 bg-blue-500 rounded-full '/>
-        <div className={!hovered ? `text-lg px-6 text-stone-500 whitespace-nowrap truncate` : `text-lg px-6 text-stone-500 whitespace-nowrap bg-stone-50`} onMouseEnter={() => setHovered(true)} onMouseLeave={() => {setHovered(false)}}>
-            {name}
+    <div className='w-36 relative shrink-0 h-full bg-gray-50 border border-gray-200/80 rounded-2xl flex flex-col justify-center px-4 select-none snap-start active:scale-95 transition-transform duration-200'>
+      
+      {/* Green indicator dot for income */}
+      <div className='flex items-center gap-2 mb-1'>
+        <div className='h-2 w-2 bg-emerald-400 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.6)]' />
+        <div className='text-sm font-medium text-gray-500 truncate'>
+          {name}
         </div>
-        <div className={!hovered ? `text-3xl px-5 text-stone-700 whitespace-nowrap truncate` : `text-3xl px-5 text-stone-700 whitespace-nowrap bg-stone-50`} onMouseEnter={() => setHovered(true)} onMouseLeave={() => {setHovered(false)}}>
+      </div>
+
+      {/* Amount */}
+      <div className='text-2xl font-semibold tracking-tight text-gray-800 truncate'>
         ₹{amount}
-        </div>
+      </div>
+
     </div>
   )
 }

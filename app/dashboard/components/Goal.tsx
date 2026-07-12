@@ -75,7 +75,7 @@ const Goal = () => {
   // scroll ends here
 
   return (
-    <div className='w-full h-full min-h-0 bg-stone-50 rounded-xl shadow-sm px-4 py-3 flex flex-col'>
+    <div className='w-full h-full min-h-0 bg-stone-50 rounded-xl shadow-sm px-2 xl:px-4 py-3 flex flex-col'>
 
       {/* Header */}
       <div className='flex gap-x-2 items-center shrink-0'>
@@ -100,7 +100,7 @@ const Goal = () => {
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className='px-2 py-2 mt-10 mb-10 flex-1 min-h-0 overflow-y-auto border rounded-lg cursor-grab custom-scroll'
+        className='px-2 py-2 mt-10 flex-1 min-h-0 overflow-y-auto border rounded-lg cursor-grab custom-scroll'
         data-lenis-prevent
       >
         <div className='flex flex-col gap-2'>

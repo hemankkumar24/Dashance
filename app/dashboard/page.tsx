@@ -10,6 +10,7 @@ import Transaction from './components/Transaction'
 import Budget from './components/Budget'
 import FloatingBar from './components/mobile/FloatingBar'
 import { div } from 'framer-motion/client'
+import TopBar from './components/mobile/TopBar'
 
 const page = () => {
   // phone view
@@ -19,16 +20,17 @@ const page = () => {
   const [transactions, setTransactions] = useState(false)
 
   return (
-    <div className='h-screen bg-stone-100 main-font min-h-0'>
+    <div className='h-dvh bg-stone-100 main-font min-h-0'>
       <div className='2xl:mx-40 h-full min-h-0'>
 
         {/* Bottom Bar For Mobile View */}
-        <div className="bg-stone-200/40 h-full xl:hidden flex flex-col">
+        <div className="bg-stone-100 h-full xl:hidden flex flex-col">
+          <TopBar />
           <FloatingBar home={home} wallet={wallet} goals={goals} transactions={transactions} setHome={setHome} setWallet={setWallet} setGoals={setGoals} setTransactions={setTransactions} />
 
-          <div className="flex-1 overflow-y-auto p-2">
+          <div className="flex-1 overflow-y-auto p-2 pb-28 pt-15">
             {home && (
-              <div className="flex flex-col gap-3 pb-30">
+              <div className="flex flex-col gap-3">
                 <Balance />
 
                 <div className="bg-stone-50 rounded-xl shadow-sm">
@@ -43,7 +45,7 @@ const page = () => {
 
             {
               wallet && (
-                <div className='flex flex-col h-full gap-3 pb-30'>
+                <div className='flex flex-col h-full gap-3'>
                   <Income />
                   <Expense /> 
                 </div>
