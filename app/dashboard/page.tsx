@@ -20,7 +20,7 @@ const page = () => {
   const [transactions, setTransactions] = useState(false)
 
   return (
-    <div className='h-dvh bg-stone-100 main-font min-h-0'>
+    <div className='h-dvh main-font min-h-0'>
       <div className='2xl:mx-40 h-full min-h-0'>
 
         {/* Bottom Bar For Mobile View */}

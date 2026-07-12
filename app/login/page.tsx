@@ -67,7 +67,7 @@ const page = () => {
 
                                         <input
                                             type="text"
-                                            className='text-lg w-full rounded-sm text-stone-500 px-3 py-3 bg-stone-100 outline-none md:border-2 border-stone-300'
+                                            className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 bg-stone-50 outline-none md:border-2 border-stone-300'
                                             placeholder="Enter your email"
                                         />
                                     </div>
@@ -81,7 +81,7 @@ const page = () => {
                                         <div className="relative">
                                             <input
                                                 type={toggled ? "text" : "password"}
-                                                className='text-lg w-full rounded-sm text-stone-500 px-3 py-3 pr-10 bg-stone-100 outline-none border border-stone-300'
+                                                className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 pr-10 bg-stone-50 outline-none border border-stone-300'
                                                 placeholder="Enter your password"
                                             />
 
@@ -126,7 +126,7 @@ const page = () => {
                                     Don't have an account?
                                 </span>
 
-                                <span className='text-stone-950 xl:text-stone-800'>
+                                <span className='text-blue-400'>
                                     <Link href="/signup">
                                         Sign Up
                                     </Link>

@@ -14,7 +14,7 @@ export default function FAQItem({ title, children }: FAQItemProps) {
     <div className="border-b border-stone-500 py-3">
       <div
         onClick={() => setOpen(!open)}
-        className="flex justify-between items-center cursor-pointer text-2xl"
+        className="flex justify-between items-center cursor-pointer text-lg md:text-2xl"
       >
         <div>{title}</div>
 

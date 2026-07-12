@@ -53,7 +53,7 @@ const page = () => {
                                         <div className='text-stone-50 xl:text-stone-800 text-lg'>
                                             Email
                                         </div>
-                                        <input type="text" className='text-lg w-full rounded-sm text-stone-500 px-3 py-3 bg-stone-100 outline-none md:border-2 border-stone-300' placeholder="Enter your email" />
+                                        <input type="text" className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 bg-stone-50 outline-none md:border-2 border-stone-300' placeholder="Enter your email" />
                                     </div>
 
                                     <div className='pt-3 xl:pt-5'>
@@ -63,7 +63,7 @@ const page = () => {
                                         <div className="relative">
                                             <input
                                                 type={toggled ? "text" : "password"}
-                                                className='text-lg w-full rounded-sm text-stone-500 px-3 py-3 pr-10 bg-stone-100 outline-none border border-stone-300'
+                                                className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 pr-10 bg-stone-50 outline-none border border-stone-300'
                                                 placeholder="Enter your password"
                                             />
 
@@ -79,7 +79,7 @@ const page = () => {
                                         <div className='text-stone-50 xl:text-stone-800 text-lg'>
                                             Confirm Password
                                         </div>
-                                        <input type="password" className='text-lg w-full rounded-sm text-stone-500 px-3 py-3 bg-stone-100 outline-none border border-stone-300' placeholder="Confirm your password" />
+                                        <input type="password" className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 bg-stone-50 outline-none border border-stone-300' placeholder="Confirm your password" />
                                     </div>
 
                                     <div className='pt-3 xl:pt-5'>
@@ -92,7 +92,7 @@ const page = () => {
 
                             <div className='w-full absolute bottom-0 flex justify-center text-lg pb-2 gap-1'>
                                 <span className='text-stone-50 xl:text-stone-500'>Already have an account? </span>
-                                <span className='text-stone-950 xl:text-stone-800'><Link href="/login">Sign In</Link></span>
+                                <span className='text-blue-400'><Link href="/login">Sign In</Link></span>
                             </div>  
                         </div>
                     </div>

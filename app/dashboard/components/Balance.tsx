@@ -60,7 +60,7 @@ const Balance = () => {
                     <div className='select-none flex flex-col py-5 xl:py-0'>
                         <div className='font-bold text-4xl md:text-5xl xl:text-6xl flex gap-2 items-center'>
                             <div>
-                                ₹54,32,4140000
+                                ₹54,32,414
                             </div>
                             <div className='text-stone-500 z-10 p-2 bg-stone-200 rounded-full hover:bg-stone-300 cursor-pointer pointer-events-auto' onClick={() => { setShown(!shown) }}>
                                 {shown ? <Eye size={14} /> : <EyeOff size={14} />}

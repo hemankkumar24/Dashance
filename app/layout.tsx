@@ -3,6 +3,7 @@ import LenisProvider from "./LenisProvider";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Viewport, Metadata } from "next";
+import BodyWrapper from "./body-wrapper";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -19,11 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body className="bg-stone-100 max-w-[2000px] mx-auto">
-        <LenisProvider>
-          {children}
-        </LenisProvider>
-      </body>
+      <BodyWrapper>
+        <LenisProvider>{children}</LenisProvider>
+      </BodyWrapper>
     </html>
   );
 }

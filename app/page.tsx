@@ -20,7 +20,7 @@ const page = () => {
         gsap.fromTo(el, { opacity: 0, y: 10 },
           {
             opacity: 1, y: 0, duration: 1, ease: "power1.out",
-            scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none" }
+            scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none none"}
           })
       });
 
@@ -185,7 +185,7 @@ const page = () => {
       </div>
       {/* Hero Text Section */}
       <div className='py-10 flex flex-col items-center border-b-stone-500 border-b'>
-        <div className='text-6xl md:text-8xl animate-show-up px-5 lg:px-25 text-center main-font text-stone-800 opacity-0'>
+        <div className='text-4xl md:text-8xl animate-show-up px-5 lg:px-25 text-center main-font text-stone-800 opacity-0'>
           Beyond tracking: clearer, smarter, and
           {/* More in control Animation */}
           <span className="hover-text hidden md:inline-block cursor-pointer italic-font">
@@ -207,9 +207,9 @@ const page = () => {
               </span>
             ))}
           </span>
-          <span className='inline-block md:hidden text-6xl italic-font px-5'>more in control</span>
+          <span className='inline-block md:hidden text-4xl md:text-6xl italic-font px-5'>more in control</span>
         </div>
-        <div className='text-xl main-font text-stone-500 px-5 lg:px-0 pt-5 text-center'>
+        <div className='text-md md:text-xl main-font text-stone-500 px-5 lg:px-0 pt-5 text-center'>
           Track expenses, understand your spending, and make confident financial decisions all in one place.
         </div>
       </div>
@@ -219,10 +219,10 @@ const page = () => {
           <div className='px-3 py-1 bg-stone-100 border-stone-200 border inline-block rounded-2xl text-stone-500 font-bold'>
             Smooth Onboarding
           </div>
-          <div className='text-5xl pt-5 md:w-[70%]'>
+          <div className='text-4xl md:text-5xl pt-5 md:w-[70%]'>
             Your Personal finances, a few taps away
           </div>
-          <div className='text-xl text-stone-500 pt-5 md:w-[70%]'>
+          <div className='text-base md:text-xl text-stone-500 pt-5 w-[95%] md:w-[70%]'>
             Track, manage, and grow your money effortlessly.
             From daily expenses to long-term goals everything in one place.
           </div>
@@ -236,8 +236,8 @@ const page = () => {
       </div>
 
       {/* Scroll Section */}
-      <div className="py-2 border-b-stone-500 border-b text-3xl main-font whitespace-nowrap overflow-x-hidden mask">
-        <div className='infinite-loop-x flex gap-5'>
+      <div className="py-2 border-b-stone-500 border-b text-xl md:text-3xl main-font whitespace-nowrap overflow-x-hidden mask">
+        <div className='infinite-loop-x flex gap-3 md:gap-5'>
           <span>Real-time insights</span>
           <span className='text-blue-700'>•</span>
           <span>Track every expense</span>
@@ -269,8 +269,8 @@ const page = () => {
       </div>
 
       {/* Description Section */}
-      <div className="word-section py-35 border-b border-b-stone-500 overflow-hidden">
-        <div className='main-font text-5xl px-5 lg:px-10'>
+      <div className="word-section py-20 md:py-35 border-b border-b-stone-500 overflow-hidden">
+        <div className='main-font text-3xl md:text-5xl px-5 lg:px-10'>
           <div className='text-stone-800 animate-show-up'>
             Private by design. Powerful by default.
           </div>
@@ -286,12 +286,12 @@ const page = () => {
 
       {/* FAQ Section */}
       <div className='lg:grid lg:grid-cols-2 border-b border-b-stone-500'>
-        <div className='p-5 lg:p-10 main-font text-6xl border-r-stone-500 border-r animate-show-up'>
+        <div className='p-5 lg:p-10 main-font text-3xl md:text-6xl border-r-stone-500 border-r animate-show-up'>
           FAQ
         </div>
-        <div className='p-5 pt-0 lg:pt-5 lg:p-10 flex flex-col gap-5 main-font mb-6'>
+        <div className='p-5 pt-0 lg:pt-5 lg:p-10 flex flex-col gap-3 md:gap-5 main-font mb-6'>
           <div className='animate-show-from-left'>
-            <FAQItem title="What can I do with Dashance?">
+            <FAQItem title="What can I do with Dashance">
               Easily track your expenses, understand where your money goes, and set simple financial goals. Everything is designed to give you clarity without complexity.
             </FAQItem>
           </div>
@@ -331,10 +331,10 @@ const page = () => {
       {/* Get Started Section */}
       <div className='main-font'>
         <div className='bg-stone-900 relative w-full h-full pt-40 pb-60 lg:pb-140 flex flex-col items-center text-center overflow-hidden'>
-          <div className='text-6xl px-5 text-stone-100 animate-show-up'>
+          <div className='text-4xl md:text-6xl px-5 text-stone-100 animate-show-up'>
             Start managing your money with <span className='italic-font'>clarity</span>
           </div>
-          <div className='pt-5 text-3xl text-stone-400 lg:w-[60%]'>
+          <div className='pt-2 md:pt-5 text-lg px-5 md:px-0 md:text-3xl text-stone-400 lg:w-[60%]'>
             Simple, private, and built for control. Everything you need to track, understand, and improve your finances.
           </div>
           <div className='pt-5 flex gap-5'>
@@ -344,7 +344,7 @@ const page = () => {
                 shimmerColor={hovered ? "#fff" : "#000"}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-                className="px-10 text-lg text-black hover:text-white"
+                className="px-10 -py-1 md:-py-1 text-lg text-black hover:text-white"
               >
                 Login
               </ShimmerButton>
@@ -353,7 +353,7 @@ const page = () => {
               <Link href="/signup">Get Started</Link>
             </button>
           </div>
-          <div className="absolute text-[25vw] bottom-0 left-1/2 -translate-x-1/2 translate-y-3/10 text-stone-200/30 italic-font">
+          <div className="absolute text-[25vw] bottom-1 left-1/2 -translate-x-1/2 translate-y-3/10 text-stone-200/30 italic-font">
             Dashance
           </div>
         </div>
