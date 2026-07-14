@@ -33,5 +33,6 @@ export async function registerUser({
     return {
         _id: user._id.toString(),
         email: user.email,
+        onboardingComplete: user.onboardingComplete
     };
 }

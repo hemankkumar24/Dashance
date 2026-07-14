@@ -28,6 +28,7 @@ export async function POST(req: NextRequest) {
         const token = generateToken({
             userId: user._id.toString(),
             email: user.email,
+            onboardingComplete: user.onboardingComplete
         });
 
         const response = NextResponse.json(
