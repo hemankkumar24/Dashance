@@ -175,7 +175,7 @@ const page = () => {
                                 </div>
                             </form>
 
-                            <div className='w-full absolute bottom-0 flex justify-center text-lg pb-2 gap-1'>
+                            <div className='w-full absolute bottom-0 flex justify-center text-sm xl:text-lg pb-2 gap-1'>
                                 <span className='text-stone-500 xl:text-stone-500'>Already have an account? </span>
                                 <span className='text-blue-600'><Link href="/login">Sign In</Link></span>
                             </div>
