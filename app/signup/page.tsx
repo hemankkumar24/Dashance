@@ -3,11 +3,62 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { LucideEye, LucideEyeOff } from 'lucide-react'
+import { useRouter } from "next/navigation";
+import { LoaderCircle } from "lucide-react";
 
 const page = () => {
 
+    // router definiton
+    const router = useRouter();
+
+    // ui related definitions
     const [toggled, setToggled] = useState(false)
+    const [loading, setLoading] = useState(false);
     const [confirmToggled, setConfirmToggled] = useState(false)
+
+    // form related definitions
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleRegisterSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match.");
+            return;
+        }
+
+        setLoading(true);
+
+        // sending api call
+        try {
+            const response = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+                credentials: "include",
+            })
+
+
+            const data = await response.json();
+
+            if (response.ok) {
+                router.push("/dashboard");
+            } else {
+                setError(data.message);
+            }
+        }
+        finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <div className='w-full h-dvh bg-black'>
@@ -35,12 +86,12 @@ const page = () => {
 
                         {/* Right Side */}
                         <div className='bg-stone-950/10 md:bg-stone-950/10 backdrop-blur-xs lg:backdrop-blur-sm xl:bg-stone-50 h-full relative rounded-none md:rounded-xl xl:rounded-none xl:rounded-tr-xl xl:rounded-br-xl'>
-                            <div className='absolute inset-0 pt-5 text-2xl flex justify-center italic-font text-stone-50 xl:text-stone-800 pointer-events-none'>
-                                Dashance
+                            <div className='absolute inset-0 pt-5 text-2xl flex justify-center italic-font text-stone-50 xl:text-stone-800 pointer-events-auto h-14'>
+                                <Link href="/">Dashance</Link>
                             </div>
 
                             {/* Actual Content */}
-                            <div className='flex flex-col justify-center gap-2 w-full h-full'>
+                            <form onSubmit={handleRegisterSubmit} className='flex flex-col justify-center gap-2 w-full h-full z-10'>
                                 <div className='main-font text-stone-50 xl:text-stone-800 text-5xl w-full text-center '>
                                     Create Account
                                 </div>
@@ -50,14 +101,14 @@ const page = () => {
 
                                 <div className='px-2 md:px-10 pt-10'>
                                     <div>
-                                        <div className='text-stone-50 xl:text-stone-800 text-lg'>
+                                        <div className='text-stone-50 xl:text-stone-800 text-lg select-none'>
                                             Email
                                         </div>
-                                        <input type="text" className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 bg-stone-50 outline-none md:border-2 border-stone-300' placeholder="Enter your email" />
+                                        <input type="email" className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 bg-stone-50 outline-none md:border border-stone-300' placeholder="Enter your email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
                                     </div>
 
                                     <div className='pt-3 xl:pt-5'>
-                                        <div className='text-stone-50 xl:text-stone-800 text-lg'>
+                                        <div className='text-stone-50 xl:text-stone-800 text-lg select-none'>
                                             Password
                                         </div>
                                         <div className="relative">
@@ -65,9 +116,10 @@ const page = () => {
                                                 type={toggled ? "text" : "password"}
                                                 className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 pr-10 bg-stone-50 outline-none border border-stone-300'
                                                 placeholder="Enter your password"
+                                                value={password} onChange={(e) => { setPassword(e.target.value) }}
                                             />
 
-                                            <div className='absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer' onClick={() => {setToggled(!toggled)}}>
+                                            <div className='absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer' onClick={() => { setToggled(!toggled) }}>
                                                 {
                                                     toggled ? <LucideEyeOff className='text-stone-500/50' /> : <LucideEye className='text-stone-500/50' />
                                                 }
@@ -76,25 +128,40 @@ const page = () => {
                                     </div>
 
                                     <div className='pt-3 xl:pt-5'>
-                                        <div className='text-stone-50 xl:text-stone-800 text-lg'>
+                                        <div className='text-stone-50 xl:text-stone-800 text-lg select-none'>
                                             Confirm Password
                                         </div>
-                                        <input type="password" className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 bg-stone-50 outline-none border border-stone-300' placeholder="Confirm your password" />
+                                        <input type={toggled ? "text" : "password"} className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 bg-stone-50 outline-none border border-stone-300 select-none' placeholder="Confirm your password" value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
                                     </div>
 
+                                    {/* Error logging area */}
+                                    {
+                                        error && <div className='text-sm text-red-500 py-2'>
+                                            {error}
+                                        </div>
+                                    }
+
                                     <div className='pt-3 xl:pt-5'>
-                                        <button className="w-full px-3 py-3 bg-stone-800 text-stone-50 rounded-sm">
-                                            Sign Up
+                                        <button type='submit' disabled={loading} className="w-full px-3 py-3 border border-white/20 md:border-none bg-stone-800 text-stone-50 rounded-sm flex items-center justify-center">
+                                            {loading ? (
+                                                <LoaderCircle className="animate-spin" />
+                                            ) : (
+                                                "Sign Up"
+                                            )}
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
 
                             <div className='w-full absolute bottom-0 flex justify-center text-lg pb-2 gap-1'>
                                 <span className='text-stone-50 xl:text-stone-500'>Already have an account? </span>
-                                <span className='text-blue-400'><Link href="/login">Sign In</Link></span>
-                            </div>  
+                                <span className='text-blue-600'><Link href="/login">Sign In</Link></span>
+                            </div>
                         </div>
+
+
+
+
                     </div>
                 </div>
             </div>

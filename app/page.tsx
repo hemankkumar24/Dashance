@@ -188,7 +188,7 @@ const page = () => {
         <div className='text-4xl md:text-8xl animate-show-up px-5 lg:px-25 text-center main-font text-stone-800 opacity-0'>
           Beyond tracking: clearer, smarter, and
           {/* More in control Animation */}
-          <span className="hover-text hidden md:inline-block cursor-pointer italic-font">
+          <span className="hover-text hidden md:relative md:top-3 md:inline-block cursor-pointer italic-font">
             {Array.from(" more in control").map((char, i) => (
               <span key={i} className="letter inline-block relative overflow-hidden">
 
@@ -272,7 +272,7 @@ const page = () => {
       <div className="word-section py-20 md:py-35 border-b border-b-stone-500 overflow-hidden">
         <div className='main-font text-3xl md:text-5xl px-5 lg:px-10'>
           <div className='text-stone-800 animate-show-up'>
-            Private by design. Powerful by default.
+            Private by <span className='text-blue-600 italic-font'>design</span>. Powerful by <span className='text-blue-600 italic-font'>default.</span>
           </div>
           <div className='text-stone-300 pt-2 leading-snug flex flex-wrap'>
             {text.split(" ").map((word, i) => (
@@ -344,7 +344,7 @@ const page = () => {
                 shimmerColor={hovered ? "#fff" : "#000"}
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
-                className="px-10 -py-1 md:-py-1 text-lg text-black hover:text-white"
+                className="px-10 -py-1 md:py-1 text-lg text-black hover:text-white"
               >
                 Login
               </ShimmerButton>

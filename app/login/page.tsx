@@ -2,11 +2,53 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { LucideEye, LucideEyeOff } from 'lucide-react'
+import { LoaderCircle, LucideEye, LucideEyeOff } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 const page = () => {
 
+    // router definition
+    const router = useRouter();
+ 
+    // ui related definition
     const [toggled, setToggled] = useState(false)
+    const [loading, setLoading] = useState(false);
+    // form related definitions
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    const handleLoginSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        setLoading(true);
+
+        try {
+            const response = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+                credentials: "include",
+            })
+
+
+            const data = await response.json();
+
+            if (response.ok) {
+                router.push("/dashboard");
+            } else {
+                setError(data.message);
+            }
+        }
+        finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <div className='w-full h-dvh bg-black'>
@@ -42,8 +84,8 @@ const page = () => {
                         {/* Right Side */}
                         <div className='bg-stone-950/10 md:bg-stone-950/10 backdrop-blur-xs lg:backdrop-blur-sm xl:bg-stone-50 h-full relative rounded-none md:rounded-xl xl:rounded-none xl:rounded-tr-xl xl:rounded-br-xl'>
 
-                            <div className='absolute inset-0 pt-5 text-2xl flex justify-center italic-font text-stone-50 xl:text-stone-800 pointer-events-none'>
-                                Dashance
+                            <div className='absolute inset-0 pt-5 text-2xl flex justify-center italic-font text-stone-50 xl:text-stone-800 pointer-events-auto h-14'>
+                                <Link href="/">Dashance</Link>
                             </div>
 
                             {/* Content */}
@@ -57,7 +99,7 @@ const page = () => {
                                     Enter your email and password to access your account
                                 </div>
 
-                                <div className='px-2 md:px-10 pt-10'>
+                                <form className='px-2 md:px-10 pt-10' onSubmit={handleLoginSubmit}>
 
                                     {/* Email */}
                                     <div>
@@ -69,6 +111,8 @@ const page = () => {
                                             type="text"
                                             className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 bg-stone-50 outline-none md:border-2 border-stone-300'
                                             placeholder="Enter your email"
+                                            value={email}
+                                            onChange={(e) => {setEmail(e.target.value);}}
                                         />
                                     </div>
 
@@ -83,6 +127,8 @@ const page = () => {
                                                 type={toggled ? "text" : "password"}
                                                 className='text-lg w-full rounded-sm text-stone-950 px-3 py-3 pr-10 bg-stone-50 outline-none border border-stone-300'
                                                 placeholder="Enter your password"
+                                                value={password}
+                                                onChange={(e) => {setPassword(e.target.value);}}
                                             />
 
                                             <div
@@ -97,9 +143,16 @@ const page = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                    {/* Error logging area */}
+                                    {
+                                        error && <div className='text-sm text-red-500 py-2'>
+                                            {error}
+                                        </div>
+                                    }
 
                                     {/* Remember + Forgot */}
-                                    <div className='pt-3 xl:pt-5 flex justify-between text-sm text-stone-200 xl:text-stone-800'>
+                                    <div className='pt-1 xl:pt-2 flex justify-between text-sm text-stone-200 xl:text-stone-800'>
                                         <div className='flex gap-2'>
                                             <input type="checkbox" />
                                             Remember me
@@ -112,12 +165,16 @@ const page = () => {
 
                                     {/* Button */}
                                     <div className='pt-3 xl:pt-5'>
-                                        <button className='w-full px-3 py-3 bg-stone-800 text-stone-50 rounded-sm cursor-pointer active:bg-stone-400 hover:bg-stone-700 active:text-stone-800'>
-                                            Sign In
+                                        <button className='w-full px-3 py-3 border border-white/20 md:border-none bg-stone-800 text-stone-50 rounded-sm cursor-pointer active:bg-stone-400 hover:bg-stone-700 active:text-stone-800' type='submit' disabled={loading}>
+                                            {loading ? (
+                                                <LoaderCircle className="animate-spin" />
+                                            ) : (
+                                                "Login"
+                                            )}
                                         </button>
                                     </div>
 
-                                </div>
+                                </form>
                             </div>
 
                             {/* Bottom Link */}
@@ -126,7 +183,7 @@ const page = () => {
                                     Don't have an account?
                                 </span>
 
-                                <span className='text-blue-400'>
+                                <span className='text-blue-600'>
                                     <Link href="/signup">
                                         Sign Up
                                     </Link>
