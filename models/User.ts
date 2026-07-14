@@ -2,10 +2,6 @@ import mongoose, { Schema, model, models } from "mongoose";
 
 const userSchema = new Schema(
     {
-        name: {
-            type: String,
-            required: false,
-        },
         email: {
             type: String,
             required: [true, "Email is required"],
@@ -13,12 +9,26 @@ const userSchema = new Schema(
             lowercase: true,
             trim: true,
         },
-
         password: {
             type: String,
             required: [true, "Password is required"],
-            minlength: 6,
+            minlength: 8,
         },
+        name: {
+            type: String,
+            required: false,
+        },
+        currentBalance: {
+            type: Number,
+            required: false,
+        },
+        monthlyBudget: {
+            type: Number,
+        },
+        onboardingComplete: {
+            type: Boolean,
+            default: false,
+        }
     },
     {
         timestamps: true,
