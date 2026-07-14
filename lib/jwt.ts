@@ -7,6 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET!;
 export interface TokenPayload {
     userId: string;
     email: string;
+    onboardingComplete: boolean;
 }
 
 // creates a jwt token for retaining login

@@ -22,18 +22,24 @@ export async function POST(req: NextRequest) {
 
 
         // if yes authenticate user and generate jwt
-        const accessToken = await loginUser(validation.data);
+        const { token, user } = await loginUser(validation.data);
 
         const response = NextResponse.json(
             {
-                success: true,
+                message: "Login successful",
+                user: {
+                    id: user._id,
+                    email: user.email,
+                    onboardingComplete : user.onboardingComplete,
+                },
+
             },
             { status: 200 }
         );
 
         response.cookies.set({
             name: "accessToken",
-            value: accessToken,
+            value: token,
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",

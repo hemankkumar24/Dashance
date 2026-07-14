@@ -16,23 +16,31 @@ export async function loginUser({
     await connectDB();
 
     // check email
-    const findAccount = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-    if (!findAccount) {
+    if (!user) {
         throw new Error("Invalid email or password.");
     }
 
     // Hash password
-    const checkPassword = await bcrypt.compare(password, findAccount.password);
+    const checkPassword = await bcrypt.compare(password, user.password);
 
-    // generates jwt token for auth
-    if(checkPassword) {
-        return generateToken({
-            userId: findAccount._id.toString(),
-            email: findAccount.email,
-        });
+    if(!checkPassword) {
+        throw new Error("Invalid email or password.")
     }
 
-    throw new Error("Invalid email or password.");
+    const token = generateToken({
+        userId: user._id.toString(),
+        email: user.email,
+        onboardingComplete: user.onboardingComplete,
+    });
+
+    // generates jwt token for auth
+
+    return {
+        token,
+        user,
+    };
+
     
 }

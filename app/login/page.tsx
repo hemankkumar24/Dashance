@@ -51,7 +51,11 @@ const page = () => {
             const data = await response.json();
 
             if (response.ok) {
-                router.push("/dashboard");
+                if (data.user.onboardingComplete) {
+                    router.push("/dashboard");
+                } else {
+                    router.push("/onboarding");
+                }
             } else {
                 setError(data.message);
             }
@@ -178,7 +182,7 @@ const page = () => {
 
                                     {/* Button */}
                                     <div className='pt-3 xl:pt-5'>
-                                        <button className='w-full px-3 py-3 text-sm xl:text-md border border-white/20 md:border-none bg-stone-800 text-stone-50 rounded-sm cursor-pointer active:bg-stone-400 hover:bg-stone-700 active:text-stone-800' type='submit' disabled={loading}>
+                                        <button className='w-full px-3 py-3 text-sm xl:text-md border border-white/20 md:border-none bg-stone-800 text-stone-50 rounded-sm cursor-pointer flex items-center justify-center active:bg-stone-400 hover:bg-stone-700 active:text-stone-800' type='submit' disabled={loading}>
                                             {loading ? (
                                                 <LoaderCircle className="animate-spin" />
                                             ) : (
