@@ -1,16 +1,57 @@
-import { NextResponse } from "next/server";
+import { verifyToken } from "@/lib/jwt";
+import { getUserData } from "@/services/dashboard";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {  
+export async function GET(req: NextRequest) {
     try {
-        const data = getUserData();
-    }
-    catch(error: any) {
-        return NextResponse.json(
-            {
-                success: false,
-                message: error.message,
+        const token = req.cookies.get("accessToken")?.value;
+
+        if (!token) {
+            throw new Error("Invalid Token");
+        }
+
+        const payload = verifyToken(token);
+
+        const data = await getUserData(payload.userId);
+
+        const { user, transactions, goals } = data;
+
+        return {
+            user: {
+                name: user.name,
+                currentBalance: user.currentBalance,
+                monthlyBudget: user.monthlyBudget,
             },
-            { status: 400 }
+            transactions: transactions.map((transaction) => ({
+                title: transaction.title,
+                amount: transaction.amount,
+                type: transaction.type,
+                category: transaction.category,
+                goalId: transaction.goalId,
+            })),
+            goals: goals.map((goal) => ({
+                title: goal.title,
+                icon: goal.icon,
+                targetAmount: goal.targetAmount,
+                currentAmount: goal.currentAmount,
+                archived: goal.archived,
+            })),
+        };
+    }
+    catch (error: any) {
+        if (
+            error instanceof Error &&
+            error.message === "Invalid token."
+        ) {
+            return NextResponse.json(
+                { message: "Unauthorized" },
+                { status: 401 }
+            );
+        }
+
+        return NextResponse.json(
+            { message: "Something went wrong." },
+            { status: 500 }
         );
     }
 }
