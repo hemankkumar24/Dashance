@@ -1,16 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Page() {
     const [step, setStep] = useState(0);
 
+    const router = useRouter();
+
+    // for definition
     const [name, setName] = useState("");
     const [balance, setBalance] = useState("");
     const [budget, setBudget] = useState("");
 
+    // for ui
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    // more ui
     const steps = ["Personalize", "Balance", "Budget"];
 
     const currentTitle =
@@ -25,6 +35,40 @@ export default function Page() {
 
     const inputClassName =
         "w-full rounded-3xl border border-white/10 bg-white/8 px-5 py-4 text-lg text-white placeholder:text-white/35 outline-none backdrop-blur-md transition focus:border-white/25 focus:bg-white/12 sm:px-6 sm:py-5 sm:text-xl lg:text-2xl";
+
+
+    // function calling
+    const handleOnboardingSubmit = async () => {
+        setLoading(true);
+
+        try {
+            const response = await fetch("/api/onboarding", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: name,
+                    balance: balance,
+                    budget: budget
+                }),
+                credentials: "include",
+            })
+
+            const data = await response.json();
+
+            if (response.ok) {
+                if (data.user.onboardingComplete) {
+                    router.push("/dashboard");
+                }
+            } else {
+                setError(data.message);
+            }
+        }
+        finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <div className="relative min-h-dvh overflow-hidden bg-[#050505]">
@@ -170,6 +214,13 @@ export default function Page() {
                                                 />
                                             </div>
                                         )}
+                                        {
+                                            error && (
+                                                <p className="mt-4 text-sm text-red-400">
+                                                    {error}
+                                                </p>
+                                            )
+                                        }
                                     </div>
 
                                     <div className="mt-10 flex flex-col gap-3 sm:mt-12 sm:flex-row sm:items-center">
@@ -187,12 +238,16 @@ export default function Page() {
                                                 if (step < 2) {
                                                     setStep(step + 1);
                                                 } else {
-                                                    // submit
+                                                    handleOnboardingSubmit();
                                                 }
                                             }}
-                                            className="inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3.5 main-font text-sm font-medium text-stone-900 transition hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:px-8 sm:py-4 sm:text-base"
+                                            className="inline-flex w-full items-center justify-center rounded-full bg-white px-6 py-3.5 main-font text-sm font-medium text-stone-900 transition hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:px-8 sm:py-4 sm:text-base" disabled={loading}
                                         >
-                                            {step === 2 ? "Finish setup →" : "Continue →"}
+                                            {
+                                                loading
+                                                    ? <LoaderCircle className="animate-spin" />
+                                                    : (step === 2 ? "Finish setup →" : "Continue →")
+                                            }
                                         </button>
                                     </div>
                                 </motion.div>
