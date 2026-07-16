@@ -1,5 +1,12 @@
 import mongoose, { Schema, model, models } from "mongoose";
 
+export interface DashboardUser extends Document  {
+    name: string;
+    currentBalance: number;
+    monthlyBudget: number;
+    onboardingComplete: boolean;
+}
+
 const userSchema = new Schema(
     {
         email: {

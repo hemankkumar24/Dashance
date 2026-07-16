@@ -1,7 +1,14 @@
 import React from 'react'
 import { CircleDollarSign } from 'lucide-react'
 import BudgetBar from './BudgetBar'
+import { useDashboard } from '@/app/context/DashboardProvider';
 const Budget = () => {
+
+  // loading data
+  const { user, transactions, spentThisMonth } = useDashboard();
+
+  
+
   return (
     <div className='h-full w-full min-h-0'>
       <div className='px-4 pt-3 pb-2 h-full w-full min-h-0 flex flex-col'>
@@ -14,14 +21,14 @@ const Budget = () => {
         <div className='flex-1 min-h-0 flex flex-col'>
           <div className='flex-1 min-h-0 flex flex-col justify-center '>
             <div className='w-full'>
-              <BudgetBar spent={56} total={699} />
+              <BudgetBar spent={spentThisMonth} total={user?.monthlyBudget} />
             </div>
             <div className='flex flex-wrap pb-4 gap-1 text-sm md:text-lg leading-tight py-2'>
               <div className='text-stone-600'>
                 Great job!, You have
               </div>
               <div className='text-green-600 font-semibold'>
-                ${699-56} left
+                ${699 - 56} left
               </div>
             </div>
           </div>

@@ -9,7 +9,6 @@ import Cashflow from './components/Cashflow'
 import Transaction from './components/Transaction'
 import Budget from './components/Budget'
 import FloatingBar from './components/mobile/FloatingBar'
-import { div } from 'framer-motion/client'
 import TopBar from './components/mobile/TopBar'
 
 const page = () => {

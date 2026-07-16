@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
 
         const { user, transactions, goals } = data;
 
-        return {
+        return NextResponse.json({
             user: {
                 name: user.name,
                 currentBalance: user.currentBalance,
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
                 currentAmount: goal.currentAmount,
                 archived: goal.archived,
             })),
-        };
+        });
     }
     catch (error: any) {
         if (

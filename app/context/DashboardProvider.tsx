@@ -8,11 +8,68 @@ import {
     ReactNode,
 } from "react";
 
+interface DashboardUser {
+    name: string;
+    currentBalance: number;
+    monthlyBudget: number;
+    onboardingComplete: boolean;
+}
+
+interface DashboardTransaction {
+    id: string;
+    title: string;
+    amount: number;
+    type: "income" | "expense";
+    category: string;
+    goalId?: string;
+    createdAt: string;
+}
+
+interface DashboardGoal {
+    title: string;
+    icon: string;
+    targetAmount: number;
+    currentAmount: number;
+    archived: boolean;
+}
+
 // just defining what will be in the context
 interface DashboardContextType {
-    user: any;
-    transactions: any[];
-    goals: any[];
+    user: DashboardUser | null;
+
+    transactions: DashboardTransaction[];
+    goals: DashboardGoal[];
+
+    expenseTransactions: DashboardTransaction[];
+    incomeTransactions: DashboardTransaction[];
+
+    selectedMonth: {
+        month: number;
+        year: number;
+    };
+
+    setSelectedMonth: React.Dispatch<
+        React.SetStateAction<{
+            month: number;
+            year: number;
+        }>
+    >;
+
+    availableMonths: {
+        month: number;
+        year: number;
+        label: string;
+    }[];
+
+    getTransactions: (params: {
+        month: number;
+        year: number;
+        type?: "income" | "expense";
+    }) => DashboardTransaction[];
+
+    getSpent: (month: number, year: number) => number;
+
+    getIncome: (month: number, year: number) => number;
 
     loading: boolean;
     error: string;
@@ -29,11 +86,11 @@ export function DashboardProvider({
     children: ReactNode; // children to be react nodes
 }) {
     // all the states
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<DashboardUser | null>(null);
 
-    const [transactions, setTransactions] = useState([]);
+    const [transactions, setTransactions] = useState<DashboardTransaction[]>([]);
 
-    const [goals, setGoals] = useState([]);
+    const [goals, setGoals] = useState<DashboardGoal[]>([]);
 
     const [loading, setLoading] = useState(true);
 
@@ -62,6 +119,93 @@ export function DashboardProvider({
         }
     };
 
+    // calculating total spent and total income
+    const now = new Date;
+
+    // available months calculations
+    const [selectedMonth, setSelectedMonth] = useState({
+        month: now.getMonth(),
+        year: now.getFullYear(),
+    });
+
+    const availableMonths = [
+        ...new Map(
+            transactions.map((transaction) => {
+                const date = new Date(transaction.createdAt);
+
+                const key = `${date.getFullYear()}-${date.getMonth()}`;
+
+                return [
+                    key,
+                    {
+                        month: date.getMonth(),
+                        year: date.getFullYear(),
+                        label: date.toLocaleString("en-IN", {
+                            month: "long",
+                            year: "numeric",
+                        }),
+                    },
+                ];
+            })
+        ).values(),
+    ].sort((a, b) => {
+        if (a.year !== b.year) {
+            return b.year - a.year;
+        }
+
+        return b.month - a.month;
+    });
+
+    const getTransactions = ({
+        month,
+        year,
+        type,
+    }: {
+        month: number;
+        year: number;
+        type?: "income" | "expense";
+    }) => {
+        return transactions.filter((transaction) => {
+            const date = new Date(transaction.createdAt);
+
+            const sameMonth =
+                date.getMonth() === month &&
+                date.getFullYear() === year;
+
+            const sameType =
+                !type || transaction.type === type;
+
+            return sameMonth && sameType;
+        });
+    };
+
+    const getSpent = (month: number, year: number) => {
+        return getTransactions({
+            month,
+            year,
+            type: "expense",
+        }).reduce((sum, transaction) => sum + transaction.amount, 0);
+    };
+
+    const getIncome = (month: number, year: number) => {
+        return getTransactions({
+            month,
+            year,
+            type: "income",
+        }).reduce((sum, transaction) => sum + transaction.amount, 0);
+    };
+
+    const expenseTransactions = getTransactions({
+        month: selectedMonth.month,
+        year: selectedMonth.year,
+        type: "expense",
+    });
+
+    const incomeTransactions = getTransactions({
+        month: selectedMonth.month,
+        year: selectedMonth.year,
+        type: "income",
+    });
 
     useEffect(() => {
         refreshDashboard();
@@ -72,14 +216,25 @@ export function DashboardProvider({
         <DashboardContext.Provider
 
             value={{
-                user,
-                transactions,
-                goals,
+                user, // user db
+                transactions, // transactions (all)
+                goals, // goals (all)
 
-                loading,
-                error,
+                expenseTransactions, // expense transactions for a certain month
+                incomeTransactions, // income transactions for a certain month
+                getTransactions, // get all transactions for any month
 
-                refreshDashboard,
+                selectedMonth,  // the currently selected month
+                setSelectedMonth,// expense, income depends on this
+                getSpent, // this accepts month individually
+                getIncome, // this accepts month individually
+
+                availableMonths, // find all months available for the user
+
+                loading, // if loading currently
+                error, // if an error occurs
+
+                refreshDashboard, // refresh
             }}
 
         >

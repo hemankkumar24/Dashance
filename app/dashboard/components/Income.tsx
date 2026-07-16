@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react'
 import { ArrowBigDown } from 'lucide-react'
 import IncomeCard from './IncomeCard'
+import { useDashboard } from '@/app/context/DashboardProvider'
 
 const Income = () => {
 
@@ -65,10 +66,40 @@ const Income = () => {
   }
   // scroll ends here
 
+  // data fetch
+  const { user, incomeThisMonth, spentThisMonth, transactions } = useDashboard();
+
+  const incomeTransactions = transactions.filter(
+    (transaction) => transaction.type === "income"
+  );
+
+  const netSavings = incomeThisMonth - spentThisMonth;
+
+  // finding available months
+  const availableMonths = [
+    ...new Set(
+      transactions.map((transaction) => {
+        const date = new Date(transaction.createdAt);
+
+        return `${date.getFullYear()}-${date.getMonth()}`;
+      })
+    ),
+  ].map((month) => {
+    const [year, monthIndex] = month.split("-").map(Number);
+
+    return {
+      value: month,
+      label: new Date(year, monthIndex).toLocaleString("en-IN", {
+        month: "long",
+        year: "numeric",
+      }),
+    };
+  });
+
   return (
     <div className='flex flex-col h-full w-full min-h-0 bg-stone-50 rounded-xl shadow-sm'>
       <div className='flex flex-col px-4 py-3 h-full w-full min-h-0'>
-        
+
         <div className='flex items-center select-none justify-between w-full'>
           <div className='flex items-center gap-2 text-xl'>
             <div className='p-2 bg-stone-100 shadow-xs text-blue-600 rounded-full'>
@@ -94,10 +125,14 @@ const Income = () => {
 
         <div className='flex-1 flex flex-col justify-center elect-none'>
           <div className='text-3xl lg:text-4xl xl:text-5xl font-bold'>
-            ₹5000
+            ₹{incomeThisMonth.toLocaleString("en-IN")}
           </div>
           <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
-            x% Balance Increase
+            {netSavings >= 0 ? (
+              <>₹{netSavings.toLocaleString("en-IN")} net savings this month</>
+            ) : (
+              <>₹{Math.abs(netSavings).toLocaleString("en-IN")} overspent this month</>
+            )}
           </div>
         </div>
 
@@ -111,10 +146,13 @@ const Income = () => {
           className='h-25 min-h-0 bg-stone-100 border border-stone-200  rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
           data-lenis-prevent
         >
-          <IncomeCard name="Salary" amount={20000} />
-          <IncomeCard name="Bank Interest" amount={600} />
-          <IncomeCard name="Something" amount={600} />
-          <IncomeCard name="Freelance" amount={1200} />
+          {incomeTransactions.map((transaction) => (
+            <IncomeCard
+              key={transaction.id}
+              name={transaction.title}
+              amount={transaction.amount}
+            />
+          ))}
         </div>
         {/* scroll ends here */}
 

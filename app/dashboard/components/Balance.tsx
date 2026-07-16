@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import { Wallet, Eye, EyeOff, Plus, ArrowUp, FileText } from "lucide-react"
+import { useDashboard } from '@/app/context/DashboardProvider'
 
 const Balance = () => {
     // handle dropdown toggle
@@ -11,6 +12,9 @@ const Balance = () => {
 
     // current currency
     const [currentCurrency, setCurrency] = useState('INR')
+
+    // loading data
+    const { user } = useDashboard();
 
     return (
         <div className='relative flex flex-col h-full w-full bg-stone-50 rounded-xl shadow-sm overflow-hidden min-h-0'>
@@ -60,7 +64,7 @@ const Balance = () => {
                     <div className='select-none flex flex-col py-5 xl:py-0'>
                         <div className='font-bold text-4xl md:text-5xl xl:text-6xl flex gap-2 items-center'>
                             <div>
-                                ₹54,32,414
+                                ₹{user?.currentBalance}
                             </div>
                             <div className='text-stone-500 z-10 p-2 bg-stone-200 rounded-full hover:bg-stone-300 cursor-pointer pointer-events-auto' onClick={() => { setShown(!shown) }}>
                                 {shown ? <Eye size={14} /> : <EyeOff size={14} />}

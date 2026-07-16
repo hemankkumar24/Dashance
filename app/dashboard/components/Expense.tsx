@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react'
 import { ArrowBigUp } from 'lucide-react'
 import ExpenseCard from './ExpenseCard'
+import { useDashboard } from "@/app/context/DashboardProvider";
 
 const Income = () => {
 
@@ -74,6 +75,13 @@ const Income = () => {
   }
   // scroll ends here
 
+  // data fetch
+  const { user, spentThisMonth, transactions } = useDashboard();
+
+  const expenseTransactions = transactions.filter(
+    (transaction) => transaction.type === "expense"
+  );
+
   return (
     <div className='flex flex-col h-full w-full min-h-0 bg-stone-50 rounded-xl shadow-sm'>
       <div className='flex flex-col px-4 py-3 h-full w-full min-h-0'>
@@ -106,12 +114,14 @@ const Income = () => {
 
         </div>
         <div className='flex-1 flex flex-col justify-center select-none'>
-            <div className='text-3xl lg:text-4xl xl:text-5xl font-bold'>
-                ₹5000
-            </div>
-            <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
-              x% Balance Decrease
-            </div>
+          <div className='text-3xl lg:text-4xl xl:text-5xl font-bold'>
+            ₹{spentThisMonth.toLocaleString("en-IN")}
+          </div>
+          <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
+            {user
+              ? `${((spentThisMonth / user.monthlyBudget) * 100).toFixed(1)}% of monthly budget used`
+              : ""}
+          </div>
         </div>
 
         {/* scroll starts here */}
@@ -124,10 +134,13 @@ const Income = () => {
           className='h-25 min-h-0 border border-stone-200 bg-stone-100 rounded-xl w-full overflow-x-auto overflow-y-hidden p-2 gap-2 flex custom-scroll cursor-grab no-scrollbar'
           data-lenis-prevent
         >
-            <ExpenseCard name={"Chicken"} amount={170} />
-            <ExpenseCard name={"Chicken"} amount={170} />
-            <ExpenseCard name={"Chicken"} amount={170} />
-            <ExpenseCard name={"Chicken"} amount={170} />
+          {expenseTransactions.map((transaction) => (
+            <ExpenseCard
+              key={transaction.id}
+              name={transaction.title}
+              amount={transaction.amount}
+            />
+          ))}
         </div>
         {/* scroll ends here */}
 

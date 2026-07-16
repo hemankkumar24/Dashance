@@ -4,7 +4,7 @@ import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Viewport, Metadata } from "next";
 import BodyWrapper from "./body-wrapper";
-
+import { DashboardProvider } from "./context/DashboardProvider";
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
@@ -21,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
       <BodyWrapper>
-        <LenisProvider>{children}</LenisProvider>
+          <DashboardProvider>
+            <LenisProvider>{children}</LenisProvider>
+          </DashboardProvider>
       </BodyWrapper>
     </html>
   );
