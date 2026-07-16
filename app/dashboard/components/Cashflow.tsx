@@ -16,23 +16,6 @@ const Cashflow = () => {
                         </div>
                         <div className='text-lg md:text-xl'>Cashflow chart</div>
                     </div>
-                    {/* Button for Month Choosing */}
-                    <div className='rounded-xl shadow-sm p-0.5 select-none transition-all'>
-                        <div onClick={() => { setOpened(!opened) }} className='relative w-full'>
-                            <div className={`bg-stone-50 w-full px-3 rounded-xl text-lg flex items-center justify-center hover:bg-stone-100 text-center `}>
-                                <span className='cursor-pointer'>MARCH 2026</span>
-                                <span className="leading-none ">⌄</span>
-                            </div>
-
-                            {/* Dropdown Menu */}
-                            {
-                                <div className={`absolute z-10 backdrop-blur-sm text-lg origin-top top-5  transition-all duration-200 mt-3 text-center shadow-lg w-full gap-y-5 ${opened ? "scale-100 rounded-t-xl rounded-b-xl" : "scale-90 opacity-0 pointer-events-none"}`}>
-                                    <div className='py-1 w-full hover:bg-stone-200 shadow-2xs rounded-t-xl'>FEB 2026</div>
-                                    <div className='py-1 w-full hover:bg-stone-200 shadow-2xs rounded-b-xl'>JAN 2026</div>
-                                </div>
-                            }
-                        </div>
-                    </div>
                 </div>
                 <div className='h-3/5'>
                     <div className='flex gap-2 h-full w-full overflow-x-auto custom-scroll py-5 xl:py-0 pb-3 select-none'>

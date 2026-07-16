@@ -76,7 +76,7 @@ const Income = () => {
   // scroll ends here
 
   // data fetch
-  const { user, spentThisMonth, transactions } = useDashboard();
+  const { user, transactions } = useDashboard();
 
   const expenseTransactions = transactions.filter(
     (transaction) => transaction.type === "expense"
@@ -94,32 +94,16 @@ const Income = () => {
             <div className='text-lg md:text-xl'>Expense</div>
           </div>
 
-          {/* Button for Month Choosing */}
-          <div className='rounded-xl shadow-sm p-0.5 select-none transition-all'>
-            <div onClick={() => { setOpened(!opened) }} className='relative w-full'>
-              <div className={`bg-stone-50 w-full px-3 rounded-xl text-lg flex items-center justify-center hover:bg-stone-100 text-center `}>
-                <span className='cursor-pointer'>MARCH 2026</span>
-                <span className="leading-none ">⌄</span>
-              </div>
-
-              {/* Dropdown Menu */}
-              {
-                <div className={`absolute z-10 backdrop-blur-sm text-lg origin-top top-5  transition-all duration-200 mt-3 text-center shadow-lg w-full gap-y-5 ${opened ? "scale-100 rounded-t-xl rounded-b-xl" : "scale-90 opacity-0 pointer-events-none"}`}>
-                  <div className='py-1 w-full hover:bg-stone-200 shadow-2xs rounded-t-xl'>FEB 2026</div>
-                  <div className='py-1 w-full hover:bg-stone-200 shadow-2xs rounded-b-xl'>JAN 2026</div>
-                </div>
-              }
-            </div>
-          </div>
+          
 
         </div>
         <div className='flex-1 flex flex-col justify-center select-none'>
           <div className='text-3xl lg:text-4xl xl:text-5xl font-bold'>
-            ₹{spentThisMonth.toLocaleString("en-IN")}
+            ₹2000
           </div>
           <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
             {user
-              ? `${((spentThisMonth / user.monthlyBudget) * 100).toFixed(1)}% of monthly budget used`
+              ? `${((2000 / user.monthlyBudget) * 100).toFixed(1)}% of monthly budget used`
               : ""}
           </div>
         </div>

@@ -67,34 +67,13 @@ const Income = () => {
   // scroll ends here
 
   // data fetch
-  const { user, incomeThisMonth, spentThisMonth, transactions } = useDashboard();
+  const { user, transactions } = useDashboard();
 
   const incomeTransactions = transactions.filter(
     (transaction) => transaction.type === "income"
   );
 
-  const netSavings = incomeThisMonth - spentThisMonth;
-
-  // finding available months
-  const availableMonths = [
-    ...new Set(
-      transactions.map((transaction) => {
-        const date = new Date(transaction.createdAt);
-
-        return `${date.getFullYear()}-${date.getMonth()}`;
-      })
-    ),
-  ].map((month) => {
-    const [year, monthIndex] = month.split("-").map(Number);
-
-    return {
-      value: month,
-      label: new Date(year, monthIndex).toLocaleString("en-IN", {
-        month: "long",
-        year: "numeric",
-      }),
-    };
-  });
+  const netSavings = 0;
 
   return (
     <div className='flex flex-col h-full w-full min-h-0 bg-stone-50 rounded-xl shadow-sm'>
@@ -107,25 +86,11 @@ const Income = () => {
             </div>
             <div>Income</div>
           </div>
-
-          <div className='rounded-xl shadow-sm p-0.5 select-none transition-all'>
-            <div onClick={() => setOpened(!opened)} className='relative w-full'>
-              <div className='bg-stone-50 w-full px-3 rounded-xl text-lg flex items-center justify-center hover:bg-stone-100 text-center'>
-                <span className='cursor-pointer'>MARCH 2026</span>
-                <span className="leading-none">⌄</span>
-              </div>
-
-              <div className={`absolute z-10 backdrop-blur-sm text-lg origin-top top-5  transition-all duration-200 mt-3 text-center shadow-lg w-full gap-y-5 ${opened ? "scale-100 rounded-t-xl rounded-b-xl" : "scale-90 opacity-0 pointer-events-none"}`}>
-                <div className='py-1 w-full hover:bg-stone-200 shadow-2xs rounded-t-xl'>FEB 2026</div>
-                <div className='py-1 w-full hover:bg-stone-200 shadow-2xs rounded-b-xl'>JAN 2026</div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className='flex-1 flex flex-col justify-center elect-none'>
           <div className='text-3xl lg:text-4xl xl:text-5xl font-bold'>
-            ₹{incomeThisMonth.toLocaleString("en-IN")}
+            ₹2000
           </div>
           <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
             {netSavings >= 0 ? (

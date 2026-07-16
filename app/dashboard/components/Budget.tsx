@@ -5,7 +5,7 @@ import { useDashboard } from '@/app/context/DashboardProvider';
 const Budget = () => {
 
   // loading data
-  const { user, transactions, spentThisMonth } = useDashboard();
+  const { user, transactions } = useDashboard();
 
   
 
@@ -21,7 +21,7 @@ const Budget = () => {
         <div className='flex-1 min-h-0 flex flex-col'>
           <div className='flex-1 min-h-0 flex flex-col justify-center '>
             <div className='w-full'>
-              <BudgetBar spent={spentThisMonth} total={user?.monthlyBudget} />
+              <BudgetBar spent={2000} total={user?.monthlyBudget} />
             </div>
             <div className='flex flex-wrap pb-4 gap-1 text-sm md:text-lg leading-tight py-2'>
               <div className='text-stone-600'>

@@ -2,10 +2,12 @@
 import React, { useState } from 'react'
 import { Wallet, Eye, EyeOff, Plus, ArrowUp, FileText } from "lucide-react"
 import { useDashboard } from '@/app/context/DashboardProvider'
+import { formatMonth } from '@/lib/utils/date'
 
 const Balance = () => {
     // handle dropdown toggle
-    const [opened, setOpened] = useState(false)
+    const [currencyOpened, setCurrencyOpened] = useState(false)
+    const [monthOpened, setMonthOpened] = useState(false);
 
     // handle money toggle
     const [shown, setShown] = useState(false)
@@ -14,7 +16,7 @@ const Balance = () => {
     const [currentCurrency, setCurrency] = useState('INR')
 
     // loading data
-    const { user } = useDashboard();
+    const { user, selectedMonth, setSelectedMonth, availableMonths } = useDashboard();
 
     return (
         <div className='relative flex flex-col h-full w-full bg-stone-50 rounded-xl shadow-sm overflow-hidden min-h-0'>
@@ -24,37 +26,100 @@ const Balance = () => {
                     <div className='p-2 bg-stone-100 shadow-xs text-blue-600 rounded-full'><Wallet size={20} /></div>
                     <div className='text-lg md:text-xl'>My balance</div>
                 </div>
-                {/* Button */}
-                <div className="rounded-xl shadow-sm select-none transition-all">
-                    <div onClick={() => setOpened(!opened)} className="relative w-full">
-
-                        <div className="bg-stone-50 px-4 py-1 rounded-xl text-lg flex items-center justify-center gap-1 hover:bg-stone-100 text-center">
-                            <span className="cursor-pointer">{currentCurrency}</span>
-                            <span className="leading-none">⌄</span>
-                        </div>
-
-                        {/* Dropdown Menu */}
+                <div className='flex gap-2'>
+                    <div className="rounded-xl shadow-sm select-none transition-all">
                         <div
-                            className={`absolute z-10 backdrop-blur-sm text-lg origin-top top-6 transition-all duration-200 mt-4 text-center shadow-lg w-full ${opened
-                                ? "scale-100 opacity-100 rounded-xl"
-                                : "scale-95 opacity-0 pointer-events-none"
+                            onClick={() => {
+                                if (availableMonths.length > 0) {
+                                    setMonthOpened((prev) => !prev);
+                                }
+                            }}
+                            className={`relative w-full ${availableMonths.length === 0
+                                ? "cursor-not-allowed"
+                                : "cursor-pointer"
                                 }`}
                         >
-                            <div
-                                className="w-full py-1 hover:bg-stone-200 rounded-t-xl"
-                                onClick={() => setCurrency("INR")}
-                            >
-                                INR
+
+                            {/* Selected Month */}
+                            <div className="bg-stone-50 px-4 py-1 rounded-xl text-lg flex items-center justify-center gap-1 hover:bg-stone-100 cursor-pointer group">
+                                <span>
+                                    {formatMonth(selectedMonth.month, selectedMonth.year)}
+                                </span>
+                                {availableMonths.length === 0 && (
+                                    <div className="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-stone-800 px-3 py-1 text-xs text-stone-50 opacity-0 transition-opacity duration-200 pointer-events-none group-hover:opacity-100">
+                                        No transaction history
+                                    </div>
+                                )}
+                                <span className="leading-none">⌄</span>
                             </div>
 
+                            {/* Dropdown */}
                             <div
-                                className="w-full py-1 hover:bg-stone-200 rounded-b-xl"
-                                onClick={() => setCurrency("USD")}
+                                className={`absolute left-0 right-0 mt-3 origin-top z-20 overflow-hidden rounded-xl bg-stone-50 shadow-lg transition-all duration-200 ${monthOpened
+                                    ? "scale-100 opacity-100"
+                                    : "scale-95 opacity-0 pointer-events-none"
+                                    }`}
                             >
-                                USD
+                                {availableMonths.map((month) => {
+                                    const active =
+                                        month.month === selectedMonth.month &&
+                                        month.year === selectedMonth.year;
+
+                                    return (
+                                        <div
+                                            key={`${month.month}-${month.year}`}
+                                            onClick={() => {
+                                                setSelectedMonth({
+                                                    month: month.month,
+                                                    year: month.year,
+                                                });
+                                                setMonthOpened(false);
+                                            }}
+                                            className={`cursor-pointer py-2 transition-colors ${active
+                                                ? "bg-blue-600 text-white"
+                                                : "hover:bg-stone-100"
+                                                }`}
+                                        >
+                                            {formatMonth(month.month, month.year)}
+                                        </div>
+                                    );
+                                })}
                             </div>
+
                         </div>
+                    </div>
+                    {/* Button */}
+                    <div className="rounded-xl shadow-sm select-none transition-all">
+                        <div onClick={() => setCurrencyOpened(!currencyOpened)} className="relative w-full">
 
+                            <div className="bg-stone-50 px-4 py-1 rounded-xl text-lg flex items-center justify-center gap-1 hover:bg-stone-100 text-center">
+                                <span className="cursor-pointer">{currentCurrency}</span>
+                                <span className="leading-none">⌄</span>
+                            </div>
+
+                            {/* Dropdown Menu */}
+                            <div
+                                className={`absolute z-10 backdrop-blur-sm text-lg origin-top top-6 transition-all duration-200 mt-4 text-center shadow-lg w-full ${currencyOpened
+                                    ? "scale-100 opacity-100 rounded-xl"
+                                    : "scale-95 opacity-0 pointer-events-none"
+                                    }`}
+                            >
+                                <div
+                                    className="w-full py-1 hover:bg-stone-200 rounded-t-xl"
+                                    onClick={() => setCurrency("INR")}
+                                >
+                                    INR
+                                </div>
+
+                                <div
+                                    className="w-full py-1 hover:bg-stone-200 rounded-b-xl"
+                                    onClick={() => setCurrency("USD")}
+                                >
+                                    USD
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
