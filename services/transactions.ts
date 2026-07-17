@@ -12,9 +12,44 @@ interface addTransactionInput {
     category: string;
     type: "income" | "expense";
     goalId?: string | undefined;
+    createdAt?: Date;
 }
 
-export async function addTransaction({ userId, title, amount, category, type, goalId }: addTransactionInput) {
+interface GetTransactionsInput {
+    userId: string;
+    page: number;
+    limit: number;
+}
+
+// for infinite scrolling
+export async function getTransactions({
+    userId,
+    page,
+    limit,
+}: GetTransactionsInput) {
+
+    await connectDB();
+
+    const transactions = await Transaction.find({
+        userId,
+    })
+        .sort({
+            createdAt: -1,
+        })
+        .skip((page - 1) * limit)
+        .limit(limit);
+
+    const total = await Transaction.countDocuments({
+        userId,
+    });
+
+    return {
+        transactions,
+        hasMore: page * limit < total,
+    };
+}
+
+export async function addTransaction({ userId, title, amount, category, type, goalId, createdAt }: addTransactionInput) {
 
     await connectDB();
     const session = await mongoose.startSession();
@@ -35,6 +70,7 @@ export async function addTransaction({ userId, title, amount, category, type, go
                     category,
                     type,
                     goalId: goalId || undefined,
+                    createdAt: createdAt ?? new Date(),
                 },
             ],
             { session }

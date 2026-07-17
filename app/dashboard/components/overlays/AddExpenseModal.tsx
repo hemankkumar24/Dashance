@@ -33,6 +33,12 @@ export default function AddExpenseModal({
     const [goalId, setGoalId] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const [customDate, setCustomDate] = useState(false);
+
+    const [transactionDate, setTransactionDate] = useState(
+        new Date().toISOString().split("T")[0]
+    );
+
     if (!open) return null;
 
     const handleSubmit = async () => {
@@ -52,7 +58,8 @@ export default function AddExpenseModal({
                     amount: Number(amount),
                     category,
                     type: "expense",
-                    goalId: goalId || undefined,
+                    goalId,
+                    createdAt: customDate ? transactionDate : undefined,
                 }),
             });
 
@@ -70,6 +77,7 @@ export default function AddExpenseModal({
             setLoading(false);
         }
     };
+
 
     return (
         <div
@@ -170,6 +178,48 @@ export default function AddExpenseModal({
                                 </option>
                             ))}
                         </select>
+
+                    </div>
+
+                    <div className="rounded-2xl border border-stone-200 bg-stone-100 p-4">
+
+                        <div className="flex items-center justify-between">
+
+                            <div>
+                                <p className="text-sm text-stone-500">
+                                    Transaction Date
+                                </p>
+
+                                <p className="mt-1 font-medium">
+                                    {customDate
+                                        ? new Date(transactionDate).toLocaleDateString("en-IN", {
+                                            day: "numeric",
+                                            month: "long",
+                                            year: "numeric",
+                                        })
+                                        : "Today"}
+                                </p>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => setCustomDate((prev) => !prev)}
+                                className="text-sm font-medium text-blue-600 hover:text-blue-700 transition"
+                            >
+                                {customDate ? "Use Today" : "Change"}
+                            </button>
+
+                        </div>
+
+                        {customDate && (
+                            <input
+                                type="date"
+                                value={transactionDate}
+                                onChange={(e) => setTransactionDate(e.target.value)}
+                                max={new Date().toISOString().split("T")[0]}
+                                className="mt-4 w-full rounded-xl border border-stone-200 bg-white px-4 py-3 outline-none focus:border-blue-500"
+                            />
+                        )}
 
                     </div>
 

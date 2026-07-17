@@ -8,14 +8,14 @@ import {
     ReactNode,
 } from "react";
 
-interface DashboardUser {
+export interface DashboardUser {
     name: string;
     currentBalance: number;
     monthlyBudget: number;
     onboardingComplete: boolean;
 }
 
-interface DashboardTransaction {
+export interface DashboardTransaction {
     id: string;
     title: string;
     amount: number;
@@ -25,7 +25,7 @@ interface DashboardTransaction {
     createdAt: string;
 }
 
-interface DashboardGoal {
+export interface DashboardGoal {
     id: string;
     title: string;
     icon: string;

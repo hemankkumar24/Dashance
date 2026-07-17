@@ -8,8 +8,8 @@ export async function getUserData(userId: string) {
 
     const [user, transactions, goals] = await Promise.all([
         User.findById(userId),
-        Transaction.find({ userId }).sort({ createdAt: -1 }), // descending
-        Goal.find({ userId }), // only currently live ones
+        Transaction.find({ userId }).sort({ createdAt: -1 }),
+        Goal.find({ userId }),
     ]);
 
     if (!user) {

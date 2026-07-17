@@ -89,9 +89,6 @@ const Income = () => {
     type: "expense",
   });
 
-  // api calling
-  
-
   return (
     <div className='flex flex-col h-full w-full min-h-0 bg-stone-50 rounded-xl shadow-sm'>
       <div className='flex flex-col px-4 py-3 h-full w-full min-h-0'>

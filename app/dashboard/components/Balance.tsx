@@ -5,11 +5,13 @@ import { useDashboard } from '@/app/context/DashboardProvider'
 import { formatMonth, getLastUpdatedText } from '@/lib/utils/date'
 import AddIncomeModal from "./overlays/AddIncomeModal";
 import AddExpenseModal from './overlays/AddExpenseModal'
+import AllTransactionsModal from './overlays/AllTransactionsModal'
 
 const Balance = () => {
     // handle dropdown toggle
     const [currencyOpened, setCurrencyOpened] = useState(false)
     const [monthOpened, setMonthOpened] = useState(false);
+    const [allTransactionsOpened, setAllTransactionsOpened] = useState(false);
 
     // handle money toggle
     const [shown, setShown] = useState(false)
@@ -61,7 +63,7 @@ const Balance = () => {
 
                             {/* Dropdown */}
                             <div
-                                className={`absolute left-0 right-0 mt-3 origin-top z-20 overflow-hidden rounded-xl bg-stone-50 shadow-lg transition-all duration-200 ${monthOpened
+                                className={`absolute left-0 right-0 mt-3 origin-top z-20 overflow-hidden rounded-xl bg-stone-50/10 backdrop-blur-lg shadow-lg transition-all duration-200 ${monthOpened
                                     ? "scale-100 opacity-100"
                                     : "scale-95 opacity-0 pointer-events-none"
                                     }`}
@@ -81,7 +83,7 @@ const Balance = () => {
                                                 });
                                                 setMonthOpened(false);
                                             }}
-                                            className={`cursor-pointer py-2 transition-colors ${active
+                                            className={`cursor-pointer py-2 transition-colors flex w-full justify-center ${active
                                                 ? "bg-blue-600 text-white"
                                                 : "hover:bg-stone-100"
                                                 }`}
@@ -164,13 +166,17 @@ const Balance = () => {
                         <span>Send money</span>
                     </button>
 
-                    <button className="hidden xl:flex xl:col-span-2 items-center justify-center gap-2 rounded-2xl bg-stone-200 px-4 py-3 text-stone-600 transition-colors hover:bg-stone-300">
+                    <button className="hidden xl:flex xl:col-span-2 items-center justify-center gap-2 rounded-2xl bg-stone-200 px-4 py-3 text-stone-600 transition-colors hover:bg-stone-300" onClick={() => setAllTransactionsOpened(true)} >
                         <FileText size={18} />
                         <span>View Transactions</span>
                     </button>
 
                 </div>
             </div>
+            <AllTransactionsModal 
+                open={allTransactionsOpened}
+                onClose={() => {setAllTransactionsOpened(false)}}
+            />
             <AddIncomeModal
                 open={incomeOpen}
                 onClose={() => setIncomeOpen(false)}

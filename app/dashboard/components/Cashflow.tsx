@@ -43,18 +43,31 @@ const Cashflow = () => {
 
                 <div className="flex items-center justify-between w-full select-none">
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex justify-between w-full">
+                        <div className="flex items-center gap-2">
+                            <div className="p-2 bg-stone-100 rounded-full shadow-xs text-blue-600">
 
-                        <div className="p-2 bg-stone-100 rounded-full shadow-xs text-blue-600">
+                                <ChartNoAxesColumnIncreasing size={20} />
 
-                            <ChartNoAxesColumnIncreasing size={20} />
+                            </div>
+
+                            <span className="text-lg md:text-xl">
+                                Cashflow Chart
+                            </span>
+                        </div>
+                        <div className="flex flex-col text-sm text-stone-500 select-none">
+
+                            <div className="flex items-center gap-2 w-20">
+                                <div className="w-3 h-3 rounded-full bg-blue-500 shrink-0" />
+                                <span>Income</span>
+                            </div>
+
+                            <div className="flex items-center gap-2 w-20">
+                                <div className="w-3 h-3 rounded-full bg-lime-300 shrink-0" />
+                                <span>Expense</span>
+                            </div>
 
                         </div>
-
-                        <span className="text-lg md:text-xl">
-                            Cashflow Chart
-                        </span>
-
                     </div>
 
                 </div>
@@ -82,40 +95,34 @@ const Cashflow = () => {
                                     className="flex flex-col items-center shrink-0 w-1/6"
                                 >
                                     <div className="relative w-full h-full min-h-32 xl:min-h-0">
-                                        {empty && (
 
-                                            <div className="absolute inset-0 bg-stone-100 rounded-xl" />
+                                        {/* Background track */}
+                                        <div className="absolute inset-0 rounded-xl bg-stone-100" />
 
-                                        )}
                                         {!empty && (
-
                                             <div
-                                                className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-full rounded-xl transition-all duration-700 ${incomeBehind
+                                                className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-full rounded-t-lg transition-all duration-700 ${incomeBehind
                                                         ? "bg-blue-500 border-2 border-blue-400"
-                                                        : "bg-lime-500 border-2 border-lime-400"
+                                                        : "bg-lime-400 border-2 border-lime-300"
                                                     }`}
                                                 style={{
-                                                    height: `${Math.max(
-                                                        incomeHeight,
-                                                        expenseHeight
-                                                    )}%`,
+                                                    height: `${Math.max(incomeHeight, expenseHeight)}%`,
                                                 }}
                                             />
-
                                         )}
+
                                         {!empty && (
-
                                             <div
-                                                className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] rounded-lg transition-all duration-700 ${incomeBehind ? "bg-lime-500 border-2 border-lime-400" : "bg-blue-500 border-2 border-blue-300"}`}
+                                                className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] rounded-t-lg transition-all duration-700 ${incomeBehind
+                                                        ? "bg-lime-400"
+                                                        : "bg-blue-500"
+                                                    }`}
                                                 style={{
-                                                    height: `${Math.min(
-                                                        incomeHeight,
-                                                        expenseHeight
-                                                    )}%`,
+                                                    height: `${Math.min(incomeHeight, expenseHeight)}%`,
                                                 }}
                                             />
-
                                         )}
+
                                     </div>
 
                                     <span className="mt-2 text-stone-500 text-sm">

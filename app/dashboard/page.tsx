@@ -6,7 +6,7 @@ import Income from './components/Income'
 import Expense from './components/Expense'
 import Goal from './components/Goal'
 import Cashflow from './components/Cashflow'
-import Transaction from './components/Transaction'
+import Transaction from './components/Transactions/Transaction'
 import Budget from './components/Budget'
 import FloatingBar from './components/mobile/FloatingBar'
 import TopBar from './components/mobile/TopBar'
@@ -62,7 +62,7 @@ const page = () => {
             {
               transactions && (
                 <div className='h-full bg-stone-50 rounded-xl shadow-sm'>
-                  <Transaction />
+                  <Transaction mobile />
                 </div>
               )
             }

@@ -104,7 +104,7 @@ const Goal = () => {
         data-lenis-prevent
       >
         <div className='flex flex-col gap-2'>
-          
+          <GoalCard title={"Test"} progress={10} />
         </div>
       </div>
       {/* scroll ends here */}

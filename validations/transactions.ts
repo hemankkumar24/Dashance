@@ -11,4 +11,5 @@ export const transactionSchema = z.object({
     ]),
 
     goalId: z.string().optional(),
+    createdAt: z.coerce.date().optional(),
 });

@@ -84,8 +84,6 @@ const Income = () => {
     year: selectedMonth.year,
     type: "income",
   });
-
-  console.log(incomeTransactions);
   
   const netSavings = incomeThisMonth - spentThisMonth;
 
