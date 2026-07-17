@@ -23,13 +23,16 @@ export async function GET(req: NextRequest) {
                 monthlyBudget: user.monthlyBudget,
             },
             transactions: transactions.map((transaction) => ({
+                id: transaction.id,
                 title: transaction.title,
                 amount: transaction.amount,
                 type: transaction.type,
                 category: transaction.category,
                 goalId: transaction.goalId,
+                createdAt: transaction.createdAt
             })),
             goals: goals.map((goal) => ({
+                id: goal._id.toString(),
                 title: goal.title,
                 icon: goal.icon,
                 targetAmount: goal.targetAmount,

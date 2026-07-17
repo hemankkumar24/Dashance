@@ -67,13 +67,27 @@ const Income = () => {
   // scroll ends here
 
   // data fetch
-  const { user, transactions } = useDashboard();
+  const { selectedMonth, getIncome, getSpent, getTransactions, } = useDashboard();
 
-  const incomeTransactions = transactions.filter(
-    (transaction) => transaction.type === "income"
+  const incomeThisMonth = getIncome(
+    selectedMonth.month,
+    selectedMonth.year
   );
 
-  const netSavings = 0;
+  const spentThisMonth = getSpent(
+    selectedMonth.month,
+    selectedMonth.year
+  );
+
+  const incomeTransactions = getTransactions({
+    month: selectedMonth.month,
+    year: selectedMonth.year,
+    type: "income",
+  });
+
+  console.log(incomeTransactions);
+  
+  const netSavings = incomeThisMonth - spentThisMonth;
 
   return (
     <div className='flex flex-col h-full w-full min-h-0 bg-stone-50 rounded-xl shadow-sm'>
@@ -90,7 +104,7 @@ const Income = () => {
 
         <div className='flex-1 flex flex-col justify-center elect-none'>
           <div className='text-3xl lg:text-4xl xl:text-5xl font-bold'>
-            ₹2000
+            ₹{incomeThisMonth.toLocaleString("en-IN")}
           </div>
           <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
             {netSavings >= 0 ? (

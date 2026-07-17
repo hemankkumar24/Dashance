@@ -76,11 +76,21 @@ const Income = () => {
   // scroll ends here
 
   // data fetch
-  const { user, transactions } = useDashboard();
+  const { user, selectedMonth, getSpent, getTransactions, } = useDashboard();
 
-  const expenseTransactions = transactions.filter(
-    (transaction) => transaction.type === "expense"
+  const spentThisMonth = getSpent(
+    selectedMonth.month,
+    selectedMonth.year
   );
+
+  const expenseTransactions = getTransactions({
+    month: selectedMonth.month,
+    year: selectedMonth.year,
+    type: "expense",
+  });
+
+  // api calling
+  
 
   return (
     <div className='flex flex-col h-full w-full min-h-0 bg-stone-50 rounded-xl shadow-sm'>
@@ -94,17 +104,17 @@ const Income = () => {
             <div className='text-lg md:text-xl'>Expense</div>
           </div>
 
-          
+
 
         </div>
         <div className='flex-1 flex flex-col justify-center select-none'>
           <div className='text-3xl lg:text-4xl xl:text-5xl font-bold'>
-            ₹2000
+            ₹{spentThisMonth.toLocaleString("en-IN")}
           </div>
           <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
-            {user
-              ? `${((2000 / user.monthlyBudget) * 100).toFixed(1)}% of monthly budget used`
-              : ""}
+            {user && user.monthlyBudget > 0
+              ? `${((spentThisMonth / user.monthlyBudget) * 100).toFixed(1)}% of monthly budget used`
+              : "No monthly budget set"}
           </div>
         </div>
 

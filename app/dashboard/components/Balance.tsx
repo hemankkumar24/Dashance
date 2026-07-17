@@ -2,7 +2,9 @@
 import React, { useState } from 'react'
 import { Wallet, Eye, EyeOff, Plus, ArrowUp, FileText } from "lucide-react"
 import { useDashboard } from '@/app/context/DashboardProvider'
-import { formatMonth } from '@/lib/utils/date'
+import { formatMonth, getLastUpdatedText } from '@/lib/utils/date'
+import AddIncomeModal from "./overlays/AddIncomeModal";
+import AddExpenseModal from './overlays/AddExpenseModal'
 
 const Balance = () => {
     // handle dropdown toggle
@@ -17,6 +19,10 @@ const Balance = () => {
 
     // loading data
     const { user, selectedMonth, setSelectedMonth, availableMonths } = useDashboard();
+
+    // overlay modals
+    const [incomeOpen, setIncomeOpen] = useState(false);
+    const [expenseOpen, setExpenseOpen] = useState(false);
 
     return (
         <div className='relative flex flex-col h-full w-full bg-stone-50 rounded-xl shadow-sm overflow-hidden min-h-0'>
@@ -129,14 +135,14 @@ const Balance = () => {
                     <div className='select-none flex flex-col py-5 xl:py-0'>
                         <div className='font-bold text-4xl md:text-5xl xl:text-6xl flex gap-2 items-center'>
                             <div>
-                                ₹{user?.currentBalance}
+                                ₹{(user?.currentBalance ?? 0).toLocaleString("en-IN")}
                             </div>
                             <div className='text-stone-500 z-10 p-2 bg-stone-200 rounded-full hover:bg-stone-300 cursor-pointer pointer-events-auto' onClick={() => { setShown(!shown) }}>
                                 {shown ? <Eye size={14} /> : <EyeOff size={14} />}
                             </div>
                         </div>
                         <div className='text-md xl:text-lg text-stone-500'>
-                            x% Balance Increase/Decrease
+                            {getLastUpdatedText(new Date())}
                         </div>
                     </div>
                 </div>
@@ -148,12 +154,12 @@ const Balance = () => {
             <div className="mt-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-1 p-3">
 
-                    <button className="flex items-center justify-center gap-2 text-sm md:text-lg rounded-2xl bg-blue-600 px-4 py-1 xl:py-2 text-stone-50 transition-colors hover:bg-blue-500">
+                    <button className="flex items-center justify-center gap-2 text-sm md:text-lg rounded-2xl bg-blue-600 px-4 py-1 xl:py-2 text-stone-50 transition-colors hover:bg-blue-500" onClick={() => setIncomeOpen(true)}>
                         <Plus size={18} />
                         <span>Add money</span>
                     </button>
 
-                    <button className="flex items-center text-sm md:text-lg justify-center gap-2 rounded-2xl bg-stone-800 px-4 py-1 xl:py-2 text-stone-50 transition-colors hover:bg-stone-700">
+                    <button className="flex items-center text-sm md:text-lg justify-center gap-2 rounded-2xl bg-stone-800 px-4 py-1 xl:py-2 text-stone-50 transition-colors hover:bg-stone-700" onClick={() => setExpenseOpen(true)}>
                         <ArrowUp size={18} />
                         <span>Send money</span>
                     </button>
@@ -165,6 +171,14 @@ const Balance = () => {
 
                 </div>
             </div>
+            <AddIncomeModal
+                open={incomeOpen}
+                onClose={() => setIncomeOpen(false)}
+            />
+            <AddExpenseModal 
+                open={expenseOpen}
+                onClose={() => setExpenseOpen(false)}
+            />
         </div>
     )
 }

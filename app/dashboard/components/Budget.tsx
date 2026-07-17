@@ -5,9 +5,14 @@ import { useDashboard } from '@/app/context/DashboardProvider';
 const Budget = () => {
 
   // loading data
-  const { user, transactions } = useDashboard();
+  const { user, getSpent, selectedMonth } = useDashboard();
 
+  const spentThisMonth = getSpent(
+    selectedMonth.month,
+    selectedMonth.year
+  );
   
+  const netSpentFromBudget = user?.monthlyBudget ? user.monthlyBudget - spentThisMonth : 0;
 
   return (
     <div className='h-full w-full min-h-0'>
@@ -21,15 +26,34 @@ const Budget = () => {
         <div className='flex-1 min-h-0 flex flex-col'>
           <div className='flex-1 min-h-0 flex flex-col justify-center '>
             <div className='w-full'>
-              <BudgetBar spent={2000} total={user?.monthlyBudget} />
+              <BudgetBar spent={spentThisMonth} total={user?.monthlyBudget} />
             </div>
             <div className='flex flex-wrap pb-4 gap-1 text-sm md:text-lg leading-tight py-2'>
-              <div className='text-stone-600'>
-                Great job!, You have
-              </div>
-              <div className='text-green-600 font-semibold'>
-                ${699 - 56} left
-              </div>
+              {
+                netSpentFromBudget >= 0 ? (
+                  <>
+                    <div className='text-stone-600'>
+                      Great job!, You have
+                    </div>
+                    <div className='text-green-500'>
+                      ₹{netSpentFromBudget} left
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className='text-stone-600'>
+                      You are
+                    </div>
+                    <div className='text-red-500'>
+                      ₹{netSpentFromBudget * -1} 
+                    </div>
+                    <div className='text-stone-600'>
+                      over budget
+                    </div>
+                  </>
+                )
+              }
+              
             </div>
           </div>
 

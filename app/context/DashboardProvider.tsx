@@ -26,6 +26,7 @@ interface DashboardTransaction {
 }
 
 interface DashboardGoal {
+    id: string;
     title: string;
     icon: string;
     targetAmount: number;
@@ -75,6 +76,12 @@ interface DashboardContextType {
     error: string;
 
     refreshDashboard: () => Promise<void>;
+
+    getCashflowForYear: (year: number) => {
+        month: number;
+        income: number;
+        expense: number;
+    }[];
 }
 // create the context area
 const DashboardContext = createContext<DashboardContextType | null>(null);
@@ -207,6 +214,14 @@ export function DashboardProvider({
         type: "income",
     });
 
+    const getCashflowForYear = (year: number) => {
+        return Array.from({ length: 12 }, (_, month) => ({
+            month,
+            income: getIncome(month, year),
+            expense: getSpent(month, year),
+        }));
+    };
+
     useEffect(() => {
         refreshDashboard();
     }, []);
@@ -235,6 +250,7 @@ export function DashboardProvider({
                 error, // if an error occurs
 
                 refreshDashboard, // refresh
+                getCashflowForYear // for cashflow
             }}
 
         >
