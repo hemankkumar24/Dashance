@@ -7,7 +7,7 @@ interface TransactionMonthProps {
     month: string;
     transactions: DashboardTransaction[];
     onEdit?: (transaction: DashboardTransaction) => void;
-    onDelete?: (transaction: DashboardTransaction) => void;
+    onDelete?: (transactionId: string) => void;
 }
 
 const TransactionMonth = ({
@@ -31,7 +31,7 @@ const TransactionMonth = ({
                         key={transaction.id}
                         transaction={transaction}
                         onEdit={() => onEdit?.(transaction)}
-                        onDelete={() => onDelete?.(transaction)}
+                        onDelete={() => onDelete?.(transaction.id)}
                     />
                 ))}
             </div>

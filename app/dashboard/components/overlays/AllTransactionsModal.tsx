@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useDashboard } from "@/app/context/DashboardProvider";
 import { DashboardTransaction } from "@/app/context/DashboardProvider";
 import TransactionMonth from "../Transactions/TransactionMonth";
 import { LoaderCircle, X } from "lucide-react";
+import EditTransactionModal from "./EditTransactionModal";
 
 interface AllTransactionsModalProps {
     open: boolean;
@@ -22,6 +24,12 @@ const AllTransactionsModal = ({
     const [loading, setLoading] = useState(false);
 
     const [hasMore, setHasMore] = useState(true);
+
+    const { refreshDashboard } = useDashboard();
+
+    const [deleting, setDeleting] = useState(false);
+
+    const [editingTransaction, setEditingTransaction] = useState<DashboardTransaction | null>(null);
 
     const LIMIT = 20;
 
@@ -132,6 +140,36 @@ const AllTransactionsModal = ({
 
     if (!open) return null;
 
+    const handleDelete = async (transactionId: string) => {
+        try {
+            setDeleting(true);
+
+            const res = await fetch(`/api/transactions/${transactionId}`, {
+                method: "DELETE",
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.message);
+            }
+
+            await refreshDashboard();
+
+            setTransactions(prev =>
+                prev.filter(t => t.id !== transactionId)
+            );
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    const handleTransactionUpdate = (updated: DashboardTransaction) => {
+        setTransactions(prev =>
+            prev.map(t => (t.id === updated.id ? updated : t))
+        );
+    };
+
     return (
 
         <div className="fixed inset-0 z-50" data-lenis-prevent>
@@ -147,7 +185,8 @@ const AllTransactionsModal = ({
 
             <div
                 className="
-                    absolute inset-0
+                    relative
+                     inset-0
                     md:inset-auto
                     md:left-1/2
                     md:top-1/2
@@ -162,75 +201,95 @@ const AllTransactionsModal = ({
                     md:rounded-[32px]
                     shadow-[0_30px_80px_rgba(0,0,0,0.12)]
                     border border-stone-200
-                    animate-in
-                    fade-in
-                    zoom-in-95
-                    duration-200
                 "
             >
+                {deleting && (
+                    <div className="absolute inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-sm">
+                        <LoaderCircle
+                            size={48}
+                            className="animate-spin text-stone-700"
+                        />
+                    </div>
+                )}
+                <div
+                    className={`h-full transition-all duration-200 ${deleting
+                        ? "blur-sm pointer-events-none opacity-60"
+                        : ""
+                        }`}
+                >
 
-                {/* Header */}
+                    {/* Header */}
 
-                <div className="sticky top-0 z-20 flex items-center justify-between bg-white px-6 py-5">
+                    <div className="sticky top-0 z-20 flex items-center justify-between bg-white px-6 py-5">
 
-                    <h1 className="text-2xl font-bold">
-                        Transactions
-                    </h1>
+                        <h1 className="text-2xl font-bold">
+                            Transactions
+                        </h1>
 
-                    <button
-                        onClick={onClose}
-                        className="rounded-full p-2 transition hover:bg-stone-100"
-                    >
-                        <X size={22} />
-                    </button>
-
-                </div>
-
-                {/* Scrollable Content */}
-
-                <div className="h-[calc(100%-80px)] overflow-y-auto px-6 py-6">
-
-                    <div className="space-y-10">
-
-                        {Object.entries(groupedTransactions).map(
-                            ([month, transactions]) => (
-
-                                <TransactionMonth
-                                    key={month}
-                                    month={month}
-                                    transactions={transactions}
-                                />
-
-                            )
-                        )}
+                        <button
+                            onClick={onClose}
+                            className="rounded-full p-2 transition hover:bg-stone-100"
+                        >
+                            <X size={22} />
+                        </button>
 
                     </div>
 
-                    {/* Loader */}
+                    {/* Scrollable Content */}
 
-                    {loading && (
+                    <div className="h-[calc(100%-80px)] overflow-y-auto px-6 py-6">
 
-                        <div className="flex justify-center py-8">
+                        <div className="space-y-10">
 
-                            <LoaderCircle
-                                size={32}
-                                className="animate-spin text-stone-500"
-                            />
+                            {Object.entries(groupedTransactions).map(
+                                ([month, transactions]) => (
+
+                                    <TransactionMonth
+                                        key={month}
+                                        month={month}
+                                        transactions={transactions}
+                                        onEdit={setEditingTransaction}
+                                        onDelete={handleDelete}
+                                    />
+
+                                )
+                            )}
 
                         </div>
 
-                    )}
+                        {/* Loader */}
 
-                    {/* Infinite Scroll Observer */}
+                        {loading && (
 
-                    <div
-                        ref={observerRef}
-                        className="h-4"
-                    />
+                            <div className="flex justify-center py-8">
 
+                                <LoaderCircle
+                                    size={32}
+                                    className="animate-spin text-stone-500"
+                                />
+
+                            </div>
+
+                        )}
+
+                        {/* Infinite Scroll Observer */}
+
+                        <div
+                            ref={observerRef}
+                            className="h-4"
+                        />
+
+                    </div>
                 </div>
 
             </div>
+
+            <EditTransactionModal
+                open={editingTransaction !== null}
+                transaction={editingTransaction}
+                onClose={() => setEditingTransaction(null)}
+                onUpdate={handleTransactionUpdate}
+            />
 
         </div>
 

@@ -36,13 +36,13 @@ const NavItem = ({
   return (
     <button
       onClick={onClick}
-      className="relative flex h-14 w-14 flex-col items-center justify-center rounded-3xl"
+      className="relative flex h-14 w-16 flex-col items-center justify-center rounded-3xl"
     >
       <AnimatePresence>
         {active && (
           <motion.div
             layoutId="floating-pill"
-            className="absolute inset-0 rounded-3xl bg-stone-900"
+            className="absolute inset-0 rounded-2xl bg-stone-900"
             transition={{
                 type: "spring",
                 stiffness: 900,
