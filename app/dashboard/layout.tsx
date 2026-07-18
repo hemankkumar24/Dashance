@@ -1,9 +1,11 @@
-import "./globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { Viewport, Metadata } from "next";
-import { DashboardProvider } from "../context/DashboardProvider";
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+import { Metadata } from "next";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   verification: {
@@ -18,9 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
-          <DashboardProvider>
-            {children}
-          </DashboardProvider>
+      <body>{children}</body>
     </html>
   );
 }
