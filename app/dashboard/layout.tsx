@@ -1,26 +1,15 @@
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
-import { Metadata } from "next";
+"use client";
 
-const geist = Geist({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+import { DashboardProvider } from "@/app/context/DashboardProvider";
 
-export const metadata: Metadata = {
-  verification: {
-    google: "3HjCeOD9Wj1On6UcSk3_rrB2IK0Re6hMeVY2TXb3j8w",
-  },
-};
-
-export default function RootLayout({
+export default function DashboardLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body>{children}</body>
-    </html>
+    <DashboardProvider>
+      {children}
+    </DashboardProvider>
   );
 }
