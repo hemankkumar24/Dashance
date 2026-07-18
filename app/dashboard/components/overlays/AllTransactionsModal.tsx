@@ -265,7 +265,7 @@ const AllTransactionsModal = ({
 
                     {/* Scrollable Content */}
 
-                    <div className="h-[calc(100%-80px)] overflow-y-auto  py-6">
+                    <div className="h-[calc(100%-80px)] custom-scroll  overflow-y-auto  py-6">
 
                         <div className="space-y-10">
 

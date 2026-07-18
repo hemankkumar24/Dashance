@@ -66,9 +66,9 @@ const Balance = () => {
                                 className={`absolute left-0 right-0 mt-3 origin-top z-20 overflow-hidden rounded-xl bg-stone-50/10 backdrop-blur-lg shadow-lg transition-all duration-200 ${monthOpened
                                         ? "scale-100 opacity-100"
                                         : "scale-95 opacity-0 pointer-events-none"
-                                    }`}
+                                    }`} data-lenis-prevent
                             >
-                                <div className="max-h-40 overflow-y-auto">
+                                <div className="max-h-40 custom-scroll overflow-y-auto">
                                     {availableMonths.map((month) => {
                                         const active =
                                             month.month === selectedMonth.month &&

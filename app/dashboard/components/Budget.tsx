@@ -1,18 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CircleDollarSign } from 'lucide-react'
 import BudgetBar from './BudgetBar'
 import { useDashboard } from '@/app/context/DashboardProvider';
+import ModifyBudgetModal from './overlays/ModifyBudgetModal';
 const Budget = () => {
 
   // loading data
-  const { user, getSpent, selectedMonth } = useDashboard();
+  const { user, getSpent, selectedMonth, refreshDashboard } = useDashboard();
 
   const spentThisMonth = getSpent(
     selectedMonth.month,
     selectedMonth.year
   );
-  
+
   const netSpentFromBudget = user?.monthlyBudget ? user.monthlyBudget - spentThisMonth : 0;
+
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSave = async (budget: number) => {
+    setLoading(true);
+    try {
+      await fetch("/api/budget", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(budget),
+      });
+
+      setOpen(false);
+      refreshDashboard();
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className='h-full w-full min-h-0'>
@@ -45,7 +67,7 @@ const Budget = () => {
                       You are
                     </div>
                     <div className='text-red-500'>
-                      ₹{netSpentFromBudget * -1} 
+                      ₹{netSpentFromBudget * -1}
                     </div>
                     <div className='text-stone-600'>
                       over budget
@@ -53,17 +75,26 @@ const Budget = () => {
                   </>
                 )
               }
-              
+
             </div>
           </div>
 
           <div className='mt-auto pt-2 shrink-0'>
-            <button className='w-full py-2 px-3 flex items-center justify-center text-center rounded-lg bg-blue-600 cursor-pointer hover:bg-blue-500 text-stone-50 text-md leading-none'>
+            <button className='w-full py-2 px-3 flex items-center justify-center text-center rounded-lg bg-blue-600 cursor-pointer hover:bg-blue-500 text-stone-50 text-md leading-none' onClick={() => {setOpen(true)}}>
               Modify budget
             </button>
           </div>
         </div>
       </div>
+      {user && (
+        <ModifyBudgetModal
+          open={open}
+          currentBudget={user.monthlyBudget}
+          loading={loading}
+          onClose={() => setOpen(false)}
+          onSave={(budget) => handleSave(budget)}
+        />
+      )}
     </div>
   )
 }
