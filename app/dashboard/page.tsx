@@ -10,11 +10,12 @@ import Transaction from './components/Transactions/Transaction'
 import Budget from './components/Budget'
 import FloatingBar from './components/mobile/FloatingBar'
 import TopBar from './components/mobile/TopBar'
+import AllTransactionsModal from './components/overlays/AllTransactionsModal'
 
 const page = () => {
   // phone view
-  const [home, setHome] = useState(false)
-  const [wallet, setWallet] = useState(true)
+  const [home, setHome] = useState(true)
+  const [wallet, setWallet] = useState(false)
   const [goals, setGoals] = useState(false)
   const [transactions, setTransactions] = useState(false)
 
@@ -62,7 +63,7 @@ const page = () => {
             {
               transactions && (
                 <div className='h-full bg-stone-50 rounded-xl shadow-sm'>
-                  <Transaction mobile />
+                  <AllTransactionsModal open={true} onClose={() => {}} mobile />
                 </div>
               )
             }

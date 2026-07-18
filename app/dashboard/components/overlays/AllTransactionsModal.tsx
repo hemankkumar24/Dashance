@@ -4,17 +4,19 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useDashboard } from "@/app/context/DashboardProvider";
 import { DashboardTransaction } from "@/app/context/DashboardProvider";
 import TransactionMonth from "../Transactions/TransactionMonth";
-import { LoaderCircle, X } from "lucide-react";
+import { History, LoaderCircle, X } from "lucide-react";
 import EditTransactionModal from "./EditTransactionModal";
 
 interface AllTransactionsModalProps {
     open: boolean;
     onClose: () => void;
+    mobile?: boolean;
 }
 
 const AllTransactionsModal = ({
     open,
     onClose,
+    mobile = false,
 }: AllTransactionsModalProps) => {
 
     const [transactions, setTransactions] = useState<DashboardTransaction[]>([]);
@@ -172,36 +174,56 @@ const AllTransactionsModal = ({
 
     return (
 
-        <div className="fixed inset-0 z-50" data-lenis-prevent>
+        <div
+            className={
+                mobile
+                    ? "h-full"
+                    : "fixed inset-0 z-50"
+            }
+            data-lenis-prevent
+        >
 
             {/* Backdrop */}
 
-            <div
-                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                onClick={onClose}
-            />
+            {!mobile && (
+                <div
+                    className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                    onClick={onClose}
+                />
+            )}
 
             {/* Modal */}
 
             <div
-                className="
-                    relative
-                     inset-0
-                    md:inset-auto
-                    md:left-1/2
-                    md:top-1/2
-                    md:w-190
-                    md:max-w-[90vw]
-                    h-[92vh]
-                    md:-translate-x-1/2
-                    md:-translate-y-1/2
-                    overflow-hidden
-                    bg-white
-                    rounded-t-[32px]
-                    md:rounded-[32px]
-                    shadow-[0_30px_80px_rgba(0,0,0,0.12)]
-                    border border-stone-200
-                "
+                className={
+                    mobile
+                        ? `
+                h-full
+                bg-stone-50
+                rounded-xl
+                shadow-sm
+                overflow-hidden
+                border border-stone-200
+              `
+                        : `
+                relative
+                inset-0
+                md:inset-auto
+                md:left-1/2
+                md:top-1/2
+                md:w-190
+                md:max-w-[90vw]
+                h-[92vh]
+                md:-translate-x-1/2
+                md:-translate-y-1/2
+                overflow-hidden
+                bg-white
+                rounded-t-[32px]
+                md:rounded-[32px]
+                shadow-[0_30px_80px_rgba(0,0,0,0.12)]
+                border border-stone-200
+              `
+                }
             >
                 {deleting && (
                     <div className="absolute inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-sm">
@@ -220,24 +242,30 @@ const AllTransactionsModal = ({
 
                     {/* Header */}
 
-                    <div className="sticky top-0 z-20 flex items-center justify-between bg-white px-6 py-5">
+                    <div className="sticky top-0 z-20 bg-white px-4 py-3">
+                        <div className="flex items-center gap-2">
+                            <div className="p-2 flex bg-stone-100 text-blue-600 rounded-full">
+                                <History size={20} />
+                            </div>
 
-                        <h1 className="text-2xl font-bold">
-                            Transactions
-                        </h1>
+                            <div className="text-xl select-none w-full flex justify-between items-center">
+                                <div>Transactions</div>
 
-                        <button
-                            onClick={onClose}
-                            className="rounded-full p-2 transition hover:bg-stone-100"
-                        >
-                            <X size={22} />
-                        </button>
-
+                                {!mobile && (
+                                    <button
+                                        onClick={onClose}
+                                        className="rounded-full p-2 transition hover:bg-stone-100"
+                                    >
+                                        <X size={22} />
+                                    </button>
+                                )}
+                            </div>
+                        </div>
                     </div>
 
                     {/* Scrollable Content */}
 
-                    <div className="h-[calc(100%-80px)] overflow-y-auto px-6 py-6">
+                    <div className="h-[calc(100%-80px)] overflow-y-auto  py-6">
 
                         <div className="space-y-10">
 

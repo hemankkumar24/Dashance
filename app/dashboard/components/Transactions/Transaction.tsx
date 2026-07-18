@@ -2,11 +2,7 @@ import React, { useState } from 'react'
 import { History, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import { useDashboard } from "@/app/context/DashboardProvider";
 
-interface TransactionProps {
-    mobile?: boolean;
-}
-
-const Transaction = ({ mobile = false }: TransactionProps) => {
+const Transaction = () => {
 
     const {
         getTransactions,
@@ -18,9 +14,7 @@ const Transaction = ({ mobile = false }: TransactionProps) => {
         year: selectedMonth.year,
     });
 
-    const transactions = mobile
-        ? allTransactions
-        : allTransactions.slice(0, 3);
+    const transactions = allTransactions.slice(0, 3);
 
     return (
         <div className='h-full w-full'>
@@ -32,7 +26,7 @@ const Transaction = ({ mobile = false }: TransactionProps) => {
                         <div className='p-2 bg-stone-100 shadow-sm text-blue-600 rounded-full'>
                             <History size={20} />
                         </div>
-                        <div className=''>{mobile ? "Transactions" : "Latest Transactions"}</div>
+                        <div className=''>Latest Transactions</div>
                     </div>
                 </div>
 
@@ -45,8 +39,7 @@ const Transaction = ({ mobile = false }: TransactionProps) => {
 
                 {/* List */}
                 <div
-                    className={`flex flex-col gap-2 ${mobile ? "flex-1 overflow-y-auto pr-1" : ""
-                        }`}
+                    className={`flex flex-col gap-2`}
                 >
                     {transactions.length === 0 ? (
                         <div className="flex items-center justify-center h-40 rounded-xl bg-stone-100 text-stone-400">

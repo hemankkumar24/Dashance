@@ -19,13 +19,13 @@ const TransactionMonth = ({
     return (
         <section className="space-y-4">
 
-            <div className="sticky px-5 py-2 -top-7 z-10 bg-white/30 rounded-xl backdrop-blur-sm">
+            <div className="sticky px-5 py-4 border-t border-s border-white -top-7 z-10 bg-white/30 rounded-xl backdrop-blur-sm">
                 <h2 className="text-xl font-semibold text-stone-800">
                     {month}
                 </h2>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-3 px-4">
                 {transactions.map((transaction) => (
                     <TransactionCard
                         key={transaction.id}

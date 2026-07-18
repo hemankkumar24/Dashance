@@ -64,34 +64,36 @@ const Balance = () => {
                             {/* Dropdown */}
                             <div
                                 className={`absolute left-0 right-0 mt-3 origin-top z-20 overflow-hidden rounded-xl bg-stone-50/10 backdrop-blur-lg shadow-lg transition-all duration-200 ${monthOpened
-                                    ? "scale-100 opacity-100"
-                                    : "scale-95 opacity-0 pointer-events-none"
+                                        ? "scale-100 opacity-100"
+                                        : "scale-95 opacity-0 pointer-events-none"
                                     }`}
                             >
-                                {availableMonths.map((month) => {
-                                    const active =
-                                        month.month === selectedMonth.month &&
-                                        month.year === selectedMonth.year;
+                                <div className="max-h-40 overflow-y-auto">
+                                    {availableMonths.map((month) => {
+                                        const active =
+                                            month.month === selectedMonth.month &&
+                                            month.year === selectedMonth.year;
 
-                                    return (
-                                        <div
-                                            key={`${month.month}-${month.year}`}
-                                            onClick={() => {
-                                                setSelectedMonth({
-                                                    month: month.month,
-                                                    year: month.year,
-                                                });
-                                                setMonthOpened(false);
-                                            }}
-                                            className={`cursor-pointer py-2 transition-colors flex w-full justify-center ${active
-                                                ? "bg-blue-600 text-white"
-                                                : "hover:bg-stone-100"
-                                                }`}
-                                        >
-                                            {formatMonth(month.month, month.year)}
-                                        </div>
-                                    );
-                                })}
+                                        return (
+                                            <div
+                                                key={`${month.month}-${month.year}`}
+                                                onClick={() => {
+                                                    setSelectedMonth({
+                                                        month: month.month,
+                                                        year: month.year,
+                                                    });
+                                                    setMonthOpened(false);
+                                                }}
+                                                className={`cursor-pointer py-2 transition-colors flex justify-center ${active
+                                                        ? "bg-blue-600 text-white"
+                                                        : "hover:bg-stone-100"
+                                                    }`}
+                                            >
+                                                {formatMonth(month.month, month.year)}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
 
                         </div>
@@ -173,15 +175,15 @@ const Balance = () => {
 
                 </div>
             </div>
-            <AllTransactionsModal 
+            <AllTransactionsModal
                 open={allTransactionsOpened}
-                onClose={() => {setAllTransactionsOpened(false)}}
+                onClose={() => { setAllTransactionsOpened(false) }}
             />
             <AddIncomeModal
                 open={incomeOpen}
                 onClose={() => setIncomeOpen(false)}
             />
-            <AddExpenseModal 
+            <AddExpenseModal
                 open={expenseOpen}
                 onClose={() => setExpenseOpen(false)}
             />
