@@ -113,16 +113,16 @@ export default function Page() {
                                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_35%)]" />
                                 <div className="relative z-10 space-y-8">
                                     <div className="inline-flex rounded-full border border-white/10 bg-white/8 px-4 py-2 main-font text-sm tracking-[0.24em] text-white/70">
-                                        Smooth onboarding
+                                        Your finances, simplified
                                     </div>
                                     <div className="space-y-4 text-white">
                                         <div className="max-w-sm italic-font text-5xl leading-[0.95] xl:text-6xl">
-                                            Clean setup.
+                                            Less setup.
                                             <br />
-                                            Minimal friction.
+                                            More clarity.
                                         </div>
                                         <p className="max-w-md pb-4 main-font text-base leading-7 text-white/72 xl:text-lg">
-                                            Set up your workspace in a few quick steps with a calm, focused interface that stays clear on every screen size.
+                                            Create your account, set your balance, and begin tracking income, expenses, and goals in less than a minute.
                                         </p>
                                     </div>
                                 </div>
