@@ -42,18 +42,13 @@ export async function GET(req: NextRequest) {
         });
     }
     catch (error: any) {
-        if (
-            error instanceof Error &&
-            error.message === "Invalid token."
-        ) {
-            return NextResponse.json(
-                { message: "Unauthorized" },
-                { status: 401 }
-            );
-        }
+        console.error(error);
 
         return NextResponse.json(
-            { message: "Something went wrong." },
+            {
+                message: error instanceof Error ? error.message : String(error),
+                stack: error instanceof Error ? error.stack : undefined,
+            },
             { status: 500 }
         );
     }
