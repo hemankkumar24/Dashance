@@ -1,9 +1,11 @@
 "use client";
 
 import { ArrowBigDown, ChevronDown, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDashboard } from "@/app/context/DashboardProvider";
 import { celebrateGoal } from "@/lib/celebrate";
+
+import { toast } from "sonner";
 
 interface AddIncomeModalProps {
     open: boolean;
@@ -31,6 +33,8 @@ export default function AddIncomeModal({
     const [category, setCategory] = useState("Salary");
     const [loading, setLoading] = useState(false);
     const [goalId, setGoalId] = useState("")
+    const successSound = useRef<HTMLAudioElement | null>(null);
+
 
     const handleSubmit = async () => {
         if (!title.trim() || !amount) return;
@@ -63,8 +67,17 @@ export default function AddIncomeModal({
             if (data.goalCompleted) {
                 celebrateGoal();
 
-                setCompletingGoalId(data.goalId);
+                const goalname = goals.find(goal => goal.id === goalId)?.title;
 
+                toast.success(`${goalname} funded`, {
+                    description: "Congratulations! Time to set your next goal.",
+                });
+                setCompletingGoalId(data.goalId);
+                successSound.current = new Audio("/sounds/goal-complete.mp3");
+                successSound.current.volume = 0.5; // 0–1
+                successSound.current.currentTime = 0;
+                await successSound.current.play();
+                
                 setTimeout(async () => {
                     await refreshDashboard();
                     setCompletingGoalId(null);
