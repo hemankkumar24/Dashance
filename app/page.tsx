@@ -155,8 +155,8 @@ const page = () => {
       <div className='w-full px-5 lg:px-10 py-5 border-b-stone-500 border relative'>
         <div className='w-full flex justify-between items-center'>
           {/* Left Buttons and Right Buttons */}
-          <div className='main-font hidden xl:block text-lg'>
-            Home
+          <div className='main-font hidden xl:block text-lg cursor-pointer'>
+            <Link href="/dashboard">Dashboard</Link>
           </div>
           <div className="main-font text-2xl pointer-events-none block xl:hidden">
             Dashance
