@@ -93,7 +93,14 @@ export async function addTransaction({ userId, title, amount, category, type, go
                 throw new Error("Goal not found.");
             }
 
-            goal.currentAmount += amount;
+            if (type === "income") {
+                goal.currentAmount += amount;
+            } else {
+                if (goal.currentAmount < amount) {
+                    throw new Error("Insufficient funds in goal.");
+                }
+                goal.currentAmount -= amount;
+            }
 
             await goal.save({ session });
         }

@@ -222,6 +222,7 @@ const AllTransactionsModal = ({
                 md:rounded-[32px]
                 shadow-[0_30px_80px_rgba(0,0,0,0.12)]
                 border border-stone-200
+                animate-in fade-in zoom-in-95 duration-200
               `
                 }
             >

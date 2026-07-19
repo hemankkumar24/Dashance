@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowBigDown, X } from "lucide-react";
+import { ArrowBigDown, ChevronDown, X } from "lucide-react";
 import { useState } from "react";
 import { useDashboard } from "@/app/context/DashboardProvider";
 
@@ -23,12 +23,13 @@ export default function AddIncomeModal({
         "Other",
     ];
 
-    const { refreshDashboard } = useDashboard();
+    const { refreshDashboard, goals } = useDashboard();
 
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [category, setCategory] = useState("Salary");
     const [loading, setLoading] = useState(false);
+    const [goalId, setGoalId] = useState("")
 
     const handleSubmit = async () => {
         if (!title.trim() || !amount) return;
@@ -48,6 +49,7 @@ export default function AddIncomeModal({
                     category,
                     type: "income",
                     createdAt: customDate ? transactionDate : undefined,
+                    goalId: goalId || undefined,
                 }),
             });
 
@@ -84,24 +86,32 @@ export default function AddIncomeModal({
         >
             <div
                 onClick={(e) => e.stopPropagation()}
-                className="w-full md:max-w-xl rounded-t-[2rem] md:rounded-[2rem] bg-stone-50 border border-stone-200 shadow-2xl p-7 animate-in fade-in zoom-in-95 duration-200"
+                className="w-full md:max-w-xl rounded-t-[2rem] md:rounded-[2rem] bg-stone-50 border border-stone-200 shadow-2xl animate-in slide-in-from-bottom md:fade-in md:zoom-in-95 duration-200"
             >
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between border-b px-6 py-5 border-stone-200">
 
-                    <div>
-                        <h2 className="text-2xl font-semibold">
-                            Add Income
-                        </h2>
+                    <div className="flex items-center gap-3">
 
-                        <p className="text-stone-500 mt-1">
-                            Record a new income transaction.
-                        </p>
+                        <div className="rounded-full bg-green-100 p-2 text-green-600">
+                            <ArrowBigDown size={20} />
+                        </div>
+
+                        <div>
+                            <h2 className="text-lg font-semibold">
+                                Add Income
+                            </h2>
+
+                            <p className="text-sm text-stone-500">
+                                Record a new income transaction.
+                            </p>
+                        </div>
+
                     </div>
 
                     <button
                         onClick={onClose}
-                        className="p-2 rounded-full hover:bg-stone-200 transition"
+                        className="rounded-full p-2 transition hover:bg-stone-200"
                     >
                         <X size={18} />
                     </button>
@@ -109,7 +119,7 @@ export default function AddIncomeModal({
                 </div>
 
                 {/* Form */}
-                <div className="mt-8 space-y-5">
+                <div className="mt-8 space-y-5 px-6">
 
                     <div>
                         <label className="text-sm text-stone-500">
@@ -138,13 +148,13 @@ export default function AddIncomeModal({
                         />
                     </div>
 
-                    <div>
+                    <div className="relative">
                         <label className="text-sm text-stone-500">
                             Category
                         </label>
 
                         <select
-                            className="mt-2 w-full rounded-2xl bg-stone-100 border border-stone-200 px-4 py-3 outline-none focus:border-blue-500"
+                            className="mt-2 w-full appearance-none rounded-2xl bg-stone-100 border border-stone-200 px-4 py-3 outline-none focus:border-blue-500"
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
                         >
@@ -156,6 +166,11 @@ export default function AddIncomeModal({
                                 );
                             })}
                         </select>
+
+                        <ChevronDown
+                            size={18}
+                            className="pointer-events-none absolute right-4 top-3/5 text-stone-500"
+                        />
                     </div>
 
                     <div className="rounded-2xl border border-stone-200 bg-stone-100 p-4">
@@ -200,10 +215,37 @@ export default function AddIncomeModal({
 
                     </div>
 
+                    <div className="relative">
+                        <label className="text-sm text-stone-500">
+                            Contribute to Goal (Optional)
+                        </label>
+
+                        <select
+                            value={goalId}
+                            onChange={(e) => setGoalId(e.target.value)}
+                            className="mt-2 w-full appearance-none rounded-2xl bg-stone-100 border border-stone-200 px-4 py-3 outline-none focus:border-blue-500"
+                        >
+                            <option value="">Don't add to a goal</option>
+
+                            {goals
+                                .filter((goal) => !goal.archived)
+                                .map((goal) => (
+                                    <option key={goal.id} value={goal.id}>
+                                        {goal.title}
+                                    </option>
+                                ))}
+                        </select>
+
+                        <ChevronDown
+                            size={18}
+                            className="pointer-events-none absolute right-4 top-3/5 text-stone-500"
+                        />
+                    </div>
+
                 </div>
 
                 {/* Footer */}
-                <div className="mt-8 flex justify-end gap-3">
+                <div className="mt-8 flex justify-end gap-3 pb-5 px-5">
 
                     <button
                         onClick={onClose}

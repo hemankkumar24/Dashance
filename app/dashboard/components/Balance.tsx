@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import { Wallet, Eye, EyeOff, Plus, ArrowUp, FileText } from "lucide-react"
+import { Wallet, Eye, EyeOff, Plus, ArrowUp, FileText, ChevronDown } from "lucide-react"
 import { useDashboard } from '@/app/context/DashboardProvider'
 import { formatMonth, getLastUpdatedText } from '@/lib/utils/date'
 import AddIncomeModal from "./overlays/AddIncomeModal";
@@ -58,7 +58,7 @@ const Balance = () => {
                                         No transaction history
                                     </div>
                                 )}
-                                <span className="leading-none">⌄</span>
+                                <span className={`leading-none transition-transform duration-200 ${monthOpened ? "rotate-180" : ""}`}><ChevronDown size={12} /></span>
                             </div>
 
                             {/* Dropdown */}
@@ -104,7 +104,7 @@ const Balance = () => {
 
                             <div className="bg-stone-50 px-4 py-1 rounded-xl text-lg flex items-center justify-center gap-1 hover:bg-stone-100 text-center">
                                 <span className="cursor-pointer">{currentCurrency}</span>
-                                <span className="leading-none">⌄</span>
+                                <span className={`leading-none transition-transform duration-200 ${currencyOpened ? "rotate-180" : ""}`}><ChevronDown size={12} /></span>
                             </div>
 
                             {/* Dropdown Menu */}
@@ -158,12 +158,12 @@ const Balance = () => {
             <div className="mt-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-1 p-3">
 
-                    <button className="flex items-center justify-center gap-2 text-sm md:text-lg rounded-2xl bg-blue-600 px-4 py-1 xl:py-2 text-stone-50 transition-colors hover:bg-blue-500" onClick={() => setIncomeOpen(true)}>
+                    <button className="flex items-center justify-center gap-2 text-sm md:text-lg rounded-2xl bg-blue-600 px-4 py-2 text-stone-50 transition-colors hover:bg-blue-500" onClick={() => setIncomeOpen(true)}>
                         <Plus size={18} />
                         <span>Add money</span>
                     </button>
 
-                    <button className="flex items-center text-sm md:text-lg justify-center gap-2 rounded-2xl bg-stone-800 px-4 py-1 xl:py-2 text-stone-50 transition-colors hover:bg-stone-700" onClick={() => setExpenseOpen(true)}>
+                    <button className="flex items-center text-sm md:text-lg justify-center gap-2 rounded-2xl bg-stone-800 px-4 py-2 text-stone-50 transition-colors hover:bg-stone-700" onClick={() => setExpenseOpen(true)}>
                         <ArrowUp size={18} />
                         <span>Send money</span>
                     </button>

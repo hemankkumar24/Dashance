@@ -19,10 +19,10 @@ export const SemiGauge = ({ progress, value, max }: Props) => {
   const startX = cx - radius
   const endX = cx + radius
   const arcPath = `M ${startX} ${cy} A ${radius} ${radius} 0 0 1 ${endX} ${cy}`
-
+  const strokeColor = progress >= 100 ? "#22c55e" : "#2563eb";
 
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center w-full h-full relative">
       <div className="relative w-full max-w-xs aspect-2/1">
 
         <svg
@@ -43,7 +43,7 @@ export const SemiGauge = ({ progress, value, max }: Props) => {
           <path
             d={arcPath}
             fill="transparent"
-            stroke="#2563eb"
+            stroke={strokeColor}
             strokeWidth="8"
             strokeLinecap="round"
             strokeDasharray={circumference}

@@ -80,7 +80,7 @@ const Budget = () => {
           </div>
 
           <div className='mt-auto pt-2 shrink-0'>
-            <button className='w-full py-2 px-3 flex items-center justify-center text-center rounded-lg bg-blue-600 cursor-pointer hover:bg-blue-500 text-stone-50 text-md leading-none' onClick={() => {setOpen(true)}}>
+            <button className='w-full py-3 px-3 flex items-center justify-center text-center rounded-lg bg-blue-600 cursor-pointer hover:bg-blue-500 text-stone-50 text-sm lg:text-lg leading-none' onClick={() => {setOpen(true)}}>
               Modify budget
             </button>
           </div>

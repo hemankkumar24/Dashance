@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X } from "lucide-react";
+import { ArrowBigUp, X } from "lucide-react";
 import { useDashboard } from "@/app/context/DashboardProvider";
 
 interface AddExpenseModalProps {
@@ -32,7 +32,7 @@ export default function AddExpenseModal({
     const [category, setCategory] = useState("Food");
     const [goalId, setGoalId] = useState("");
     const [loading, setLoading] = useState(false);
-
+    const [goalError, setGoalError] = useState("");
     const [customDate, setCustomDate] = useState(false);
 
     const [transactionDate, setTransactionDate] = useState(
@@ -46,6 +46,22 @@ export default function AddExpenseModal({
 
         try {
             setLoading(true);
+
+            setGoalError("");
+
+            if (goalId) {
+                const selectedGoal = goals.find((goal) => goal.id === goalId);
+
+                if (
+                    selectedGoal &&
+                    Number(amount) > selectedGoal.currentAmount
+                ) {
+                    setGoalError(
+                        `This goal only has ₹${selectedGoal.currentAmount.toLocaleString("en-IN")} available.`
+                    );
+                    return;
+                }
+            }
 
             await fetch("/api/transactions", {
                 method: "POST",
@@ -86,24 +102,32 @@ export default function AddExpenseModal({
         >
             <div
                 onClick={(e) => e.stopPropagation()}
-                className="w-full md:max-w-xl rounded-t-[2rem] md:rounded-[2rem] bg-stone-50 border border-stone-200 shadow-2xl p-7 animate-in fade-in zoom-in-95 duration-200"
+                className="w-full md:max-w-xl rounded-t-[2rem] md:rounded-[2rem] bg-stone-50 border border-stone-200 shadow-2xl animate-in slide-in-from-bottom md:fade-in md:zoom-in-95 duration-200"
             >
                 {/* Header */}
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between border-b px-6 py-5 border-stone-200">
 
-                    <div>
-                        <h2 className="text-2xl font-semibold">
-                            Add Expense
-                        </h2>
+                    <div className="flex items-center gap-3">
 
-                        <p className="mt-1 text-sm text-stone-500">
-                            Record where your money went.
-                        </p>
+                        <div className="rounded-full bg-red-100 p-2 text-red-600">
+                            <ArrowBigUp size={20} />
+                        </div>
+
+                        <div>
+                            <h2 className="text-lg font-semibold">
+                                Add Expense
+                            </h2>
+
+                            <p className="text-sm text-stone-500">
+                                Record where your money went.
+                            </p>
+                        </div>
+
                     </div>
 
                     <button
                         onClick={onClose}
-                        className="rounded-full p-2 hover:bg-stone-200 transition"
+                        className="rounded-full p-2 transition hover:bg-stone-200"
                     >
                         <X size={18} />
                     </button>
@@ -111,7 +135,7 @@ export default function AddExpenseModal({
                 </div>
 
                 {/* Form */}
-                <div className="mt-8 space-y-5">
+                <div className="mt-8 space-y-5 px-5">
 
                     {/* Title */}
 
@@ -147,7 +171,10 @@ export default function AddExpenseModal({
                             <input
                                 type="number"
                                 value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
+                                onChange={(e) => {
+                                    setAmount(e.target.value);
+                                    setGoalError("");
+                                }}
                                 placeholder="0"
                                 className="w-full rounded-2xl border border-stone-200 bg-stone-100 pl-8 pr-4 py-3 outline-none transition focus:border-blue-500"
                             />
@@ -230,16 +257,19 @@ export default function AddExpenseModal({
                         <div>
 
                             <label className="block text-sm text-stone-600 mb-2">
-                                Contribute to Goal
+                                Use Goal Funds (optional)
                             </label>
 
                             <select
                                 value={goalId}
-                                onChange={(e) => setGoalId(e.target.value)}
+                                onChange={(e) => {
+                                    setGoalId(e.target.value);
+                                    setGoalError("");
+                                }}
                                 className="w-full rounded-2xl border border-stone-200 bg-stone-100 px-4 py-3 outline-none transition focus:border-blue-500"
                             >
                                 <option value="">
-                                    None
+                                    Don't use goal funds
                                 </option>
 
                                 {goals
@@ -254,8 +284,14 @@ export default function AddExpenseModal({
                                     ))}
 
                             </select>
-
+                            {goalError && (
+                                <p className="mt-2 text-sm text-red-600">
+                                    {goalError}
+                                </p>
+                            )}
                         </div>
+
+
 
                     )}
 
@@ -263,7 +299,7 @@ export default function AddExpenseModal({
 
                 {/* Footer */}
 
-                <div className="mt-8 flex justify-end gap-3">
+                <div className="mt-8 flex justify-end gap-3 pb-6 px-5">
 
                     <button
                         onClick={onClose}
