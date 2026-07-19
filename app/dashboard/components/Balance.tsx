@@ -99,6 +99,7 @@ const Balance = () => {
                         </div>
                     </div>
                     {/* Button */}
+                    {/*
                     <div className="rounded-xl shadow-sm select-none transition-all">
                         <div onClick={() => setCurrencyOpened(!currencyOpened)} className="relative w-full">
 
@@ -107,7 +108,7 @@ const Balance = () => {
                                 <span className={`leading-none transition-transform duration-200 ${currencyOpened ? "rotate-180" : ""}`}><ChevronDown size={12} /></span>
                             </div>
 
-                            {/* Dropdown Menu */}
+                            Dropdown Menu 
                             <div
                                 className={`absolute z-10 backdrop-blur-sm text-lg origin-top top-6 transition-all duration-200 mt-4 text-center shadow-lg w-full ${currencyOpened
                                     ? "scale-100 opacity-100 rounded-xl"
@@ -131,6 +132,7 @@ const Balance = () => {
 
                         </div>
                     </div>
+                    */}
                 </div>
             </div>
             {/* Money */}

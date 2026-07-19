@@ -130,7 +130,7 @@ const GoalCard = ({ id, title, icon, targetAmount, currentAmount, isCompleting }
                 <div className='h-full w-full flex items-center justify-around gap-4 '>
 
                     <div className='w-[40%] text-xl font-medium truncate select-none flex items-center gap-2'>
-                        <Icon size={20} className="shrink-0" /> {title}
+                        <Icon size={20} className={`shrink-0 ${toggled ? "text-blue-400" : "text-blue-500"}`} /> {title}
                     </div>
 
                     {/* Progress Section */}

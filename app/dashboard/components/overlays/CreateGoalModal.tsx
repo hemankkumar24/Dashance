@@ -41,14 +41,14 @@ const GoalModal = ({
     onCreate,
 }: GoalModalProps) => {
     const [title, setTitle] = useState("");
-    const [targetAmount, setTargetAmount] = useState(0);
+    const [targetAmount, setTargetAmount] = useState("");
     const [icon, setIcon] = useState("Target");
 
     useEffect(() => {
         if (!open) return;
 
         setTitle("");
-        setTargetAmount(0);
+        setTargetAmount("");
         setIcon("Target");
     }, [open]);
 
@@ -70,7 +70,7 @@ const GoalModal = ({
 
     const valid =
         title.trim().length > 0 &&
-        targetAmount > 0;
+        Number(targetAmount) > 0;
 
     return (
         <div
@@ -162,10 +162,11 @@ const GoalModal = ({
 
                             <input
                                 type="number"
-                                min={1}
+                                min={0}
+                                placeholder="100"
                                 value={targetAmount}
                                 onChange={(e) => { 
-                                    setTargetAmount(Number(e.target.value))}
+                                    setTargetAmount(e.target.value)}
                                 }
                                 className="w-full bg-transparent px-2 py-3 outline-none"
                             />
@@ -220,7 +221,7 @@ const GoalModal = ({
                         onClick={() =>
                             onCreate({
                                 title: title.trim(),
-                                targetAmount,
+                                targetAmount: Number(targetAmount),
                                 icon,
                             })
                         }

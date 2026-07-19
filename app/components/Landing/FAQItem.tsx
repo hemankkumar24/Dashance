@@ -1,5 +1,6 @@
 "use client"
 
+import { ChevronDown } from "lucide-react";
 import { useState, ReactNode } from "react";
 
 interface FAQItemProps {
@@ -23,7 +24,7 @@ export default function FAQItem({ title, children }: FAQItemProps) {
             open ? "rotate-180" : ""
           }`}
         >
-          v
+          <ChevronDown size={14} />
         </div>
       </div>
 

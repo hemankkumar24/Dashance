@@ -279,7 +279,7 @@ export default function AddExpenseModal({
                                             key={goal.id}
                                             value={goal.id}
                                         >
-                                            {goal.icon} {goal.title}
+                                            {goal.title}
                                         </option>
                                     ))}
 
