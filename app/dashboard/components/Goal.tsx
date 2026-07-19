@@ -78,7 +78,9 @@ const Goal = () => {
 
   // api calling
   const { refreshDashboard, goals, completingGoalId } = useDashboard();
-  const activeGoals = goals.filter(goal => !goal.archived);
+  const [showCompleted, setShowCompleted] = useState(false);
+  const visibleGoals = showCompleted ? goals : goals.filter(goal => !goal.archived);
+
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false);
 
@@ -105,6 +107,7 @@ const Goal = () => {
     }
   };
 
+
   return (
     <div className='w-full h-full min-h-0 bg-stone-50 rounded-xl shadow-sm px-2 xl:px-4 py-3 flex flex-col'>
 
@@ -114,13 +117,46 @@ const Goal = () => {
           <GoalIcon size={20} />
         </div>
 
-        <div className='text-xl select-none w-full flex justify-between'>
-          <div>
+        <div className="w-full flex items-center justify-between">
+
+          <span className="text-xl select-none">
             My Goals
+          </span>
+
+          <div className="flex items-center gap-4">
+
+            <div className="flex items-center gap-2">
+
+              <span className="text-sm text-stone-500 whitespace-nowrap">
+                Completed
+              </span>
+
+              <button
+                onClick={() => setShowCompleted(!showCompleted)}
+                className={`relative h-7 w-12 rounded-full transition-colors duration-300 ${showCompleted
+                    ? "bg-green-500"
+                    : "bg-stone-300"
+                  }`}
+              >
+                <span
+                  className={`absolute top-0.5 left-0.5 h-6 w-6 rounded-full bg-white shadow transition-transform duration-300 ${showCompleted
+                      ? "translate-x-5"
+                      : "translate-x-0"
+                    }`}
+                />
+              </button>
+
+            </div>
+
+            <button
+              onClick={() => setOpen(true)}
+              className="h-8 w-8 rounded-full bg-stone-200 flex items-center justify-center text-2xl leading-none hover:bg-stone-300 transition"
+            >
+              +
+            </button>
+
           </div>
-          <div className="mr-2 h-8 w-8 pb-1 rounded-full bg-stone-200 flex items-center justify-center text-2xl leading-none" onClick={() => { setOpen(true) }}>
-            +
-          </div>
+
         </div>
       </div>
 
@@ -135,8 +171,8 @@ const Goal = () => {
         data-lenis-prevent
       >
         <div className="flex flex-col gap-2 cursor-pointer w-full h-full">
-          {activeGoals.length > 0 ? (
-            activeGoals.map((goal) => (
+          {visibleGoals.length > 0 ? (
+            visibleGoals.map((goal) => (
               <GoalCard
                 key={goal.id}
                 id={goal.id}

@@ -58,7 +58,7 @@ const Budget = () => {
                       Great job!, You have
                     </div>
                     <div className='text-green-500'>
-                      ₹{netSpentFromBudget} left
+                      ₹{Number(netSpentFromBudget * -1).toLocaleString("en-IN")} left
                     </div>
                   </>
                 ) : (
@@ -67,7 +67,7 @@ const Budget = () => {
                       You are
                     </div>
                     <div className='text-red-500'>
-                      ₹{netSpentFromBudget * -1}
+                      ₹{Number(netSpentFromBudget * -1).toLocaleString("en-IN")}
                     </div>
                     <div className='text-stone-600'>
                       over budget
@@ -80,7 +80,7 @@ const Budget = () => {
           </div>
 
           <div className='mt-auto pt-2 shrink-0'>
-            <button className='w-full py-3 px-3 flex items-center justify-center text-center rounded-lg bg-blue-600 cursor-pointer hover:bg-blue-500 text-stone-50 text-sm lg:text-lg leading-none' onClick={() => {setOpen(true)}}>
+            <button className='w-full py-2 px-3 flex items-center justify-center text-center rounded-lg bg-blue-600 cursor-pointer hover:bg-blue-500 text-stone-50 text-sm leading-none' onClick={() => {setOpen(true)}}>
               Modify budget
             </button>
           </div>

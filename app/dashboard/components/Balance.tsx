@@ -158,18 +158,18 @@ const Balance = () => {
             <div className="mt-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-1 p-3">
 
-                    <button className="flex items-center justify-center gap-2 text-sm md:text-lg rounded-2xl bg-blue-600 px-4 py-2 text-stone-50 transition-colors hover:bg-blue-500" onClick={() => setIncomeOpen(true)}>
-                        <Plus size={18} />
+                    <button className="flex items-center justify-center gap-2 text-sm rounded-2xl bg-blue-600 px-4 py-2 text-stone-50 transition-colors hover:bg-blue-500" onClick={() => setIncomeOpen(true)}>
+                        <Plus size={14} />
                         <span>Add money</span>
                     </button>
 
-                    <button className="flex items-center text-sm md:text-lg justify-center gap-2 rounded-2xl bg-stone-800 px-4 py-2 text-stone-50 transition-colors hover:bg-stone-700" onClick={() => setExpenseOpen(true)}>
-                        <ArrowUp size={18} />
+                    <button className="flex items-center text-sm justify-center gap-2 rounded-2xl bg-stone-800 px-4 py-2 text-stone-50 transition-colors hover:bg-stone-700" onClick={() => setExpenseOpen(true)}>
+                        <ArrowUp size={14} />
                         <span>Send money</span>
                     </button>
 
-                    <button className="hidden xl:flex xl:col-span-2 items-center justify-center gap-2 rounded-2xl bg-stone-200 px-4 py-3 text-stone-600 transition-colors hover:bg-stone-300" onClick={() => setAllTransactionsOpened(true)} >
-                        <FileText size={18} />
+                    <button className="hidden xl:flex xl:col-span-2 items-center text-sm justify-center gap-2 rounded-2xl bg-stone-200 px-4 py-2 text-stone-600 transition-colors hover:bg-stone-300" onClick={() => setAllTransactionsOpened(true)} >
+                        <FileText size={13} />
                         <span>View Transactions</span>
                     </button>
 
