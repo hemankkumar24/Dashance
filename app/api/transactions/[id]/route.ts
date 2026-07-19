@@ -72,6 +72,13 @@ export async function PATCH(
             ...validatedData,
         });
 
+        if(!transaction) {
+            return NextResponse.json(
+                { message: "Transaction cannot be found." },
+                { status: 401 }
+            );
+        }
+
         const updated = transaction.toObject();
 
         return NextResponse.json(

@@ -226,9 +226,11 @@ const page = () => {
             Track, manage, and grow your money effortlessly.
             From daily expenses to long-term goals everything in one place.
           </div>
-          <button className='px-5 py-1 text-lg border border-stone-300 bg-white mt-5 inline-block rounded-2xl text-stone-800 hover:bg-stone-800 hover:text-stone-50 transition-colors duration-300 cursor-pointer'>
-            Get Started
-          </button>
+          <Link href="/signup">
+            <button className='px-5 py-1 text-lg border border-stone-300 bg-white mt-5 inline-block rounded-2xl text-stone-800 hover:bg-stone-800 hover:text-stone-50 transition-colors duration-300 cursor-pointer'>
+              Get Started
+            </button>
+          </Link>
         </div>
         <div>
 
