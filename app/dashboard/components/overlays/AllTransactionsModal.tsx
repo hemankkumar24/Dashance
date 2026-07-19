@@ -167,9 +167,19 @@ const AllTransactionsModal = ({
     };
 
     const handleTransactionUpdate = (updated: DashboardTransaction) => {
-        setTransactions(prev =>
-            prev.map(t => (t.id === updated.id ? updated : t))
-        );
+        setTransactions(prev => {
+            const next = prev.filter(t => t.id !== updated.id);
+
+            next.push(updated);
+
+            next.sort(
+                (a, b) =>
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime()
+            );
+
+            return next;
+        });
     };
 
     return (

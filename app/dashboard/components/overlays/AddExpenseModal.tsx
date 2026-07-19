@@ -252,7 +252,7 @@ export default function AddExpenseModal({
 
                     {/* Goal */}
 
-                    {goals.filter((goal) => !goal.archived).length > 0 && (
+                    {goals.filter((goal) => !goal.archived) && (
 
                         <div>
 

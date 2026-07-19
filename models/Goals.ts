@@ -52,6 +52,7 @@ const goalSchema = new Schema<IGoal>(
     }
 );
 
+
 const Goal: Model<IGoal> =
     mongoose.models.Goal ||
     mongoose.model<IGoal>("Goal", goalSchema);

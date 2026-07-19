@@ -11,7 +11,6 @@ interface UpdateTransactionInput {
     amount: number;
     type: "income" | "expense";
     category: string;
-    description?: string;
     goalId?: string | null;
     createdAt?: Date;
 }
@@ -23,7 +22,6 @@ export async function updateTransaction({
     amount,
     type,
     category,
-    description,
     goalId,
     createdAt,
 }: UpdateTransactionInput) {
@@ -74,17 +72,32 @@ export async function updateTransaction({
         transaction.type = type;
         transaction.category = category;
         transaction.goalId = goalId ? new mongoose.Types.ObjectId(goalId) : undefined;
-
+        
         if (createdAt) {
-            transaction.createdAt = createdAt;
+            await Transaction.updateOne(
+                {
+                    _id: transactionId,
+                    userId,
+                },
+                {
+                    $set: {
+                        createdAt,
+                    },
+                },
+                {
+                    session,
+                    timestamps: false,
+                    overwriteImmutable: true,
+                }
+            );
         }
 
         if (type === "income") {
             user.currentBalance += amount;
         } else {
             user.currentBalance -= amount;
-        }
-
+        }      
+        
         if (goalId) {
             const newGoal = await Goal.findById(goalId).session(session);
 
@@ -100,9 +113,11 @@ export async function updateTransaction({
         await user.save({ session });
         await transaction.save({ session });
 
+        const updatedTransaction = await Transaction.findById(transaction._id).session(session);
+        
         await session.commitTransaction();
 
-        return transaction;
+        return updatedTransaction;  
     } catch (error) {
         await session.abortTransaction();
         throw error;
