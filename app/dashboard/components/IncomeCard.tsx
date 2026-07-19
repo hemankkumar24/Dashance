@@ -21,7 +21,7 @@ const IncomeCard = ({ name, amount }: Props) => {
 
       {/* Amount */}
       <div className='text-2xl font-semibold tracking-tight text-gray-800 truncate'>
-        ₹{amount}
+        ₹{Number(amount).toLocaleString("en-IN")}
       </div>
 
     </div>
