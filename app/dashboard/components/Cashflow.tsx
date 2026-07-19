@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ChartNoAxesColumnIncreasing } from "lucide-react";
 import { useDashboard } from "@/app/context/DashboardProvider";
 
@@ -35,6 +35,12 @@ const Cashflow = () => {
             month.expense,
         ])
     );
+
+    const [activeMonth, setActiveMonth] = useState<number | null>(null);
+
+    const canHover =
+        typeof window !== "undefined" &&
+        window.matchMedia("(hover: hover)").matches;
 
     return (
         <div className="h-full w-full">
@@ -92,8 +98,34 @@ const Cashflow = () => {
 
                                 <div
                                     key={month.month}
-                                    className="flex flex-col items-center shrink-0 w-1/6"
+                                    className="relative flex flex-col items-center shrink-0 w-1/6"
+                                    onMouseEnter={() => canHover && setActiveMonth(month.month)}
+                                    onMouseLeave={() => canHover && setActiveMonth(null)}
+                                    onClick={() => {
+                                        if (!canHover) {
+                                            setActiveMonth(prev =>
+                                                prev === month.month ? null : month.month
+                                            );
+                                        }
+                                    }}
                                 >
+                                    {activeMonth === month.month && !empty && (
+                                        <div className="absolute left-1/2 top-2 -translate-x-1/2 z-30 whitespace-nowrap rounded-2xl border border-stone-200 bg-white/50 backdrop-blur-sm px-4 py-3 shadow-xl animate-in fade-in zoom-in-95 duration-150">
+                                            <div className="text-xs text-stone-500">
+                                                {months[month.month]}
+                                            </div>
+
+                                            <div className="mt-2 flex items-center gap-2 text-sm">
+                                                <div className="h-2 w-2 rounded-full bg-blue-500" />
+                                                <span>₹{month.income.toLocaleString("en-IN")}</span>
+                                            </div>
+
+                                            <div className="mt-1 flex items-center gap-2 text-sm">
+                                                <div className="h-2 w-2 rounded-full bg-lime-400" />
+                                                <span>₹{month.expense.toLocaleString("en-IN")}</span>
+                                            </div>
+                                        </div>
+                                    )}
                                     <div className="relative w-full h-full min-h-32 xl:min-h-0">
 
                                         {/* Background track */}
@@ -102,8 +134,8 @@ const Cashflow = () => {
                                         {!empty && (
                                             <div
                                                 className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-full rounded-t-lg transition-all duration-700 ${incomeBehind
-                                                        ? "bg-blue-500 border-2 border-blue-400"
-                                                        : "bg-lime-400 border-2 border-lime-300"
+                                                    ? "bg-blue-500 border-2 border-blue-400"
+                                                    : "bg-lime-400 border-2 border-lime-300"
                                                     }`}
                                                 style={{
                                                     height: `${Math.max(incomeHeight, expenseHeight)}%`,
@@ -114,8 +146,8 @@ const Cashflow = () => {
                                         {!empty && (
                                             <div
                                                 className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] rounded-t-lg transition-all duration-700 ${incomeBehind
-                                                        ? "bg-lime-400"
-                                                        : "bg-blue-500"
+                                                    ? "bg-lime-400"
+                                                    : "bg-blue-500"
                                                     }`}
                                                 style={{
                                                     height: `${Math.min(incomeHeight, expenseHeight)}%`,
