@@ -58,7 +58,7 @@ const Budget = () => {
                       Great job!, You have
                     </div>
                     <div className='text-green-500'>
-                      ₹{Number(netSpentFromBudget * -1).toLocaleString("en-IN")} left
+                      ₹{Number(netSpentFromBudget).toLocaleString("en-IN")} left
                     </div>
                   </>
                 ) : (
