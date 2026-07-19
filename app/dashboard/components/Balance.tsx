@@ -14,13 +14,13 @@ const Balance = () => {
     const [allTransactionsOpened, setAllTransactionsOpened] = useState(false);
 
     // handle money toggle
-    const [shown, setShown] = useState(false)
+    
 
     // current currency
-    const [currentCurrency, setCurrency] = useState('INR')
+    // const [currentCurrency, setCurrency] = useState('INR')
 
     // loading data
-    const { user, selectedMonth, setSelectedMonth, availableMonths } = useDashboard();
+    const { user, selectedMonth, setSelectedMonth, availableMonths, shown, setShown } = useDashboard();
 
     // overlay modals
     const [incomeOpen, setIncomeOpen] = useState(false);
@@ -64,8 +64,8 @@ const Balance = () => {
                             {/* Dropdown */}
                             <div
                                 className={`absolute left-0 right-0 mt-3 origin-top z-20 overflow-hidden rounded-xl bg-stone-50/10 backdrop-blur-lg shadow-lg transition-all duration-200 ${monthOpened
-                                        ? "scale-100 opacity-100"
-                                        : "scale-95 opacity-0 pointer-events-none"
+                                    ? "scale-100 opacity-100"
+                                    : "scale-95 opacity-0 pointer-events-none"
                                     }`} data-lenis-prevent
                             >
                                 <div className="max-h-40 custom-scroll overflow-y-auto">
@@ -85,8 +85,8 @@ const Balance = () => {
                                                     setMonthOpened(false);
                                                 }}
                                                 className={`cursor-pointer py-2 transition-colors flex justify-center ${active
-                                                        ? "bg-blue-600 text-white"
-                                                        : "hover:bg-stone-100"
+                                                    ? "bg-blue-600 text-white"
+                                                    : "hover:bg-stone-100"
                                                     }`}
                                             >
                                                 {formatMonth(month.month, month.year)}
@@ -140,8 +140,12 @@ const Balance = () => {
                 <div className='px-4 flex items-center '>
                     <div className='select-none flex flex-col py-5 xl:py-0'>
                         <div className='font-bold text-4xl md:text-5xl xl:text-6xl flex gap-2 items-center'>
-                            <div>
-                                ₹{(user?.currentBalance ?? 0).toLocaleString("en-IN")}
+                            ₹
+                            <div
+                                className={`transition-all duration-200 ${shown ? "" : "blur-lg select-none"
+                                    }`}
+                            >
+                                {(user?.currentBalance ?? 0).toLocaleString("en-IN")}
                             </div>
                             <div className='text-stone-500 z-10 p-2 bg-stone-200 rounded-full hover:bg-stone-300 cursor-pointer pointer-events-auto' onClick={() => { setShown(!shown) }}>
                                 {shown ? <Eye size={14} /> : <EyeOff size={14} />}

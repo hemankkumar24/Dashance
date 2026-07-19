@@ -87,6 +87,11 @@ interface DashboardContextType {
     setCompletingGoalId: React.Dispatch<
         React.SetStateAction<string | null>
     >;
+
+    shown: boolean
+    setShown: React.Dispatch<
+        React.SetStateAction<boolean>
+    >;
 }
 // create the context area
 const DashboardContext = createContext<DashboardContextType | null>(null);
@@ -109,6 +114,8 @@ export function DashboardProvider({
     const [error, setError] = useState("");
 
     const [completingGoalId, setCompletingGoalId] = useState<string | null>(null);
+
+    const [shown, setShown] = useState(false)
 
     // the main usecase is to simply update, ui 
     const refreshDashboard = async () => {
@@ -260,6 +267,8 @@ export function DashboardProvider({
                 // for animation
                 completingGoalId, 
                 setCompletingGoalId,
+                shown,
+                setShown,
             }}
 
         >

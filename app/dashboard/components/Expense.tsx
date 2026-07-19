@@ -76,7 +76,7 @@ const Income = () => {
   // scroll ends here
 
   // data fetch
-  const { user, selectedMonth, getSpent, getTransactions, } = useDashboard();
+  const { user, selectedMonth, getSpent, getTransactions, shown } = useDashboard();
 
   const spentThisMonth = getSpent(
     selectedMonth.month,
@@ -105,8 +105,14 @@ const Income = () => {
 
         </div>
         <div className='flex-1 flex flex-col justify-center select-none'>
-          <div className='text-3xl lg:text-4xl xl:text-5xl font-bold'>
-            ₹{spentThisMonth.toLocaleString("en-IN")}
+          <div className='text-3xl lg:text-4xl xl:text-5xl font-bold flex'>
+            ₹
+            <div
+              className={`transition-all duration-200 ${shown ? "" : "blur-lg select-none"
+                }`}
+            >
+              {spentThisMonth.toLocaleString("en-IN")}
+            </div>
           </div>
           <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
             {user && user.monthlyBudget > 0
