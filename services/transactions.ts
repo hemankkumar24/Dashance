@@ -84,7 +84,8 @@ export async function addTransaction({ userId, title, amount, category, type, go
         }
 
         await user.save({ session });
-
+        let goalCompleted = false;
+        let goalTitle : string | null = null;
         // Update goal if linked
         if (goalId) {
             const goal = await Goal.findById(goalId).session(session);
@@ -93,8 +94,16 @@ export async function addTransaction({ userId, title, amount, category, type, go
                 throw new Error("Goal not found.");
             }
 
+            goalTitle = goal.title;
+
             if (type === "income") {
                 goal.currentAmount += amount;
+
+                if (goal.currentAmount >= goal.targetAmount) {
+                    goal.currentAmount = goal.targetAmount;
+                    goal.archived = true;
+                    goalCompleted = true;
+                }
             } else {
                 if (goal.currentAmount < amount) {
                     throw new Error("Insufficient funds in goal.");
@@ -108,13 +117,18 @@ export async function addTransaction({ userId, title, amount, category, type, go
         await session.commitTransaction();
 
         return {
-            id: transaction[0]._id.toString(),
-            title: transaction[0].title,
-            amount: transaction[0].amount,
-            category: transaction[0].category,
-            type: transaction[0].type,
-            goalId: transaction[0].goalId,
-            createdAt: transaction[0].createdAt,
+            transaction: {
+                id: transaction[0]._id.toString(),
+                title: transaction[0].title,
+                amount: transaction[0].amount,
+                category: transaction[0].category,
+                type: transaction[0].type,
+                goalId: transaction[0].goalId,
+                createdAt: transaction[0].createdAt,
+            },
+            goalCompleted,
+            goalTitle,
+            goalId
         };
     } catch (error) {
         await session.abortTransaction();

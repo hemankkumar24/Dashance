@@ -42,7 +42,7 @@ const Transaction = () => {
                     className={`flex flex-col gap-2`}
                 >
                     {transactions.length === 0 ? (
-                        <div className="flex items-center justify-center h-40 rounded-xl bg-stone-100 text-stone-400">
+                        <div className="flex items-center justify-center h-45 rounded-xl bg-stone-100 text-stone-400">
                             No transactions this month
                         </div>
                     ) :

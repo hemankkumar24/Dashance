@@ -3,6 +3,7 @@
 import { ArrowBigDown, ChevronDown, X } from "lucide-react";
 import { useState } from "react";
 import { useDashboard } from "@/app/context/DashboardProvider";
+import { celebrateGoal } from "@/lib/celebrate";
 
 interface AddIncomeModalProps {
     open: boolean;
@@ -23,7 +24,7 @@ export default function AddIncomeModal({
         "Other",
     ];
 
-    const { refreshDashboard, goals } = useDashboard();
+    const { refreshDashboard, goals, setCompletingGoalId } = useDashboard();
 
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
@@ -59,7 +60,19 @@ export default function AddIncomeModal({
                 throw new Error(data.message);
             }
 
-            await refreshDashboard();
+            if (data.goalCompleted) {
+                celebrateGoal();
+
+                setCompletingGoalId(data.goalId);
+
+                setTimeout(async () => {
+                    await refreshDashboard();
+                    setCompletingGoalId(null);
+                }, 900);
+            }
+            else {
+                await refreshDashboard();
+            }
 
             setTitle("");
             setAmount("");

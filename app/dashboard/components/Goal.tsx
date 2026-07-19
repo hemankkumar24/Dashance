@@ -77,7 +77,8 @@ const Goal = () => {
   // scroll ends here
 
   // api calling
-  const { refreshDashboard, goals } = useDashboard();
+  const { refreshDashboard, goals, completingGoalId } = useDashboard();
+  const activeGoals = goals.filter(goal => !goal.archived);
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false);
 
@@ -130,20 +131,27 @@ const Goal = () => {
         onMouseLeave={handleMouseLeave}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        className='px-2 py-2 mt-10 flex-1 min-h-0 overflow-y-auto border rounded-lg cursor-grab custom-scroll'
+        className='px-2 py-2 mt-10 flex-1 min-h-0 overflow-y-auto border rounded-lg cursor-grab custom-scroll w-full h-full'
         data-lenis-prevent
       >
-        <div className='flex flex-col gap-2 cursor-pointer'>
-          {goals.map((goal) => (
-            <GoalCard
-              key={goal.id}
-              id={goal.id}
-              title={goal.title}
-              icon={goal.icon}
-              targetAmount={goal.targetAmount}
-              currentAmount={goal.currentAmount}
-            />
-          ))}
+        <div className="flex flex-col gap-2 cursor-pointer w-full h-full">
+          {activeGoals.length > 0 ? (
+            activeGoals.map((goal) => (
+              <GoalCard
+                key={goal.id}
+                id={goal.id}
+                isCompleting={goal.id === completingGoalId}
+                title={goal.title}
+                icon={goal.icon}
+                targetAmount={goal.targetAmount}
+                currentAmount={goal.currentAmount}
+              />
+            ))
+          ) : (
+            <div className="flex items-center justify-center h-full rounded-xl bg-stone-100 text-stone-400">
+              No goals set
+            </div>
+          )}
         </div>
       </div>
       {/* scroll ends here */}

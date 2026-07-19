@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
         const userId = payload.userId;
 
-        const transaction = await addTransaction({
+        const {transaction, goalCompleted, goalTitle, goalId} = await addTransaction({
             userId,
             title: result.data.title,
             amount: result.data.amount,
@@ -62,6 +62,9 @@ export async function POST(req: NextRequest) {
                 success: true,
                 message: "Transaction added successfully.",
                 transaction,
+                goalCompleted,
+                goalTitle,
+                goalId
             },
             { status: 201 }
         );

@@ -21,6 +21,7 @@ interface Props {
     icon: string,
     targetAmount: number,
     currentAmount: number
+    isCompleting: boolean;
 }
 
 interface GoalProps {
@@ -31,7 +32,7 @@ interface GoalProps {
     currentAmount: number;
 }
 
-const GoalCard = ({ id, title, icon, targetAmount, currentAmount }: Props) => {
+const GoalCard = ({ id, title, icon, targetAmount, currentAmount, isCompleting }: Props) => {
 
     const goalIcons = {
         Target,
@@ -140,21 +141,23 @@ const GoalCard = ({ id, title, icon, targetAmount, currentAmount }: Props) => {
                             className={`overflow-hidden transition-all duration-300 ${toggled ? "w-0 opacity-0" : "flex-1 max-w-28 opacity-100"}`}>
                             <div className="h-3 bg-stone-300 rounded-full overflow-hidden">
                                 <div
-                                    className={`h-full ${progress >= 100 ? "bg-green-500" : "bg-blue-500"} rounded-full transition-all duration-500`}
-                                    style={{ width: `${progress}%` }}
+                                    className={`h-full ${isCompleting || progress  >= 100 ? "bg-green-500" : "bg-blue-500"} rounded-full transition-all duration-500`}
+                                    style={{
+                                        width: `${isCompleting ? 100 : progress}%`,
+                                    }}
                                 />
                             </div>
                         </div>
 
                         {/* Percentage */}
                         {!toggled && <div className="text-sm shrink-0 transition-all duration-300">
-                            {progress}%
+                            {isCompleting ? "100%" : `${progress}%`}
                         </div>}
                     </div>
                 </div>
                 <div className={`overflow-hidden transition-all duration-500 ${toggled ? "max-h-70 mt-4" : "max-h-0"}`}>
                     <div className='h-60 flex items-center justify-center'>
-                        <SemiGauge progress={progress} value={currentAmount} max={targetAmount} />
+                        <SemiGauge progress={isCompleting ? 100 : progress} value={currentAmount} max={targetAmount} />
                     </div>
                 </div>
 

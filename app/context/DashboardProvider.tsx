@@ -82,6 +82,11 @@ interface DashboardContextType {
         income: number;
         expense: number;
     }[];
+
+    completingGoalId: string | null;
+    setCompletingGoalId: React.Dispatch<
+        React.SetStateAction<string | null>
+    >;
 }
 // create the context area
 const DashboardContext = createContext<DashboardContextType | null>(null);
@@ -103,7 +108,7 @@ export function DashboardProvider({
 
     const [error, setError] = useState("");
 
-
+    const [completingGoalId, setCompletingGoalId] = useState<string | null>(null);
 
     // the main usecase is to simply update, ui 
     const refreshDashboard = async () => {
@@ -250,7 +255,11 @@ export function DashboardProvider({
                 error, // if an error occurs
 
                 refreshDashboard, // refresh
-                getCashflowForYear // for cashflow
+                getCashflowForYear, // for cashflow
+
+                // for animation
+                completingGoalId, 
+                setCompletingGoalId,
             }}
 
         >
