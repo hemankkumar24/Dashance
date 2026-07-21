@@ -37,6 +37,10 @@ export async function updateGoal({
     goal.icon = icon;
     goal.targetAmount = targetAmount;
 
+    if (goal.currentAmount < goal.targetAmount) {
+        goal.archived = false;
+    }
+
     await goal.save();
 
     return {
