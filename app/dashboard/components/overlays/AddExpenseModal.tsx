@@ -34,6 +34,7 @@ export default function AddExpenseModal({
     const [loading, setLoading] = useState(false);
     const [goalError, setGoalError] = useState("");
     const [customDate, setCustomDate] = useState(false);
+    const [formError, setFormError] = useState("");
 
     const [transactionDate, setTransactionDate] = useState(
         new Date().toISOString().split("T")[0]
@@ -63,7 +64,7 @@ export default function AddExpenseModal({
                 }
             }
 
-            await fetch("/api/transactions", {
+            const response = await fetch("/api/transactions", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -78,6 +79,19 @@ export default function AddExpenseModal({
                     createdAt: customDate ? transactionDate : undefined,
                 }),
             });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setFormError(
+                    data.errors?.amount?.[0] ??
+                    data.errors?.title?.[0] ??
+                    data.errors?.category?.[0] ??
+                    data.message
+                );
+                
+                return;
+            }
 
             await refreshDashboard();
 
@@ -292,6 +306,11 @@ export default function AddExpenseModal({
                             {goalError && (
                                 <p className="mt-2 text-sm text-red-600">
                                     {goalError}
+                                </p>
+                            )}
+                            {formError && (
+                                <p className="mt-2 text-sm text-red-600">
+                                    {formError}
                                 </p>
                             )}
                         </div>

@@ -33,6 +33,7 @@ export default function AddIncomeModal({
     const [category, setCategory] = useState("Salary");
     const [loading, setLoading] = useState(false);
     const [goalId, setGoalId] = useState("")
+    const [formError, setFormError] = useState("");
     const successSound = useRef<HTMLAudioElement | null>(null);
 
 
@@ -41,6 +42,7 @@ export default function AddIncomeModal({
 
         try {
             setLoading(true);
+            setFormError("");
 
             const response = await fetch("/api/transactions", {
                 method: "POST",
@@ -61,7 +63,13 @@ export default function AddIncomeModal({
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message);
+                setFormError(
+                    data.errors?.title?.[0] ??
+                    data.errors?.amount?.[0] ??
+                    data.errors?.category?.[0] ??
+                    data.message
+                );
+                return;
             }
 
             if (data.goalCompleted) {
@@ -154,7 +162,10 @@ export default function AddIncomeModal({
 
                         <input
                             value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            onChange={(e) => {
+                                setTitle(e.target.value);
+                                setFormError("");
+                            }}
                             placeholder="Salary"
                             className="mt-2 w-full rounded-2xl bg-stone-100 border border-stone-200 px-4 py-3 outline-none focus:border-blue-500"
                         />
@@ -173,7 +184,10 @@ export default function AddIncomeModal({
                             <input
                                 type="number"
                                 value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
+                                onChange={(e) => {
+                                    setAmount(e.target.value);
+                                    setFormError("");
+                                }}
                                 placeholder="0"
                                 className="w-full rounded-2xl border border-stone-200 bg-stone-100 pl-8 pr-4 py-3 outline-none transition focus:border-blue-500"
                             />
@@ -275,7 +289,11 @@ export default function AddIncomeModal({
                             />
                         </div>
                     </div>
-
+                    {formError && (
+                        <p className="mt-2 text-sm text-red-600">
+                            {formError}
+                        </p>
+                    )}
                 </div>
 
                 {/* Footer */}
@@ -290,8 +308,12 @@ export default function AddIncomeModal({
 
                     <button
                         onClick={handleSubmit}
-                        disabled={loading || !title.trim() || !amount}
-                        className="rounded-2xl bg-blue-600 px-5 py-3 text-white hover:bg-blue-500 transition"
+                        disabled={
+                            loading ||
+                            !title.trim() ||
+                            !amount
+                        }
+                        className="rounded-2xl bg-blue-600 px-5 py-3 text-white hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {loading ? "Saving..." : "Save Income"}
                     </button>
