@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ChartNoAxesColumnIncreasing } from "lucide-react";
 import { useDashboard } from "@/app/context/DashboardProvider";
 
@@ -38,9 +38,84 @@ const Cashflow = () => {
 
     const [activeMonth, setActiveMonth] = useState<number | null>(null);
 
+    const [tooltip, setTooltip] = useState<{
+        left: number;
+        month: number;
+        income: number;
+        expense: number;
+    } | null>(null);
+
     const canHover =
         typeof window !== "undefined" &&
         window.matchMedia("(hover: hover)").matches;
+
+    const scrollRef = useRef<HTMLDivElement>(null);
+
+    const isDragging = useRef(false);
+    const startX = useRef(0);
+    const scrollLeft = useRef(0);
+
+    const velocity = useRef(0);
+    const lastX = useRef(0);
+    const animationFrame = useRef<number | null>(null);
+
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+        if (!scrollRef.current) return;
+
+        isDragging.current = true;
+
+        startX.current = e.clientX;
+        scrollLeft.current = scrollRef.current.scrollLeft;
+
+        lastX.current = e.clientX;
+        velocity.current = 0;
+
+        setTooltip(null);
+        setActiveMonth(null);
+
+        cancelAnimationFrame(animationFrame.current!);
+
+        scrollRef.current.setPointerCapture(e.pointerId);
+        scrollRef.current.style.cursor = "grabbing";
+
+        document.body.style.userSelect = "none";
+    };
+
+    const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+        if (!isDragging.current || !scrollRef.current) return;
+
+        const dx = e.clientX - startX.current;
+
+        velocity.current = e.clientX - lastX.current;
+        lastX.current = e.clientX;
+
+        scrollRef.current.scrollLeft = scrollLeft.current - dx;
+    };
+
+    const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+        if (!scrollRef.current) return;
+
+        isDragging.current = false;
+
+        scrollRef.current.releasePointerCapture(e.pointerId);
+        scrollRef.current.style.cursor = "grab";
+
+        document.body.style.userSelect = "";
+
+        const momentum = () => {
+            if (!scrollRef.current) return;
+
+            scrollRef.current.scrollLeft -= velocity.current;
+
+            velocity.current *= 0.96;
+
+            if (Math.abs(velocity.current) > 0.4) {
+                animationFrame.current = requestAnimationFrame(momentum);
+            }
+        };
+
+        momentum();
+    };
 
     return (
         <div className="h-full w-full">
@@ -78,9 +153,41 @@ const Cashflow = () => {
 
                 </div>
 
-                <div className="h-3/5">
+                <div className="relative h-3/5">
 
-                    <div className="flex gap-2 h-full w-full overflow-x-auto custom-scroll py-5 pb-3 xl:py-0 select-none">
+                    {tooltip && !(tooltip.income == 0 && tooltip.expense == 0) && (
+                        <div
+                            className="absolute left-0 -top-6 z-50 pointer-events-none"
+                            style={{
+                                transform: `translateX(${tooltip.left}px) translateX(-50%)`,
+                            }}
+                        >
+                            <div className="whitespace-nowrap rounded-2xl border border-stone-200 bg-white/40 backdrop-blur-sm px-4 py-3 shadow-xl animate-in fade-in zoom-in-95 duration-150">
+                                <div className="text-xs text-stone-500">
+                                    {months[tooltip.month]}
+                                </div>
+
+                                <div className="mt-2 flex items-center gap-2 text-sm">
+                                    <div className="h-2 w-2 rounded-full bg-blue-500" />
+                                    <span>₹{tooltip.income.toLocaleString("en-IN")}</span>
+                                </div>
+
+                                <div className="mt-1 flex items-center gap-2 text-sm">
+                                    <div className="h-2 w-2 rounded-full bg-lime-400" />
+                                    <span>₹{tooltip.expense.toLocaleString("en-IN")}</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <div
+                        ref={scrollRef}
+                        onPointerDown={handlePointerDown}
+                        onPointerMove={handlePointerMove}
+                        onPointerUp={handlePointerUp}
+                        onPointerLeave={handlePointerUp}
+                        className="flex gap-2 h-full w-full overflow-x-auto overflow-y-visible custom-scroll py-5 pb-3 xl:py-0 cursor-grab active:cursor-grabbing select-none"
+                    >
                         {cashflow.map((month) => {
                             const incomeHeight =
                                 (month.income / maxValue) * 100;
@@ -99,33 +206,62 @@ const Cashflow = () => {
                                 <div
                                     key={month.month}
                                     className="relative flex flex-col items-center shrink-0 w-1/6"
-                                    onMouseEnter={() => canHover && setActiveMonth(month.month)}
-                                    onMouseLeave={() => canHover && setActiveMonth(null)}
-                                    onClick={() => {
-                                        if (!canHover) {
-                                            setActiveMonth(prev =>
-                                                prev === month.month ? null : month.month
-                                            );
+                                    onMouseEnter={(e) => {
+                                        if (!canHover) return;
+                                        if (isDragging.current) return;
+
+                                        const rect = (
+                                            e.currentTarget as HTMLDivElement
+                                        ).getBoundingClientRect();
+
+                                        const parentRect = (
+                                            e.currentTarget.parentElement as HTMLDivElement
+                                        ).getBoundingClientRect();
+
+                                        setActiveMonth(month.month);
+
+                                        setTooltip({
+                                            left: rect.left - parentRect.left + rect.width / 2,
+                                            month: month.month,
+                                            income: month.income,
+                                            expense: month.expense,
+                                        });
+                                    }}
+
+                                    onMouseLeave={() => {
+                                        if (!canHover) return;
+
+                                        setActiveMonth(null);
+                                        setTooltip(null);
+                                    }}
+
+                                    onClick={(e) => {
+                                        if (canHover) return;
+
+                                        const rect = (
+                                            e.currentTarget as HTMLDivElement
+                                        ).getBoundingClientRect();
+
+                                        const parentRect = (
+                                            e.currentTarget.parentElement as HTMLDivElement
+                                        ).getBoundingClientRect();
+
+                                        if (activeMonth === month.month) {
+                                            setActiveMonth(null);
+                                            setTooltip(null);
+                                        } else {
+                                            setActiveMonth(month.month);
+
+                                            setTooltip({
+                                                left: rect.left - parentRect.left + rect.width / 2,
+                                                month: month.month,
+                                                income: month.income,
+                                                expense: month.expense,
+                                            });
                                         }
                                     }}
                                 >
-                                    {activeMonth === month.month && !empty && (
-                                        <div className="absolute left-1/2 top-2 -translate-x-1/2 z-30 whitespace-nowrap rounded-2xl border border-stone-200 bg-white/50 backdrop-blur-sm px-4 py-3 shadow-xl animate-in fade-in zoom-in-95 duration-150">
-                                            <div className="text-xs text-stone-500">
-                                                {months[month.month]}
-                                            </div>
 
-                                            <div className="mt-2 flex items-center gap-2 text-sm">
-                                                <div className="h-2 w-2 rounded-full bg-blue-500" />
-                                                <span>₹{month.income.toLocaleString("en-IN")}</span>
-                                            </div>
-
-                                            <div className="mt-1 flex items-center gap-2 text-sm">
-                                                <div className="h-2 w-2 rounded-full bg-lime-400" />
-                                                <span>₹{month.expense.toLocaleString("en-IN")}</span>
-                                            </div>
-                                        </div>
-                                    )}
                                     <div className="relative w-full h-full min-h-32 xl:min-h-0">
 
                                         {/* Background track */}
