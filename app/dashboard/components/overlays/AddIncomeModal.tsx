@@ -77,7 +77,7 @@ export default function AddIncomeModal({
                 successSound.current.volume = 0.5; // 0–1
                 successSound.current.currentTime = 0;
                 await successSound.current.play();
-                
+
                 setTimeout(async () => {
                     await refreshDashboard();
                     setCompletingGoalId(null);
@@ -145,7 +145,7 @@ export default function AddIncomeModal({
                 </div>
 
                 {/* Form */}
-                <div className="mt-8 space-y-5 px-6">
+                <div className="mt-8 space-y-5 px-5">
 
                     <div>
                         <label className="text-sm text-stone-500">
@@ -161,42 +161,48 @@ export default function AddIncomeModal({
                     </div>
 
                     <div>
-                        <label className="text-sm text-stone-500">
+                        <label className="block text-sm text-stone-600 mb-2">
                             Amount
                         </label>
 
-                        <input
-                            type="number"
-                            placeholder="₹25,000"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                            className="mt-2 w-full rounded-2xl bg-stone-100 border border-stone-200 px-4 py-3 outline-none focus:border-blue-500"
-                        />
+                        <div className="relative">
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-500">
+                                ₹
+                            </span>
+
+                            <input
+                                type="number"
+                                value={amount}
+                                onChange={(e) => setAmount(e.target.value)}
+                                placeholder="0"
+                                className="w-full rounded-2xl border border-stone-200 bg-stone-100 pl-8 pr-4 py-3 outline-none transition focus:border-blue-500"
+                            />
+                        </div>
                     </div>
 
-                    <div className="relative">
-                        <label className="text-sm text-stone-500">
+                    <div>
+                        <label className="block text-sm text-stone-600 mb-2">
                             Category
                         </label>
 
-                        <select
-                            className="mt-2 w-full appearance-none rounded-2xl bg-stone-100 border border-stone-200 px-4 py-3 outline-none focus:border-blue-500"
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                        >
-                            {categories.map((category, key) => {
-                                return (
-                                    <option key={key}>
+                        <div className="relative">
+                            <select
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                                className="w-full appearance-none rounded-2xl border border-stone-200 bg-stone-100 px-4 py-3 outline-none transition focus:border-blue-500"
+                            >
+                                {categories.map((category) => (
+                                    <option key={category} value={category}>
                                         {category}
                                     </option>
-                                );
-                            })}
-                        </select>
+                                ))}
+                            </select>
 
-                        <ChevronDown
-                            size={18}
-                            className="pointer-events-none absolute right-4 top-3/5 text-stone-500"
-                        />
+                            <ChevronDown
+                                size={18}
+                                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-stone-500"
+                            />
+                        </div>
                     </div>
 
                     <div className="rounded-2xl border border-stone-200 bg-stone-100 p-4">
@@ -241,31 +247,33 @@ export default function AddIncomeModal({
 
                     </div>
 
-                    <div className="relative">
-                        <label className="text-sm text-stone-500">
+                    <div>
+                        <label className="block text-sm text-stone-600 mb-2">
                             Contribute to Goal (Optional)
                         </label>
 
-                        <select
-                            value={goalId}
-                            onChange={(e) => setGoalId(e.target.value)}
-                            className="mt-2 w-full appearance-none rounded-2xl bg-stone-100 border border-stone-200 px-4 py-3 outline-none focus:border-blue-500"
-                        >
-                            <option value="">Don't add to a goal</option>
+                        <div className="relative">
+                            <select
+                                value={goalId}
+                                onChange={(e) => setGoalId(e.target.value)}
+                                className="w-full appearance-none rounded-2xl border border-stone-200 bg-stone-100 px-4 py-3 outline-none transition focus:border-blue-500"
+                            >
+                                <option value="">Don't add to a goal</option>
 
-                            {goals
-                                .filter((goal) => !goal.archived)
-                                .map((goal) => (
-                                    <option key={goal.id} value={goal.id}>
-                                        {goal.title}
-                                    </option>
-                                ))}
-                        </select>
+                                {goals
+                                    .filter((goal) => !goal.archived)
+                                    .map((goal) => (
+                                        <option key={goal.id} value={goal.id}>
+                                            {goal.title}
+                                        </option>
+                                    ))}
+                            </select>
 
-                        <ChevronDown
-                            size={18}
-                            className="pointer-events-none absolute right-4 top-3/5 text-stone-500"
-                        />
+                            <ChevronDown
+                                size={18}
+                                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-stone-500"
+                            />
+                        </div>
                     </div>
 
                 </div>

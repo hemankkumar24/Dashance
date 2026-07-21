@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowBigUp, X } from "lucide-react";
+import { ArrowBigUp, ChevronDown, X } from "lucide-react";
 import { useDashboard } from "@/app/context/DashboardProvider";
 
 interface AddExpenseModalProps {
@@ -186,26 +186,28 @@ export default function AddExpenseModal({
                     {/* Category */}
 
                     <div>
-
                         <label className="block text-sm text-stone-600 mb-2">
                             Category
                         </label>
 
-                        <select
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                            className="w-full rounded-2xl border border-stone-200 bg-stone-100 px-4 py-3 outline-none transition focus:border-blue-500"
-                        >
-                            {categories.map((category) => (
-                                <option
-                                    key={category}
-                                    value={category}
-                                >
-                                    {category}
-                                </option>
-                            ))}
-                        </select>
+                        <div className="relative">
+                            <select
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                                className="w-full appearance-none rounded-2xl border border-stone-200 bg-stone-100 px-4 py-3 pr-10 outline-none transition focus:border-blue-500"
+                            >
+                                {categories.map((category) => (
+                                    <option key={category} value={category}>
+                                        {category}
+                                    </option>
+                                ))}
+                            </select>
 
+                            <ChevronDown
+                                size={18}
+                                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-stone-500"
+                            />
+                        </div>
                     </div>
 
                     <div className="rounded-2xl border border-stone-200 bg-stone-100 p-4">
@@ -255,35 +257,38 @@ export default function AddExpenseModal({
                     {goals.filter((goal) => !goal.archived) && (
 
                         <div>
-
                             <label className="block text-sm text-stone-600 mb-2">
                                 Use Goal Funds (optional)
                             </label>
 
-                            <select
-                                value={goalId}
-                                onChange={(e) => {
-                                    setGoalId(e.target.value);
-                                    setGoalError("");
-                                }}
-                                className="w-full rounded-2xl border border-stone-200 bg-stone-100 px-4 py-3 outline-none transition focus:border-blue-500"
-                            >
-                                <option value="">
-                                    Don't use goal funds
-                                </option>
+                            <div className="relative">
+                                <select
+                                    value={goalId}
+                                    onChange={(e) => {
+                                        setGoalId(e.target.value);
+                                        setGoalError("");
+                                    }}
+                                    className="w-full appearance-none rounded-2xl border border-stone-200 bg-stone-100 px-4 py-3 pr-10 outline-none transition focus:border-blue-500"
+                                >
+                                    <option value="">
+                                        Don't use goal funds
+                                    </option>
 
-                                {goals
-                                    .filter((goal) => !goal.archived)
-                                    .map((goal) => (
-                                        <option
-                                            key={goal.id}
-                                            value={goal.id}
-                                        >
-                                            {goal.title}
-                                        </option>
-                                    ))}
+                                    {goals
+                                        .filter((goal) => !goal.archived)
+                                        .map((goal) => (
+                                            <option key={goal.id} value={goal.id}>
+                                                {goal.title}
+                                            </option>
+                                        ))}
+                                </select>
 
-                            </select>
+                                <ChevronDown
+                                    size={18}
+                                    className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-stone-500"
+                                />
+                            </div>
+
                             {goalError && (
                                 <p className="mt-2 text-sm text-red-600">
                                     {goalError}
