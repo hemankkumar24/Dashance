@@ -1,5 +1,6 @@
 "use client";
 
+import Money from "@/app/components/Dashboard/Money";
 import { DashboardTransaction } from "@/app/context/DashboardProvider";
 import { ArrowDownLeft, ArrowUpRight, Pencil, Trash2 } from "lucide-react";
 
@@ -77,8 +78,8 @@ const TransactionCard = ({
                         isIncome ? "text-green-600" : "text-red-500"
                     }`}
                 >
-                    {isIncome ? "+" : "-"}₹
-                    {transaction.amount.toLocaleString()}
+                    {isIncome ? "+" : "-"}
+                    {<Money value={transaction.amount} />}
                 </p>
 
             </div>

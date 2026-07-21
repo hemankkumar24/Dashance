@@ -3,6 +3,7 @@ import { CircleDollarSign } from 'lucide-react'
 import BudgetBar from './BudgetBar'
 import { useDashboard } from '@/app/context/DashboardProvider';
 import ModifyBudgetModal from './overlays/ModifyBudgetModal';
+import Money from '@/app/components/Dashboard/Money';
 const Budget = () => {
 
   // loading data
@@ -58,7 +59,7 @@ const Budget = () => {
                       Great job!, You have
                     </div>
                     <div className='text-green-500'>
-                      ₹{Number(netSpentFromBudget).toLocaleString("en-IN")} left
+                      {<Money value={netSpentFromBudget} />} left
                     </div>
                   </>
                 ) : (
@@ -67,7 +68,7 @@ const Budget = () => {
                       You are
                     </div>
                     <div className='text-red-500'>
-                      ₹{Number(netSpentFromBudget * -1).toLocaleString("en-IN")}
+                      {<Money value={netSpentFromBudget * -1} />}
                     </div>
                     <div className='text-stone-600'>
                       over budget

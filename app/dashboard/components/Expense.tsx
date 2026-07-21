@@ -3,6 +3,7 @@ import React, { useState, useRef } from 'react'
 import { ArrowBigUp } from 'lucide-react'
 import ExpenseCard from './ExpenseCard'
 import { useDashboard } from "@/app/context/DashboardProvider";
+import Money from '@/app/components/Dashboard/Money';
 
 const Income = () => {
 
@@ -106,12 +107,11 @@ const Income = () => {
         </div>
         <div className='flex-1 flex flex-col justify-center select-none'>
           <div className='text-3xl lg:text-4xl xl:text-5xl font-bold flex'>
-            ₹
             <div
               className={`transition-all duration-200 ${shown ? "" : "blur-lg select-none"
                 }`}
             >
-              {spentThisMonth.toLocaleString("en-IN")}
+              <Money value={spentThisMonth} />
             </div>
           </div>
           <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>

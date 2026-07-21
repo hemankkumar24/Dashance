@@ -1,5 +1,6 @@
 "use client";
 
+import Money from "@/app/components/Dashboard/Money";
 import React, { useEffect, useState } from "react";
 import { number } from "zod/mini";
 
@@ -60,7 +61,7 @@ const IncomeCard = ({ name, amount }: Props) => {
                 className={`text-2xl font-semibold tracking-tight text-gray-800 transition-all duration-300 ${expanded ? (Number(amount) > 1000000 ? "text-lg" : "") : "truncate"
                     }`}
             >
-                ₹{Number(amount).toLocaleString("en-IN")}
+                {<Money value={amount} />}
             </div>
         </div>
     );

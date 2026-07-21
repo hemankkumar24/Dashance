@@ -58,7 +58,7 @@ const Cashflow = () => {
     const velocity = useRef(0);
     const lastX = useRef(0);
     const animationFrame = useRef<number | null>(null);
-
+    
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
         if (!scrollRef.current) return;
 

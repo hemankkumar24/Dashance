@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { History, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import { useDashboard } from "@/app/context/DashboardProvider";
+import Money from '@/app/components/Dashboard/Money';
 
 const Transaction = () => {
 
@@ -66,7 +67,7 @@ const Transaction = () => {
                                     {/* Amount */}
                                     <div className={`text-center font-medium ${isIncome ? "text-green-600" : "text-red-500"
                                         }`}>
-                                        {isIncome ? "+" : "-"}₹{txn.amount.toLocaleString("en-IN")}
+                                        {isIncome ? "+" : "-"}{<Money value={txn.amount} />}
                                     </div>
 
                                     {/* Date AND Time */}

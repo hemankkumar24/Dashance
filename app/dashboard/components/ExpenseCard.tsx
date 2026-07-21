@@ -1,5 +1,6 @@
 "use client";
 
+import Money from "@/app/components/Dashboard/Money";
 import React, { useEffect, useState } from "react";
 
 interface Props {
@@ -57,7 +58,7 @@ const ExpenseCard = ({ name, amount }: Props) => {
             {/* Amount */}
             <div className={`truncate text-2xl font-semibold tracking-tight text-gray-800 ${expanded ? (Number(amount) > 1000000 ? "text-lg" : "") : "truncate"
                     }`}>
-                ₹{Number(amount).toLocaleString("en-IN")}
+                {<Money value={amount} />}
             </div>
         </div>
     );

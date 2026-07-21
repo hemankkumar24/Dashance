@@ -3,6 +3,7 @@ import React, { useState, useRef } from 'react'
 import { ArrowBigDown } from 'lucide-react'
 import IncomeCard from './IncomeCard'
 import { useDashboard } from '@/app/context/DashboardProvider'
+import Money from '@/app/components/Dashboard/Money'
 
 const Income = () => {
 
@@ -102,18 +103,18 @@ const Income = () => {
 
         <div className='flex-1 flex flex-col justify-center elect-none'>
           <div className='text-3xl flex lg:text-4xl xl:text-5xl font-bold'>
-            ₹<div
+            <div
               className={`transition-all duration-200 ${shown ? "" : "blur-lg select-none"
                 }`}
             >
-            {incomeThisMonth.toLocaleString("en-IN")}
+            {<Money value={incomeThisMonth} />}
             </div>
           </div>
           <div className='text-sm relative bottom-1 xl:text-lg text-stone-500 pb-1 xl:pb-2'>
             {netSavings >= 0 ? (
-              <>₹{netSavings.toLocaleString("en-IN")} net savings this month</>
+              <>{<Money value={netSavings} />} net savings this month</>
             ) : (
-              <>₹{Math.abs(netSavings).toLocaleString("en-IN")} overspent this month</>
+              <>{<Money value={netSavings} />} overspent this month</>
             )}
           </div>
         </div>

@@ -6,6 +6,7 @@ import { formatMonth, getLastUpdatedText } from '@/lib/utils/date'
 import AddIncomeModal from "./overlays/AddIncomeModal";
 import AddExpenseModal from './overlays/AddExpenseModal'
 import AllTransactionsModal from './overlays/AllTransactionsModal'
+import Money from '@/app/components/Dashboard/Money'
 
 const Balance = () => {
     // handle dropdown toggle
@@ -140,12 +141,11 @@ const Balance = () => {
                 <div className='px-4 flex items-center '>
                     <div className='select-none flex flex-col py-5 xl:py-0'>
                         <div className='font-bold text-4xl md:text-5xl xl:text-6xl flex gap-2 items-center'>
-                            ₹
                             <div
                                 className={`transition-all duration-200 ${shown ? "" : "blur-lg select-none"
                                     }`}
                             >
-                                {(user?.currentBalance ?? 0).toLocaleString("en-IN")}
+                                {<Money value={user?.currentBalance} />}
                             </div>
                             <div className='text-stone-500 z-10 p-2 bg-stone-200 rounded-full hover:bg-stone-300 cursor-pointer pointer-events-auto' onClick={() => { setShown(!shown) }}>
                                 {shown ? <Eye size={14} /> : <EyeOff size={14} />}

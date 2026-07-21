@@ -1,3 +1,5 @@
+import Money from "@/app/components/Dashboard/Money";
+
 interface Props {
   spent: number;
   total: number | undefined;
@@ -19,10 +21,10 @@ const BudgetBar = ({ spent, total }: Props) => {
       <div className="flex items-end justify-between">
         <div className="pt-2">
           <p className="text-3xl md:text-4xl font-semibold tracking-tight text-stone-900 relative top-1">
-            ₹{Number(spent).toLocaleString("en-IN")}
+            {<Money value={spent} />}
           </p>
           <p className="text-sm text-stone-500 relative pt-0.5">
-            of ₹{Number(total).toLocaleString("en-IN")} spent
+            of {<Money value={total} />} spent
           </p>
         </div>
 

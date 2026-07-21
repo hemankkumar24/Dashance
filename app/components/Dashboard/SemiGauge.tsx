@@ -1,3 +1,4 @@
+import Money from "./Money"
 
 interface Props {
     progress: number,
@@ -55,8 +56,8 @@ export const SemiGauge = ({ progress, value, max }: Props) => {
         {/* Center Content */}
         <div className="absolute inset-0 top-10 flex flex-col items-center justify-center select-none">
           <div className="text-lg text-stone-400">Target</div>
-          <div className="text-4xl font-semibold text-white">₹{Number(value).toLocaleString("en-IN", {maximumFractionDigits: 1,})}</div>
-          <div className="text-lg text-stone-400">/ ₹{Number(max).toLocaleString("en-IN")}</div>
+          <div className="text-4xl font-semibold text-white">{<Money value={value} />}</div>
+          <div className="text-lg text-stone-400">/ {<Money value={max} />}</div>
         </div>
 
       </div>
